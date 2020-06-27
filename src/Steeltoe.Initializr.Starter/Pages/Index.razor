@@ -1,0 +1,90 @@
+﻿@page "/"
+
+<h1>Steeltoe Initializr</h1>
+
+@if (Configuration != null)
+{
+<EditForm Model="@Specification">
+    <div class="form-group row">
+        <label for="projectName" class="col-sm-2 col-form-label">
+            Project Name
+        </label>
+        <div class="col-sm-10">
+            <InputText id="projectName"
+                       @bind-Value="@Specification.ProjectName"
+                       class="form-control"
+                       placeholder="@Configuration.Name.Default"/>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="projectDescription" class="col-sm-2 col-form-label">
+            Project Description
+        </label>
+        <div class="col-sm-10">
+            <InputText id="projectDescription"
+                       @bind-Value="@Specification.ProjectDescription"
+                       class="form-control"
+                       placeholder="@Configuration.Description.Default"/>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="steeltoeRelease" class="col-sm-2 col-form-label">
+            Steeltoe Release
+        </label>
+        <div class="col-sm-10">
+            <InputSelect id="steeltoeRelease"
+                         @bind-Value="@Specification.SteeltoeReleaseId">
+                @foreach (var steeltoeRelease in Configuration.SteeltoeRelease.Values)
+                {
+                    <option value="@steeltoeRelease.Id" selected="@Configuration.SteeltoeRelease.Default">@steeltoeRelease.Name</option>
+                }
+            </InputSelect>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="dotnetTargetFramework" class="col-sm-2 col-form-label">
+            Target Framework
+        </label>
+        <div class="col-sm-10">
+            <InputSelect id="dotnetTargetFramework"
+                         @bind-Value="@Specification.DotnetFrameworkTargetId">
+                @foreach (var target in Configuration.DotnetFrameworkTarget.Values)
+                {
+                    <option value="@target.Id" selected="@Configuration.DotnetFrameworkTarget.Default">@target.Id [@target.Name]</option>
+                }
+            </InputSelect>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="dotnetTemplate" class="col-sm-2 col-form-label">
+            Template
+        </label>
+        <div class="col-sm-10">
+            <InputSelect id="dotnetTemplate"
+                         @bind-Value="@Specification.DotnetTemplateId">
+                @foreach (var template in Configuration.DotnetTemplate.Values)
+                {
+                    <option value="@template.Id" selected="@Configuration.DotnetTemplate.Default">@template.Id [@template.Name]</option>
+                }
+            </InputSelect>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="language" class="col-sm-2 col-form-label">
+            Language
+        </label>
+        <div class="col-sm-10">
+            <InputSelect id="language"
+                         @bind-Value="@Specification.DotnetLanguageId">
+                @foreach (var language in Configuration.DotnetLanguage.Values)
+                {
+                    <option value="@language.Id" selected="@Configuration.DotnetLanguage.Default">@language.Name</option>
+                }
+            </InputSelect>
+        </div>
+    </div>
+    <div class="col-sm-10">
+        <input type="submit" class="btn btn-primary" value="Generate Project"/>
+    </div>
+</EditForm>
+}
