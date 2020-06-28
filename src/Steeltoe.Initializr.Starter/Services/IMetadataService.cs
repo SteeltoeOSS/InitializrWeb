@@ -5,6 +5,6 @@ namespace Steeltoe.Initializr.Starter.Services
 {
     public interface IMetadataService
     {
-         Task<Configuration> GetConfiguration();
+        Task<Configuration> GetConfiguration();
     }
 }

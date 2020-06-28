@@ -1,3 +1,5 @@
+using System;
+using System.Net.Http;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
 using Steeltoe.Initializr.Starter.Services;
@@ -10,14 +12,24 @@ namespace Steeltoe.Initializr.Starter.Pages
     {
         [Inject] public IMetadataService MetadataService { get; set; }
 
-        public Configuration Configuration { get; set;  }
+        public Configuration Configuration { get; set; }
 
-        public Specification Specification { get; set;  }
+        public Specification Specification { get; set; }
+
+        public Exception Error { get; set; }
 
         protected override async Task OnInitializedAsync()
         {
-            Configuration = await MetadataService.GetConfiguration();
-            Specification = new Specification();
+            Error = null;
+            try
+            {
+                Configuration = await MetadataService.GetConfiguration();
+                Specification = new Specification();
+            }
+            catch (HttpRequestException e)
+            {
+                Error = e;
+            }
         }
     }
 }
