@@ -5,7 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Moq;
 using Steeltoe.Initializr.Starter.Pages;
 using Steeltoe.Initializr.Starter.Services;
-using Steeltoe.Initializr.WebApi.Models.Metadata;
+using Steeltoe.Initializr.WebApi.Models;
 using Xunit;
 
 namespace Steeltoe.Initializr.Starter.Test
@@ -16,7 +16,7 @@ namespace Steeltoe.Initializr.Starter.Test
         public void ConnectionError()
         {
             // Arrange
-            var metadataServiceMock = new Mock<IMetadataService>();
+            var metadataServiceMock = new Mock<IConfigurationService>();
             metadataServiceMock.Setup(svc => svc.GetConfiguration())
                 .Throws(new HttpRequestException("Something weird is going on"));
             Services.AddSingleton(metadataServiceMock.Object);
@@ -36,7 +36,7 @@ namespace Steeltoe.Initializr.Starter.Test
         public void PageLoading()
         {
             // Arrange
-            var metadataServiceMock = new Mock<IMetadataService>();
+            var metadataServiceMock = new Mock<IConfigurationService>();
             metadataServiceMock.Setup(svc => svc.GetConfiguration())
                 .Returns(new TaskCompletionSource<Configuration>().Task);
             Services.AddSingleton(metadataServiceMock.Object);

@@ -1,22 +1,22 @@
 using System.Net.Http;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
-using Steeltoe.Initializr.WebApi.Models.Metadata;
+using Steeltoe.Initializr.WebApi.Models;
 
 namespace Steeltoe.Initializr.Starter.Services
 {
-    public class MetadataRestService : IMetadataService
+    public class ConfigurationRestService : IConfigurationService
     {
         private readonly HttpClient _httpClient;
 
-        public MetadataRestService(HttpClient httpClient)
+        public ConfigurationRestService(HttpClient httpClient)
         {
             _httpClient = httpClient;
         }
 
         public async Task<Configuration> GetConfiguration()
         {
-            return await _httpClient.GetJsonAsync<Configuration>("metadata");
+            return await _httpClient.GetJsonAsync<Configuration>("configuration");
         }
     }
 }

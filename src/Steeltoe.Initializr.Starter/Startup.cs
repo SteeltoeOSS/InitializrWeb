@@ -24,7 +24,7 @@ namespace Steeltoe.Initializr.Starter
             services.AddRazorPages();
             services.AddServerSideBlazor();
             var restUrl = new Uri("http://localhost:5000/api/");
-            services.AddHttpClient<IMetadataService, MetadataRestService>(client =>
+            services.AddHttpClient<IConfigurationService, ConfigurationRestService>(client =>
                 client.BaseAddress = restUrl);
         }
 
