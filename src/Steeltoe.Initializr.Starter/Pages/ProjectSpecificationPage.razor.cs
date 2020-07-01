@@ -7,7 +7,7 @@ using Steeltoe.Initializr.WebApi.Models;
 
 namespace Steeltoe.Initializr.Starter.Pages
 {
-    public partial class Index
+    public partial class ProjectSpecificationPage
     {
         [Inject] public IConfigurationService ConfigurationService { get; set; }
 

@@ -1,3 +1,4 @@
+using System;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Bunit;
@@ -10,7 +11,7 @@ using Xunit;
 
 namespace Steeltoe.Initializr.Starter.Test
 {
-    public class IndexTest : TestContext
+    public class ProjectSpecificationPageTest : TestContext
     {
         [Fact]
         public void ConnectionError()
@@ -22,7 +23,7 @@ namespace Steeltoe.Initializr.Starter.Test
             Services.AddSingleton(metadataServiceMock.Object);
 
             // Act
-            var page = RenderComponent<Index>();
+            var page = RenderComponent<ProjectSpecificationPage>();
 
             // Assert
             var expectedHtml = @"<h1>Steeltoe Initializr</h1>
@@ -42,7 +43,7 @@ namespace Steeltoe.Initializr.Starter.Test
             Services.AddSingleton(metadataServiceMock.Object);
 
             // Act
-            var page = RenderComponent<Index>();
+            var page = RenderComponent<ProjectSpecificationPage>();
 
             // Assert
             var expectedHtml = @"<h1>Steeltoe Initializr</h1>
