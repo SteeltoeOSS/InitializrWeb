@@ -1,92 +1,77 @@
 ﻿@page "/"
 
-<h1>Steeltoe Initializr</h1>
-
+<Heading Level="HeadingLevel.H1">Steeltoe Initializr</Heading>
 
 @if (Configuration != null)
 {
     <EditForm Model="@ProjectSpecification">
-        <div class="form-group row">
-            <label for="projectName" class="col-sm-2 col-form-label">
-                Project Name
-            </label>
-            <div class="col-sm-10">
-                <InputText id="projectName"
-                           @bind-Value="@ProjectSpecification.ProjectName"
-                           class="form-control"
-                           placeholder="@Configuration.Name.Default"/>
-            </div>
-        </div>
-        <div class="form-group row">
-            <label for="projectDescription" class="col-sm-2 col-form-label">
-                Project Description
-            </label>
-            <div class="col-sm-10">
-                <InputText id="projectDescription"
-                           @bind-Value="@ProjectSpecification.ProjectDescription"
-                           class="form-control"
-                           placeholder="@Configuration.Description.Default"/>
-            </div>
-        </div>
-        <div class="form-group row">
-            <label for="steeltoeRelease" class="col-sm-2 col-form-label">
-                Steeltoe Release
-            </label>
-            <div class="col-sm-10">
-                <InputSelect id="steeltoeRelease"
-                             @bind-Value="@ProjectSpecification.SteeltoeReleaseId">
+        <Field Horizontal="true">
+            <FieldLabel ColumnSize="ColumnSize.Is3">Project Name</FieldLabel>
+            <FieldBody ColumnSize="ColumnSize.Is9">
+                <TextEdit id="projectName"
+                          @bind-Value="@ProjectSpecification.ProjectName"
+                          class="form-control"
+                          placeholder="@Configuration.Name.Default"/>
+            </FieldBody>
+        </Field>
+        <Field Horizontal="true">
+            <FieldLabel ColumnSize="ColumnSize.Is3">Project Description</FieldLabel>
+            <FieldBody ColumnSize="ColumnSize.Is9">
+                <TextEdit id="projectDescription"
+                          @bind-Value="@ProjectSpecification.ProjectDescription"
+                          class="form-control"
+                          placeholder="@Configuration.Description.Default"/>
+            </FieldBody>
+        </Field>
+        <Field Horizontal="true">
+            <FieldLabel ColumnSize="ColumnSize.Is3">Steeltoe Release</FieldLabel>
+            <FieldBody ColumnSize="ColumnSize.Is9">
+                <Select TValue="string" id="steeltoeRelease"
+                        @bind-Value="@ProjectSpecification.SteeltoeReleaseId">
                     @foreach (var steeltoeRelease in Configuration.SteeltoeRelease.Values)
                     {
-                        <option value="@steeltoeRelease.Id" selected="@Configuration.SteeltoeRelease.Default">@steeltoeRelease.Name</option>
+                        <SelectItem TValue="string" value="@steeltoeRelease.Id" selected="@Configuration.SteeltoeRelease.Default">@steeltoeRelease.Name</SelectItem>
                     }
-                </InputSelect>
-            </div>
-        </div>
-        <div class="form-group row">
-            <label for="dotnetTargetFramework" class="col-sm-2 col-form-label">
-                Target Framework
-            </label>
-            <div class="col-sm-10">
-                <InputSelect id="dotnetTargetFramework"
-                             @bind-Value="@ProjectSpecification.DotnetFrameworkTargetId">
+                </Select>
+            </FieldBody>
+        </Field>
+        <Field Horizontal="true">
+            <FieldLabel ColumnSize="ColumnSize.Is3">DotNet Target Framework</FieldLabel>
+            <FieldBody ColumnSize="ColumnSize.Is9">
+                <Select TValue="string" id="dotnetTargetFramework"
+                        @bind-Value="@ProjectSpecification.DotnetFrameworkTargetId">
                     @foreach (var target in Configuration.DotnetFrameworkTarget.Values)
                     {
-                        <option value="@target.Id" selected="@Configuration.DotnetFrameworkTarget.Default">@target.Id [@target.Name]</option>
+                        <SelectItem TValue="string" value="@target.Id" selected="@Configuration.DotnetFrameworkTarget.Default">@target.Name</SelectItem>
                     }
-                </InputSelect>
-            </div>
-        </div>
-        <div class="form-group row">
-            <label for="dotnetTemplate" class="col-sm-2 col-form-label">
-                Template
-            </label>
-            <div class="col-sm-10">
-                <InputSelect id="dotnetTemplate"
-                             @bind-Value="@ProjectSpecification.DotnetTemplateId">
+                </Select>
+            </FieldBody>
+        </Field>
+        <Field Horizontal="true">
+            <FieldLabel ColumnSize="ColumnSize.Is3">DotNet Template</FieldLabel>
+            <FieldBody ColumnSize="ColumnSize.Is9">
+                <Select TValue="string" id="dotnetTemplate"
+                        @bind-Value="@ProjectSpecification.DotnetTemplateId">
                     @foreach (var template in Configuration.DotnetTemplate.Values)
                     {
-                        <option value="@template.Id" selected="@Configuration.DotnetTemplate.Default">@template.Id [@template.Name]</option>
+                        <SelectItem TValue="string" value="@template.Id" selected="@Configuration.DotnetTemplate.Default">@template.Name [@template.Id]</SelectItem>
                     }
-                </InputSelect>
-            </div>
-        </div>
-        <div class="form-group row">
-            <label for="language" class="col-sm-2 col-form-label">
-                Language
-            </label>
-            <div class="col-sm-10">
-                <InputSelect id="language"
-                             @bind-Value="@ProjectSpecification.DotnetLanguageId">
+                </Select>
+            </FieldBody>
+        </Field>
+        <Field Horizontal="true">
+            <FieldLabel ColumnSize="ColumnSize.Is3">Language</FieldLabel>
+            <FieldBody ColumnSize="ColumnSize.Is9">
+                <Select TValue="string" id="language"
+                        @bind-Value="@ProjectSpecification.DotnetLanguageId">
                     @foreach (var language in Configuration.DotnetLanguage.Values)
                     {
-                        <option value="@language.Id" selected="@Configuration.DotnetLanguage.Default">@language.Name</option>
+                        <SelectItem TValue="string" value="@language.Id" selected="@Configuration.DotnetLanguage.Default">@language.Name</SelectItem>
                     }
-                </InputSelect>
-            </div>
-        </div>
-        <div class="col-sm-10">
-            <input type="submit" class="btn btn-primary" value="Generate Project"/>
-        </div>
+                </Select>
+            </FieldBody>
+        </Field>
+        <Button Color="Color.Primary">Generate Project</Button>
     </EditForm>
 }
 else if (@Error != null)

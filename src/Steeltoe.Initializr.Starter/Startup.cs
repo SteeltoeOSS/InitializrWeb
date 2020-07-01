@@ -1,4 +1,7 @@
 using System;
+using Blazorise;
+using Blazorise.Bootstrap;
+using Blazorise.Icons.FontAwesome;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -21,6 +24,9 @@ namespace Steeltoe.Initializr.Starter
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddBlazorise(options => { options.ChangeTextOnKeyPress = true; })
+                .AddBootstrapProviders()
+                .AddFontAwesomeIcons();
             services.AddRazorPages();
             services.AddServerSideBlazor();
             var restUrl = new Uri("http://localhost:5000/api/");
@@ -46,6 +52,10 @@ namespace Steeltoe.Initializr.Starter
             app.UseStaticFiles();
 
             app.UseRouting();
+
+            app.ApplicationServices
+                .UseBootstrapProviders()
+                .UseFontAwesomeIcons();
 
             app.UseEndpoints(endpoints =>
             {
