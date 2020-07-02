@@ -36,6 +36,8 @@ jobs:
         inputs:
           command: build
           arguments: --no-restore /p:TreatWarningsAsErrors=True
+          feedsToUse: config
+          nugetConfigPath: Nuget.config
       - task: DotNetCoreCLI@2
         displayName: Dotnet Test
         inputs:
