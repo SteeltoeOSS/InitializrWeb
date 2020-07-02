@@ -71,6 +71,22 @@
                 </Select>
             </FieldBody>
         </Field>
+        <Field Horizontal="true">
+            <FieldLabel ColumnSize="ColumnSize.Is3">Dependencies</FieldLabel>
+            <FieldBody ColumnSize="ColumnSize.Is9">
+                <Select TValue="string" id="dependencies">
+                    @foreach (var dependencyGroup in Configuration.Dependencies.Values)
+                    {
+                        @foreach (var dependency in dependencyGroup.Values)
+                        {
+                            <SelectItem TValue="string" value="@dependency.Id">@dependency.Name</SelectItem>
+                        }
+                    }
+                    <SelectItem TValue="string" id></SelectItem>
+
+                </Select>
+            </FieldBody>
+        </Field>
         <Button Color="Color.Primary">Generate Project</Button>
     </EditForm>
 }
