@@ -6,7 +6,7 @@
 
     <!--
     <ItemGroup>
-        <ProjectReference Include="..\..\..\Steeltoe.Initializr.WebApi/src/Steeltoe.Initializr.WebApi.Models\Steeltoe.Initializr.WebApi.Models.csproj" />
+        <ProjectReference Include="..\..\..\..\SteeltoeOSS\InitializrApi\src\InitializrApi.Models\Steeltoe.InitializrApi.Models.csproj" />
     </ItemGroup>
     -->
 
@@ -15,16 +15,13 @@
         <PackageReference Include="Blazorise.Bootstrap" Version="0.9.1.1" />
         <PackageReference Include="Blazorise.Icons.FontAwesome" Version="0.9.1.1" />
         <PackageReference Include="Microsoft.AspNetCore.Blazor.HttpClient" Version="3.2.0-preview3.20168.3" />
+        <PackageReference Include="Steeltoe.InitializrApi.Models" Version="0.7.0-3" />
     </ItemGroup>
 
     <ItemGroup>
       <Content Update="Pages\ProjectSpecificationPage.razor">
         <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
       </Content>
-    </ItemGroup>
-
-    <ItemGroup>
-      <Folder Include="Temp" />
     </ItemGroup>
 
 </Project>
