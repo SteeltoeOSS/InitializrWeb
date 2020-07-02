@@ -11,9 +11,9 @@
     -->
 
     <ItemGroup>
-        <PackageReference Include="Blazorise" Version="0.9.1" />
-        <PackageReference Include="Blazorise.Bootstrap" Version="0.9.1" />
-        <PackageReference Include="Blazorise.Icons.FontAwesome" Version="0.9.1" />
+        <PackageReference Include="Blazorise" Version="0.9.1.1" />
+        <PackageReference Include="Blazorise.Bootstrap" Version="0.9.1.1" />
+        <PackageReference Include="Blazorise.Icons.FontAwesome" Version="0.9.1.1" />
         <PackageReference Include="Microsoft.AspNetCore.Blazor.HttpClient" Version="3.2.0-preview3.20168.3" />
     </ItemGroup>
 
