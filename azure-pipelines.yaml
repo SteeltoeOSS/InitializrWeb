@@ -31,13 +31,12 @@ jobs:
         displayName: Dotnet Restore
         inputs:
           command: restore
+          arguments: --configfile NuGet.Config
       - task: DotNetCoreCLI@2
         displayName: Dotnet Build
         inputs:
           command: build
           arguments: --no-restore /p:TreatWarningsAsErrors=True
-          feedsToUse: config
-          nugetConfigPath: Nuget.config
       - task: DotNetCoreCLI@2
         displayName: Dotnet Test
         inputs:
