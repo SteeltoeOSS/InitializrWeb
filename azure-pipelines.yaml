@@ -31,7 +31,8 @@ jobs:
         displayName: Dotnet Restore
         inputs:
           command: restore
-          arguments: --configfile NuGet.Config
+          feedsToUse: config
+          nugetConfigPath: NuGet.Config
       - task: DotNetCoreCLI@2
         displayName: Dotnet Build
         inputs:
