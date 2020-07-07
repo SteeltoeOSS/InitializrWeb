@@ -1,7 +1,7 @@
 using System.Threading.Tasks;
 using Steeltoe.Initializr.WebApi.Models;
 
-namespace Steeltoe.Initializr.Starter.Services
+namespace Steeltoe.InitializrWeb.Services
 {
     public interface IConfigurationService
     {

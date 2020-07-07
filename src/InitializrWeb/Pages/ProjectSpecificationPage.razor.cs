@@ -2,10 +2,10 @@ using System;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
-using Steeltoe.Initializr.Starter.Services;
+using Steeltoe.InitializrWeb.Services;
 using Steeltoe.Initializr.WebApi.Models;
 
-namespace Steeltoe.Initializr.Starter.Pages
+namespace Steeltoe.InitializrWeb.Pages
 {
     public partial class ProjectSpecificationPage
     {

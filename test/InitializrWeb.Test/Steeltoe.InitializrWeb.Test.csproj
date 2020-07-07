@@ -17,7 +17,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\src\Steeltoe.Initializr.Starter\Steeltoe.Initializr.Starter.csproj" />
+      <ProjectReference Include="..\..\src\InitializrWeb\Steeltoe.InitializrWeb.csproj" />
     </ItemGroup>
 
 </Project>

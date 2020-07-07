@@ -1,8 +1,8 @@
-﻿
+
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Steeltoe.Initializr.Starter", "src\Steeltoe.Initializr.Starter\Steeltoe.Initializr.Starter.csproj", "{8D62DAA0-BAC2-4856-A107-46E9A82F5959}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Steeltoe.InitializrWeb", "src\InitializrWeb\Steeltoe.InitializrWeb.csproj", "{8D62DAA0-BAC2-4856-A107-46E9A82F5959}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Steeltoe.Initializr.Starter.Test", "test\Steeltoe.Initializr.Starter.Test\Steeltoe.Initializr.Starter.Test.csproj", "{8DA22AC4-3BA7-4A21-B542-9D446685C765}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Steeltoe.InitializrWeb.Test", "test\InitializrWeb.Test\Steeltoe.InitializrWeb.Test.csproj", "{8DA22AC4-3BA7-4A21-B542-9D446685C765}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

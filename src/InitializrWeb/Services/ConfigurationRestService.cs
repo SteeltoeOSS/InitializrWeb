@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
 using Steeltoe.Initializr.WebApi.Models;
 
-namespace Steeltoe.Initializr.Starter.Services
+namespace Steeltoe.InitializrWeb.Services
 {
     public class ConfigurationRestService : IConfigurationService
     {

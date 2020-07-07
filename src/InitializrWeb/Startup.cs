@@ -7,9 +7,9 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Steeltoe.Initializr.Starter.Services;
+using Steeltoe.InitializrWeb.Services;
 
-namespace Steeltoe.Initializr.Starter
+namespace Steeltoe.InitializrWeb
 {
     public class Startup
     {

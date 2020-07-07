@@ -4,12 +4,12 @@ using System.Threading.Tasks;
 using Bunit;
 using Microsoft.Extensions.DependencyInjection;
 using Moq;
-using Steeltoe.Initializr.Starter.Pages;
-using Steeltoe.Initializr.Starter.Services;
+using Steeltoe.InitializrWeb.Pages;
+using Steeltoe.InitializrWeb.Services;
 using Steeltoe.Initializr.WebApi.Models;
 using Xunit;
 
-namespace Steeltoe.Initializr.Starter.Test
+namespace Steeltoe.InitializrWeb.Test
 {
     public class ProjectSpecificationPageTest : TestContext
     {

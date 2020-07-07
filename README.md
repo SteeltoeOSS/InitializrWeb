@@ -1,2 +1,3 @@
-# Steeltoe.Initializr.Starter
+# Steeltoe.InitializrWeb
+
 Steeltoe Initializr UI reference implementation

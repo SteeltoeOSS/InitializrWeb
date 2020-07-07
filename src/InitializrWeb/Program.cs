@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 
-namespace Steeltoe.Initializr.Starter
+namespace Steeltoe.InitializrWeb
 {
     public class Program
     {
