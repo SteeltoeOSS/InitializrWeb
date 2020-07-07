@@ -1,5 +1,5 @@
 using System.Threading.Tasks;
-using Steeltoe.Initializr.WebApi.Models;
+using Steeltoe.InitializrApi.Models;
 
 namespace Steeltoe.InitializrWeb.Services
 {

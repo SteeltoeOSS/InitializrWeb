@@ -4,9 +4,9 @@ using System.Threading.Tasks;
 using Bunit;
 using Microsoft.Extensions.DependencyInjection;
 using Moq;
+using Steeltoe.InitializrApi.Models;
 using Steeltoe.InitializrWeb.Pages;
 using Steeltoe.InitializrWeb.Services;
-using Steeltoe.Initializr.WebApi.Models;
 using Xunit;
 
 namespace Steeltoe.InitializrWeb.Test

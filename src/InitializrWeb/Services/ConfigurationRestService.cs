@@ -1,7 +1,7 @@
 using System.Net.Http;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
-using Steeltoe.Initializr.WebApi.Models;
+using Steeltoe.InitializrApi.Models;
 
 namespace Steeltoe.InitializrWeb.Services
 {

@@ -2,8 +2,8 @@ using System;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
+using Steeltoe.InitializrApi.Models;
 using Steeltoe.InitializrWeb.Services;
-using Steeltoe.Initializr.WebApi.Models;
 
 namespace Steeltoe.InitializrWeb.Pages
 {
