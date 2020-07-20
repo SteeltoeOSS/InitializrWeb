@@ -43,3 +43,14 @@ jobs:
         inputs:
           command: test
           arguments: --no-build /p:CollectCoverage=true /p:CoverletOutputFormat="opencover"
+      - task: CloudFoundry@1
+        displayName: Deploy Staging
+        inputs:
+          cfEndpoint: PCFone
+          skipSSLValidation: true
+          org: group-steeltoe
+          space: staging
+          deploymentOptions: manifest
+          cfManifest: deploy/cloud-foundry/manifest-Staging.yaml
+        condition:
+          and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'), not(eq(variables['build.reason'], 'PullRequest')))
