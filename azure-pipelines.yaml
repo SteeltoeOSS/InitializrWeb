@@ -23,23 +23,23 @@ jobs:
       vmImage: windows-latest
     steps:
       - task: UseDotNet@2
-        displayName: Dotnet Prep
+        displayName: Prep Dotnet 3
         inputs:
           packageType: sdk
           version: $(DotNet3Version)
       - task: DotNetCoreCLI@2
-        displayName: Dotnet Restore
+        displayName: Restore
         inputs:
           command: restore
           feedsToUse: config
           nugetConfigPath: NuGet.Config
       - task: DotNetCoreCLI@2
-        displayName: Dotnet Build
+        displayName: Build
         inputs:
           command: build
           arguments: --no-restore /p:TreatWarningsAsErrors=True
       - task: DotNetCoreCLI@2
-        displayName: Dotnet Test
+        displayName: Test
         inputs:
           command: test
           arguments: --no-build /p:CollectCoverage=true /p:CoverletOutputFormat="opencover"
