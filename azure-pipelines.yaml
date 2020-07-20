@@ -18,9 +18,9 @@ variables:
 name: $(major).$(minor).$(micro)-$(Rev:r)
 
 jobs:
-  - job: BuildArtifacts
+  - job: Build
     pool:
-      vmImage: Windows-2019
+      vmImage: windows-latest
     steps:
       - task: UseDotNet@2
         displayName: Dotnet Prep
