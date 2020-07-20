@@ -15,12 +15,20 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "Steeltoe.InitializrWeb": {
+    "Development": {
       "commandName": "Project",
       "launchBrowser": false,
       "applicationUrl": "https://localhost:8443;http://localhost:8080",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
+      }
+    },
+    "Staging": {
+      "commandName": "Project",
+      "launchBrowser": false,
+      "applicationUrl": "https://localhost:8443;http://localhost:8080",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Staging"
       }
     }
   }

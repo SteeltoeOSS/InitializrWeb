@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using Steeltoe.InitializrWeb.Services;
 
 namespace Steeltoe.InitializrWeb
@@ -18,25 +19,41 @@ namespace Steeltoe.InitializrWeb
             Configuration = configuration;
         }
 
-        public IConfiguration Configuration { get; }
+        public IConfiguration Configuration
+        {
+            get;
+        }
+
+        private InitializrApiOptions _apiOptions;
 
         // This method gets called by the runtime. Use this method to add services to the container.
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddBlazorise(options => { options.ChangeTextOnKeyPress = true; })
-                .AddBootstrapProviders()
+            services.Configure<InitializrApiOptions>(Configuration.GetSection(InitializrApiOptions.InitializrApi));
+            services.AddBlazorise(options =>
+                    {
+                    options.ChangeTextOnKeyPress = true;
+                    })
+            .AddBootstrapProviders()
                 .AddFontAwesomeIcons();
             services.AddRazorPages();
             services.AddServerSideBlazor();
-            var restUrl = new Uri("http://localhost:5000/api/");
-            services.AddHttpClient<IConfigurationService, ConfigurationRestService>(client =>
-                client.BaseAddress = restUrl);
+            _apiOptions = Configuration.GetSection(InitializrApiOptions.InitializrApi).Get<InitializrApiOptions>();
+            var apiUri = _apiOptions.Uri;
+            if (!apiUri.EndsWith('/'))
+            {
+                apiUri += '/';
+            }
+            apiUri += "api/";
+            services.AddHttpClient<IConfigurationService,
+                ConfigurationRestService>(client => client.BaseAddress = new Uri(apiUri));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILogger<Startup> logger)
         {
+            logger.LogInformation(_apiOptions.ToString());
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
