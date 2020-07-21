@@ -5,9 +5,6 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Blazorise" Version="0.9.1.1" />
-        <PackageReference Include="Blazorise.Bootstrap" Version="0.9.1.1" />
-        <PackageReference Include="Blazorise.Icons.FontAwesome" Version="0.9.1.1" />
         <PackageReference Include="Microsoft.AspNetCore.Blazor.HttpClient" Version="3.2.0-preview3.20168.3" />
         <PackageReference Include="Steeltoe.InitializrApi.Models" Version="0.7.0-5" />
     </ItemGroup>

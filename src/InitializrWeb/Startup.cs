@@ -1,7 +1,4 @@
 using System;
-using Blazorise;
-using Blazorise.Bootstrap;
-using Blazorise.Icons.FontAwesome;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -31,12 +28,6 @@ namespace Steeltoe.InitializrWeb
         public void ConfigureServices(IServiceCollection services)
         {
             services.Configure<InitializrApiOptions>(Configuration.GetSection(InitializrApiOptions.InitializrApi));
-            services.AddBlazorise(options =>
-                    {
-                    options.ChangeTextOnKeyPress = true;
-                    })
-            .AddBootstrapProviders()
-                .AddFontAwesomeIcons();
             services.AddRazorPages();
             services.AddServerSideBlazor();
             _apiOptions = Configuration.GetSection(InitializrApiOptions.InitializrApi).Get<InitializrApiOptions>();
@@ -69,10 +60,6 @@ namespace Steeltoe.InitializrWeb
             app.UseStaticFiles();
 
             app.UseRouting();
-
-            app.ApplicationServices
-                .UseBootstrapProviders()
-                .UseFontAwesomeIcons();
 
             app.UseEndpoints(endpoints =>
             {
