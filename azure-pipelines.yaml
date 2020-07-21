@@ -34,17 +34,17 @@ jobs:
           feedsToUse: config
           nugetConfigPath: NuGet.Config
       - task: DotNetCoreCLI@2
-        displayName: Build
+        displayName: Dotnet Build
         inputs:
           command: build
           arguments: --no-restore /p:TreatWarningsAsErrors=True
       - task: DotNetCoreCLI@2
-        displayName: Test
+        displayName: Dotnet Test
         inputs:
           command: test
           arguments: --no-build /p:CollectCoverage=true /p:CoverletOutputFormat="opencover"
       - task: DotNetCoreCLI@2
-        displayName: Publish
+        displayName: Dotnet Publish
         inputs:
           command: publish
           arguments: --no-build
