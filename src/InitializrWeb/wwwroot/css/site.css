@@ -183,9 +183,10 @@ app {
 }
 
 .versions {
+    padding-top: 2rem;
     padding-left: 1rem;
     color: white;
-    font-size: 60%;
+    font-size: 65%;
     font-style: oblique;
 }
 

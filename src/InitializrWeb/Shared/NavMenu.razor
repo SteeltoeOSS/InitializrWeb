@@ -1,26 +1,9 @@
-<div class="top-row pl-4 navbar navbar-dark">
-    <a class="navbar-brand" href="">Steeltoe.Initializr</a>
-    <button class="navbar-toggler" @onclick="ToggleNavMenu">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-</div>
-
-<div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
-    <ul class="nav flex-column">
-        <li class="nav-item px-3">
-            <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
-                <span class="oi oi-home" aria-hidden="true"></span> Home
-            </NavLink>
-        </li>
-    </ul>
-</div>
-
 @if (Configuration != null)
 {
     var about = new Program.About();
     <div class="versions">
-        version: <a href="https://github.com/SteeltoeOSS/InitializrWeb/commit/@about.Commit" target="_blank">@about.Version</a><br/>
-        API version: <a href="https://github.com/SteeltoeOSS/InitializrApi/commit/@Configuration.About.Commit" target="_blank">@Configuration.About.Version</a><br/>
+        Steeltoe Initializr Web <a href="https://github.com/SteeltoeOSS/InitializrWeb/commit/@about.Commit" target="_blank">@about.Version</a><br/>
+        Steeltoe Initializr API <a href="https://github.com/SteeltoeOSS/InitializrApi/commit/@Configuration.About.Commit" target="_blank">@Configuration.About.Version</a><br/>
     </div>
 }
 
