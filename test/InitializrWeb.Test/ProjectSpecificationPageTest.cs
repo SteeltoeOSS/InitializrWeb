@@ -27,6 +27,7 @@ namespace Steeltoe.InitializrWeb.Test
 
             // Assert
             var expectedHtml = @"<h1>Steeltoe Initializr</h1>
+                                 <hr/>
                                  <div class=""error"">
                                      Cannot connect to Web API: Something weird is going on
                                  </div>";
@@ -47,6 +48,7 @@ namespace Steeltoe.InitializrWeb.Test
 
             // Assert
             var expectedHtml = @"<h1>Steeltoe Initializr</h1>
+                                 <hr/>
                                  <div class=""spinner""></div>";
             page.MarkupMatches(expectedHtml);
         }
