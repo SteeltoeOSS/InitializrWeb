@@ -48,6 +48,7 @@ jobs:
         inputs:
           command: publish
           arguments: --no-build
+          zipAfterPublish: false
       - task: CloudFoundry@1
         displayName: Deploy Staging
         inputs:
