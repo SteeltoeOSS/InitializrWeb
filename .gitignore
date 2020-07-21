@@ -2,6 +2,9 @@
 bin/
 obj/
 
+# User-specific state
+*.sln.DotSettings.user
+
 # Visual Studio Code
 .vscode/
 
