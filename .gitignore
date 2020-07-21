@@ -3,10 +3,10 @@ bin/
 obj/
 
 # User-specific state
-*.sln.DotSettings.user
+/*.sln.DotSettings.user
 
 # Visual Studio Code
-.vscode/
+/.vscode/
 
 # JetBrains
 /.idea/
