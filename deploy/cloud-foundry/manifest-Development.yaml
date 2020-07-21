@@ -1,11 +1,11 @@
 ---
 applications:
-- name: steeltoe-initializr-web
+- name: initializr
   path: ../../src/InitializrWeb/bin/Debug/netcoreapp3.1/publish
   buildpacks:
    - dotnet_core_buildpack
   memory: 1024M
   env:
-    ASPNETCORE_ENVIRONMENT: Staging
+    ASPNETCORE_ENVIRONMENT: Development
     DOTNET_CLI_TELEMETRY_OPTOUT: 1
     DOTNET_SKIP_FIRST_TIME_EXPERIENCE: true
