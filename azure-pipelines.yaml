@@ -28,16 +28,10 @@ jobs:
           packageType: sdk
           version: $(DotNet3Version)
       - task: DotNetCoreCLI@2
-        displayName: Restore
-        inputs:
-          command: restore
-          feedsToUse: config
-          nugetConfigPath: NuGet.Config
-      - task: DotNetCoreCLI@2
         displayName: Dotnet Build
         inputs:
           command: build
-          arguments: --no-restore /p:TreatWarningsAsErrors=True
+          arguments: /p:TreatWarningsAsErrors=True
       - task: DotNetCoreCLI@2
         displayName: Dotnet Test
         inputs:
