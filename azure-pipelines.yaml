@@ -43,6 +43,11 @@ jobs:
         inputs:
           command: test
           arguments: --no-build /p:CollectCoverage=true /p:CoverletOutputFormat="opencover"
+      - task: DotNetCoreCLI@2
+        displayName: Publish
+        inputs:
+          command: publish
+          arguments: --no-build
       - task: CloudFoundry@1
         displayName: Deploy Staging
         inputs:
