@@ -182,6 +182,13 @@ app {
     }
 }
 
+.versions {
+    padding-left: 1rem;
+    color: white;
+    font-size: 60%;
+    font-style: oblique;
+}
+
 .spinner {
     border: 16px solid silver;
     border-top: 16px solid #337AB7;

@@ -15,6 +15,15 @@
     </ul>
 </div>
 
+@if (Configuration != null)
+{
+    var about = new Program.About();
+    <div class="versions">
+        version: <a href="https://github.com/SteeltoeOSS/InitializrWeb/commit/@about.Commit">@about.Version</a><br/>
+        API version: <a href="https://github.com/SteeltoeOSS/InitializrApi/commit/@Configuration.About.Commit" target="_blank">@Configuration.About.Version</a><br/>
+    </div>
+}
+
 @code {
     private bool collapseNavMenu = true;
 
