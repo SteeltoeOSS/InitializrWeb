@@ -1,4 +1,4 @@
-﻿<div class="top-row pl-4 navbar navbar-dark">
+<div class="top-row pl-4 navbar navbar-dark">
     <a class="navbar-brand" href="">Steeltoe.Initializr</a>
     <button class="navbar-toggler" @onclick="ToggleNavMenu">
         <span class="navbar-toggler-icon"></span>
@@ -19,7 +19,7 @@
 {
     var about = new Program.About();
     <div class="versions">
-        version: <a href="https://github.com/SteeltoeOSS/InitializrWeb/commit/@about.Commit">@about.Version</a><br/>
+        version: <a href="https://github.com/SteeltoeOSS/InitializrWeb/commit/@about.Commit" target="_blank">@about.Version</a><br/>
         API version: <a href="https://github.com/SteeltoeOSS/InitializrApi/commit/@Configuration.About.Commit" target="_blank">@Configuration.About.Version</a><br/>
     </div>
 }
