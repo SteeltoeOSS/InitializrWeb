@@ -1,6 +1,5 @@
 trigger:
   - dev
-  - master
 
 variables:
   - name: major
@@ -45,24 +44,12 @@ jobs:
           arguments: --no-build
           zipAfterPublish: false
       - task: CloudFoundry@1
-        displayName: Deploy Development
+        displayName: Deploy
         inputs:
           cfEndpoint: PCFone
-          skipSSLValidation: true
           org: group-steeltoe
-          space: initializr
+          space: initializr-dev
           deploymentOptions: manifest
-          cfManifest: deploy/cloud-foundry/manifest-Development.yaml
+          cfManifest: deploy/cloud-foundry/manifest.yaml
         condition:
           and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/dev'), not(eq(variables['build.reason'], 'PullRequest')))
-      - task: CloudFoundry@1
-        displayName: Deploy Staging
-        inputs:
-          cfEndpoint: PCFone
-          skipSSLValidation: true
-          org: group-steeltoe
-          space: staging
-          deploymentOptions: manifest
-          cfManifest: deploy/cloud-foundry/manifest-Staging.yaml
-        condition:
-          and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'), not(eq(variables['build.reason'], 'PullRequest')))

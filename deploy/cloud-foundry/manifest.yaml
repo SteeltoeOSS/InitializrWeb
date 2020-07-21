@@ -1,9 +1,11 @@
 ---
 applications:
-- name: initializr
+- name: initializr-web
   path: ../../src/InitializrWeb/bin/Debug/netcoreapp3.1/publish
   buildpacks:
-   - dotnet_core_buildpack
+    - dotnet_core_buildpack
+  routes:
+    - route: initializr-dev.apps.pcfone.io
   memory: 1024M
   env:
     ASPNETCORE_ENVIRONMENT: Development
