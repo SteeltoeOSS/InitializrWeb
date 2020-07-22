@@ -23,22 +23,22 @@ jobs:
       vmImage: windows-latest
     steps:
       - task: UseDotNet@2
-        displayName: Prep Dotnet 3
+        displayName: Prep DotNet 3
         inputs:
           packageType: sdk
           version: $(DotNet3Version)
       - task: DotNetCoreCLI@2
-        displayName: Dotnet Build
+        displayName: DotNet Build
         inputs:
           command: build
           arguments: /p:TreatWarningsAsErrors=True
       - task: DotNetCoreCLI@2
-        displayName: Dotnet Test
+        displayName: DotNet Test
         inputs:
           command: test
           arguments: --no-build /p:CollectCoverage=true /p:CoverletOutputFormat="opencover"
       - task: DotNetCoreCLI@2
-        displayName: Dotnet Publish
+        displayName: DotNet Publish
         inputs:
           command: publish
           arguments: --no-build
