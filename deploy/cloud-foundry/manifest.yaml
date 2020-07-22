@@ -5,7 +5,7 @@ applications:
   buildpacks:
     - dotnet_core_buildpack
   routes:
-    - route: initializr-dev.apps.pcfone.io
+    - route: initializr.apps.pcfone.io
   memory: 1024M
   env:
     ASPNETCORE_ENVIRONMENT: Development

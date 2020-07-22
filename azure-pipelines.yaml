@@ -48,7 +48,7 @@ jobs:
         inputs:
           cfEndpoint: PCFone
           org: group-steeltoe
-          space: initializr-dev
+          space: initializr
           deploymentOptions: manifest
           cfManifest: deploy/cloud-foundry/manifest.yaml
         condition:
