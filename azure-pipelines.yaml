@@ -43,13 +43,3 @@ jobs:
           command: publish
           arguments: --no-build
           zipAfterPublish: false
-      - task: CloudFoundry@1
-        displayName: Deploy
-        inputs:
-          cfEndpoint: PCFone
-          org: group-steeltoe
-          space: initializr
-          deploymentOptions: manifest
-          cfManifest: deploy/cloud-foundry/manifest.yaml
-        condition:
-          and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/dev'), not(eq(variables['build.reason'], 'PullRequest')))
