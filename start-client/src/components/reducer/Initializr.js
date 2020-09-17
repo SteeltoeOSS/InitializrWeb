@@ -52,13 +52,6 @@ export function reducer(state, action) {
         const {boot, ...err} = errors
         errors = err
       }
-      if (get(changes, 'meta.group') !== undefined) {
-        set(
-          meta,
-          'namespace',
-          `${get(meta, 'group')}.${get(meta, 'project')}`
-        )
-      }
       if (get(changes, 'meta.project') !== undefined) {
         set(meta, 'application', `${get(meta, 'project')}Application`)
         set(meta, 'namespace', `${get(meta, 'project')}Namespace`)

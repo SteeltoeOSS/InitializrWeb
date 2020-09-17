@@ -116,14 +116,6 @@ const Fields = ({
                 }}
               />
               <FieldInput
-                id='input-group'
-                value={get(values, 'meta.group')}
-                text='Group'
-                onChange={event => {
-                  update({meta: {group: event.target.value}})
-                }}
-              />
-              <FieldInput
                 id='input-description'
                 value={get(values, 'meta.description')}
                 text='Description'

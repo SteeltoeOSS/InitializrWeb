@@ -289,10 +289,6 @@
       }
     ]
   },
-  "groupId": {
-    "type": "text",
-    "default": "com.example"
-  },
   "project": {
     "type": "text",
     "default": "DemoProject"
