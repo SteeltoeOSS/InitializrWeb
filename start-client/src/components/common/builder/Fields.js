@@ -40,20 +40,6 @@ function Fields({
         <div className='left'>
           <Warnings/>
           <div className='col-sticky'>
-            <div className='colset'>
-              <div className='right'>
-                <Control text='Language'>
-                  <Radio
-                    name='language'
-                    selected={get(values, 'language')}
-                    options={get(config, 'lists.language')}
-                    onChange={value => {
-                      update({language: value})
-                    }}
-                  />
-                </Control>
-              </div>
-            </div>
 
             <Control text='Steeltoe'>
               <Radio
@@ -105,6 +91,17 @@ function Fields({
                   Please select a valid version.
                 </FieldError>
               )}
+            </Control>
+
+            <Control text='Language'>
+              <Radio
+                name='language'
+                selected={get(values, 'language')}
+                options={get(config, 'lists.language')}
+                onChange={value => {
+                  update({language: value})
+                }}
+              />
             </Control>
 
             <Control text='Project Metadata'>
