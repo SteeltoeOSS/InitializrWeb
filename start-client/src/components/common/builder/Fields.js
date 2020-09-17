@@ -41,18 +41,6 @@ function Fields({
           <Warnings/>
           <div className='col-sticky'>
             <div className='colset'>
-              <div className='left'>
-                <Control text='Project'>
-                  <Radio
-                    name='project'
-                    selected={get(values, 'project')}
-                    options={get(config, 'lists.project')}
-                    onChange={value => {
-                      update({project: value})
-                    }}
-                  />
-                </Control>
-              </div>
               <div className='right'>
                 <Control text='Language'>
                   <Radio

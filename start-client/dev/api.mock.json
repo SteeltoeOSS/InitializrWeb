@@ -1,19 +1,7 @@
 {
   "_links": {
-    "maven-project": {
-      "href": "https://start.spring.io/starter.zip?type=maven-project{&dependencies,javaVersion,language,bootVersion,groupId,project,name,description,namespace}",
-      "templated": true
-    },
-    "maven-build": {
-      "href": "https://start.spring.io/pom.xml?type=maven-build{&dependencies,javaVersion,language,bootVersion,groupId,project,name,description,namespace}",
-      "templated": true
-    },
-    "gradle-project": {
-      "href": "https://start.spring.io/starter.zip?type=gradle-project{&dependencies,javaVersion,language,bootVersion,groupId,project,name,description,namespace}",
-      "templated": true
-    },
-    "gradle-build": {
-      "href": "https://start.spring.io/build.gradle?type=gradle-build{&dependencies,javaVersion,language,bootVersion,groupId,project,name,description,namespace}",
+    "project": {
+      "href": "https://start.spring.io/starter.zip?{&dependencies,javaVersion,language,bootVersion,groupId,project,name,description,namespace}",
       "templated": true
     },
     "dependencies": {
@@ -168,52 +156,6 @@
             "description": "Target Microsoft Azure Spring Cloud hosting."
           }
         ]
-      }
-    ]
-  },
-  "type": {
-    "type": "action",
-    "default": "maven-project",
-    "values": [
-      {
-        "id": "maven-project",
-        "name": "Maven Project",
-        "description": "Generate a Maven based project archive.",
-        "action": "/starter.zip",
-        "tags": {
-          "build": "maven",
-          "format": "project"
-        }
-      },
-      {
-        "id": "maven-build",
-        "name": "Maven POM",
-        "description": "Generate a Maven pom.xml.",
-        "action": "/pom.xml",
-        "tags": {
-          "build": "maven",
-          "format": "build"
-        }
-      },
-      {
-        "id": "gradle-project",
-        "name": "Gradle Project",
-        "description": "Generate a Gradle based project archive.",
-        "action": "/starter.zip",
-        "tags": {
-          "build": "gradle",
-          "format": "project"
-        }
-      },
-      {
-        "id": "gradle-build",
-        "name": "Gradle Config",
-        "description": "Generate a Gradle build file.",
-        "action": "/build.gradle",
-        "tags": {
-          "build": "gradle",
-          "format": "build"
-        }
       }
     ]
   },
