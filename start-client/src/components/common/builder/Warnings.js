@@ -59,16 +59,6 @@ function Warnings() {
               selected.
             </li>
           )}
-          {get(warnings, 'meta.packaging') && (
-            <li>
-              <strong className='warn'>
-                {get(warnings, 'meta.packaging.value')}
-              </strong>{' '}
-              is not a valid packaging,{' '}
-              <strong>{get(warnings, 'meta.packaging.select')}</strong> has been
-              selected.
-            </li>
-          )}
           {get(warnings, 'dependencies') && (
             <li>
               The following dependencies are not supported:{' '}

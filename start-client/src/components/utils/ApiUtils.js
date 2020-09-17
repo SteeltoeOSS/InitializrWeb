@@ -9,7 +9,6 @@ const PROPERTIES_MAPPING_URL = {
   type: 'project',
   language: 'language',
   platformVersion: 'boot',
-  packaging: 'meta.packaging',
   jvmVersion: 'meta.java',
   project: 'meta.project',
   application: 'meta.application',
@@ -78,7 +77,6 @@ export const parseParams = (values, queryParams, lists) => {
         switch (key) {
           case 'project':
           case 'language':
-          case 'meta.packaging':
           case 'meta.java': {
             const list = get(lists, key, [])
             const res = list.find(a => a.key.toLowerCase() === value)
@@ -220,10 +218,6 @@ export const getLists = json => {
         key: `${java.id}`,
         text: `${java.name}`,
       })),
-      packaging: get(json, 'packaging.values', []).map(packaging => ({
-        key: `${packaging.id}`,
-        text: `${packaging.name}`,
-      })),
     },
     dependencies: deps,
   }
@@ -238,7 +232,6 @@ export const getDefaultValues = json => {
       application: get(json, 'application.default'),
       project: get(json, 'project.default'),
       description: get(json, 'description.default'),
-      packaging: get(json, 'packaging.default'),
       namespace: get(json, 'namespace.default'),
       java: get(json, 'javaVersion.default'),
     },
@@ -273,7 +266,6 @@ export const getProject = function getProject(url, values, config) {
       application: get(values, 'meta.application'),
       description: get(values, 'meta.description'),
       namespace: get(values, 'meta.namespace'),
-      packaging: get(values, 'meta.packaging'),
       javaVersion: get(values, 'meta.java'),
     })
     let paramsDependencies = get(values, 'dependencies', [])
