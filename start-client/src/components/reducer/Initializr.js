@@ -7,7 +7,6 @@ import {getShareUrl, parseParams} from '../utils/ApiUtils'
 
 export const defaultInitializrContext = {
   values: {
-    project: '',
     language: '',
     boot: '',
     meta: {

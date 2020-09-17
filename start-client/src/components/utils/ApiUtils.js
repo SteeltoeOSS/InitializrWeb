@@ -6,7 +6,6 @@ import Extend from '../../Extend.json'
 import {isInRange, parseReleases, parseVersion} from './Version'
 
 const PROPERTIES_MAPPING_URL = {
-  type: 'project',
   language: 'language',
   platformVersion: 'boot',
   jvmVersion: 'meta.java',
@@ -225,7 +224,6 @@ export const getLists = json => {
 
 export const getDefaultValues = json => {
   return {
-    project: get(json, 'type.default'),
     language: get(json, 'language.default'),
     boot: get(json, 'bootVersion.default'),
     meta: {
@@ -258,7 +256,6 @@ export const isValidDependency = function isValidDependency(boot, dependency) {
 export const getProject = function getProject(url, values, config) {
   return new Promise((resolve, reject) => {
     const params = querystring.stringify({
-      type: get(values, 'project'),
       language: get(values, 'language'),
       bootVersion: get(values, 'boot'),
       baseDir: get(values, 'meta.project'),
