@@ -8,7 +8,6 @@ import {isInRange, parseReleases, parseVersion} from './Version'
 const PROPERTIES_MAPPING_URL = {
   language: 'language',
   steeltoeVersion: 'steeltoe',
-  jvmVersion: 'meta.java',
   project: 'meta.project',
   application: 'meta.application',
   description: 'meta.description',
@@ -76,22 +75,6 @@ export const parseParams = (values, queryParams, lists) => {
         switch (key) {
           case 'project':
           case 'language':
-          case 'meta.java': {
-            const list = get(lists, key, [])
-            const res = list.find(a => a.key.toLowerCase() === value)
-            if (res) {
-              set(values, key, res.key)
-            } else {
-              const currentValue = list.find(
-                a => a.key.toLowerCase() === get(values, key)
-              )
-              set(warnings, key, {
-                value: get(queryParams, entry, ''),
-                select: currentValue.text,
-              })
-            }
-            break
-          }
           case 'steeltoe': {
             const list = get(lists, key, [])
             const res = list.find(a => a.key.toLowerCase() === value)
@@ -212,12 +195,8 @@ export const getLists = json => {
       key: `${steeltoe.id}`,
       text: `${steeltoe.name}`,
     })),
-    meta: {
-      java: get(json, 'javaVersion.values', []).map(java => ({
-        key: `${java.id}`,
-        text: `${java.name}`,
-      })),
-    },
+    // meta: {
+    // },
     dependencies: deps,
   }
 }
@@ -231,7 +210,6 @@ export const getDefaultValues = json => {
       project: get(json, 'project.default'),
       description: get(json, 'description.default'),
       namespace: get(json, 'namespace.default'),
-      java: get(json, 'javaVersion.default'),
     },
     dependencies: [],
   }
@@ -263,7 +241,6 @@ export const getProject = function getProject(url, values, config) {
       application: get(values, 'meta.application'),
       description: get(values, 'meta.description'),
       namespace: get(values, 'meta.namespace'),
-      javaVersion: get(values, 'meta.java'),
     })
     let paramsDependencies = get(values, 'dependencies', [])
       .map(dependency => {

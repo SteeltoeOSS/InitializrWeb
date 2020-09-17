@@ -1,7 +1,7 @@
 {
   "_links": {
     "project": {
-      "href": "https://start.spring.io/starter.zip?{&dependencies,javaVersion,language,steeltoeVersion,groupId,project,name,description,namespace}",
+      "href": "https://start.spring.io/starter.zip?{&dependencies,language,steeltoeVersion,groupId,project,name,description,namespace}",
       "templated": true
     },
     "dependencies": {
@@ -156,24 +156,6 @@
             "description": "Target Microsoft Azure Spring Cloud hosting."
           }
         ]
-      }
-    ]
-  },
-  "javaVersion": {
-    "type": "single-select",
-    "default": "1.8",
-    "values": [
-      {
-        "id": "13",
-        "name": "13"
-      },
-      {
-        "id": "11",
-        "name": "11"
-      },
-      {
-        "id": "1.8",
-        "name": "8"
       }
     ]
   },

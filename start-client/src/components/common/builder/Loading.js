@@ -50,17 +50,6 @@ export default function Loading() {
                 <span className='placeholder-label'>Description</span>
                 <Placeholder type='input' />
               </div>
-              <div
-                className='control control-inline control-placeholder'
-                style={{ height: 30 }}
-              >
-                <span className='placeholder-label' style={{ marginRight: 20 }}>
-                  Java
-                </span>
-                <Placeholder type='radio' width='12px' />
-                <Placeholder type='radio' width='12px' />
-                <Placeholder type='radio' width='12px' />
-              </div>
             </div>
           </Control>
         </div>

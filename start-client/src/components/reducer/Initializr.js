@@ -15,7 +15,6 @@ export const defaultInitializrContext = {
       group: '',
       description: '',
       namespace: '',
-      java: '',
     },
     dependencies: [],
   },
