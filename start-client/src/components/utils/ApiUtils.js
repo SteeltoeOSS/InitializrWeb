@@ -3,7 +3,7 @@ import querystring from 'querystring'
 import set from 'lodash.set'
 
 import Extend from '../../Extend.json'
-import { isInRange, parseReleases, parseVersion } from './Version'
+import {isInRange, parseReleases, parseVersion} from './Version'
 
 const PROPERTIES_MAPPING_URL = {
   type: 'project',
