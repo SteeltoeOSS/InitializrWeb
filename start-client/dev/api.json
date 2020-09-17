@@ -179,19 +179,11 @@
   },
   "language": {
     "type": "single-select",
-    "default": "java",
+    "default": "csharp",
     "values": [
       {
-        "id": "java",
-        "name": "Java"
-      },
-      {
-        "id": "kotlin",
-        "name": "Kotlin"
-      },
-      {
-        "id": "groovy",
-        "name": "Groovy"
+        "id": "csharp",
+        "name": "C#"
       }
     ]
   },
