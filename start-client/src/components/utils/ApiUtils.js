@@ -15,7 +15,7 @@ const PROPERTIES_MAPPING_URL = {
   project: 'meta.project',
   application: 'meta.application',
   description: 'meta.description',
-  packageName: 'meta.packageName',
+  namespace: 'meta.namespace',
   dependencies: 'dependencies',
 }
 
@@ -241,7 +241,7 @@ export const getDefaultValues = json => {
       project: get(json, 'project.default'),
       description: get(json, 'description.default'),
       packaging: get(json, 'packaging.default'),
-      packageName: get(json, 'packageName.default'),
+      namespace: get(json, 'namespace.default'),
       java: get(json, 'javaVersion.default'),
     },
     dependencies: [],
@@ -275,7 +275,7 @@ export const getProject = function getProject(url, values, config) {
       project: get(values, 'meta.project'),
       application: get(values, 'meta.application'),
       description: get(values, 'meta.description'),
-      packageName: get(values, 'meta.packageName'),
+      namespace: get(values, 'meta.namespace'),
       packaging: get(values, 'meta.packaging'),
       javaVersion: get(values, 'meta.java'),
     })

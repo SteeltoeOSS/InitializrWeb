@@ -110,6 +110,14 @@ function Fields({
                 }}
               />
               <FieldInput
+                id='input-namespace'
+                value={get(values, 'meta.namespace')}
+                text='Namespace'
+                onChange={event => {
+                  update({meta: {namespace: event.target.value}})
+                }}
+              />
+              <FieldInput
                 id='input-group'
                 value={get(values, 'meta.group')}
                 text='Group'
@@ -123,14 +131,6 @@ function Fields({
                 text='Description'
                 onChange={event => {
                   update({meta: {description: event.target.value}})
-                }}
-              />
-              <FieldInput
-                id='input-packageName'
-                value={get(values, 'meta.packageName')}
-                text='Package name'
-                onChange={event => {
-                  update({meta: {packageName: event.target.value}})
                 }}
               />
               <FieldRadio

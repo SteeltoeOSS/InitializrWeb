@@ -16,7 +16,7 @@ export const defaultInitializrContext = {
       group: '',
       description: '',
       packaging: '',
-      packageName: '',
+      namespace: '',
       java: '',
     },
     dependencies: [],
@@ -55,17 +55,13 @@ export function reducer(state, action) {
       if (get(changes, 'meta.group') !== undefined) {
         set(
           meta,
-          'packageName',
+          'namespace',
           `${get(meta, 'group')}.${get(meta, 'project')}`
         )
       }
       if (get(changes, 'meta.project') !== undefined) {
-        set(
-          meta,
-          'packageName',
-          `${get(meta, 'group')}.${get(meta, 'project')}`
-        )
         set(meta, 'application', `${get(meta, 'project')}Application`)
+        set(meta, 'namespace', `${get(meta, 'project')}Namespace`)
       }
       const values = {
         ...get(state, 'values'),
