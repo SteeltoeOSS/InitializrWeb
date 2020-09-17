@@ -124,15 +124,6 @@ const Fields = ({
                 }}
               />
               <FieldRadio
-                id='input-packaging'
-                value={get(values, 'meta.packaging')}
-                text='Packaging'
-                options={get(config, 'lists.meta.packaging')}
-                onChange={value => {
-                  update({meta: {packaging: value}})
-                }}
-              />
-              <FieldRadio
                 id='input-java'
                 value={get(values, 'meta.java')}
                 text='Java'
