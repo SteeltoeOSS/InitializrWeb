@@ -9,6 +9,7 @@ export const defaultInitializrContext = {
   values: {
     language: '',
     steeltoe: '',
+    dotNetFramework: '',
     meta: {
       project: '',
       application: '',
@@ -47,6 +48,10 @@ export function reducer(state, action) {
       }
       if (get(changes, 'steeltoe')) {
         const {steeltoe, ...err} = errors
+        errors = err
+      }
+      if (get(changes, 'dotNetFramework')) {
+        const {dotNetFramework, ...err} = errors
         errors = err
       }
       if (get(changes, 'meta.project') !== undefined) {

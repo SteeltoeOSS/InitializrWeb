@@ -80,6 +80,33 @@ function Fields({
                 </FieldError>
               )}
             </Control>
+
+            <Control text='DotNet Framework'>
+              <Radio
+                name='dotNetFramework'
+                selected={get(values, 'dotNetFramework')}
+                error={get(errors, 'dotNetFramework.value', '')}
+                options={get(config, 'lists.dotNetFramework')}
+                onChange={value => {
+                  dispatchInitializr({
+                    type: 'UPDATE',
+                    payload: {dotNetFramework: value},
+                    config: get(dependencies, 'list'),
+                  })
+                  dispatch({
+                    type: 'UPDATE_DEPENDENCIES',
+                    payload: {dotNetFramework: value},
+                  })
+                }}
+              />
+              {get(errors, 'dotNetFramework') && (
+                <FieldError>
+                  Steeltoe {get(errors, 'dotNetFramework.value')} is not supported.
+                  Please select a valid version.
+                </FieldError>
+              )}
+            </Control>
+
             <Control text='Project Metadata'>
               <FieldInput
                 id='input-project'

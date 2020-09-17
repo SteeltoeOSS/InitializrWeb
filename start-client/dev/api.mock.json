@@ -1,7 +1,7 @@
 {
   "_links": {
     "project": {
-      "href": "https://start.spring.io/starter.zip?{&dependencies,language,steeltoeVersion,groupId,project,name,description,namespace}",
+      "href": "https://start.spring.io/starter.zip?{&dependencies,language,steeltoeVersion,dotNetFramework,project,name,description,namespace}",
       "templated": true
     },
     "dependencies": {
@@ -180,6 +180,20 @@
       {
         "id": "3.0.0",
         "name": "3.0.0"
+      }
+    ]
+  },
+  "dotNetFramework": {
+    "type": "single-select",
+    "default": "netcoreapp3.1",
+    "values": [
+      {
+        "id": "netcoreapp2.1",
+        "name": "netcoreapp2.1"
+      },
+      {
+        "id": "netcoreapp3.1",
+        "name": "netcoreapp3.1"
       }
     ]
   },

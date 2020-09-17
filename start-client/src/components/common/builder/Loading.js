@@ -32,6 +32,14 @@ export default function Loading() {
             <Placeholder type='radio' width='140px' />
             <Placeholder type='radio' width='98px' />
           </Control>
+          <Control text='DotNet Framework'>
+            <Placeholder type='radio' width='100px' />
+            <Placeholder type='radio' width='98px' />
+            <Placeholder type='radio' width='98px' />
+            <Placeholder type='radio' width='120px' />
+            <Placeholder type='radio' width='140px' />
+            <Placeholder type='radio' width='98px' />
+          </Control>
           <Control text='Project Metadata'>
             <div>
               <div className='control control-inline control-placeholder'>

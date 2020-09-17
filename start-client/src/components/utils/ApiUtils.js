@@ -8,6 +8,7 @@ import {isInRange, parseReleases, parseVersion} from './Version'
 const PROPERTIES_MAPPING_URL = {
   language: 'language',
   steeltoeVersion: 'steeltoe',
+  dotNetFramework: 'dotNetFramework',
   project: 'meta.project',
   application: 'meta.application',
   description: 'meta.description',
@@ -75,7 +76,7 @@ export const parseParams = (values, queryParams, lists) => {
         switch (key) {
           case 'project':
           case 'language':
-          case 'steeltoe': {
+          case 'dotNetFramework': {
             const list = get(lists, key, [])
             const res = list.find(a => a.key.toLowerCase() === value)
             let error = false
@@ -195,6 +196,10 @@ export const getLists = json => {
       key: `${steeltoe.id}`,
       text: `${steeltoe.name}`,
     })),
+    dotNetFramework: get(json, 'dotNetFramework.values', []).map(dotNetFramework => ({
+      key: `${dotNetFramework.id}`,
+      text: `${dotNetFramework.name}`,
+    })),
     // meta: {
     // },
     dependencies: deps,
@@ -205,6 +210,7 @@ export const getDefaultValues = json => {
   return {
     language: get(json, 'language.default'),
     steeltoe: get(json, 'steeltoeVersion.default'),
+    dotNetFramework: get(json, 'dotNetFramework.default'),
     meta: {
       application: get(json, 'application.default'),
       project: get(json, 'project.default'),

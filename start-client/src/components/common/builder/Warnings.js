@@ -35,9 +35,17 @@ function Warnings() {
           )}
           {get(warnings, 'steeltoe') && (
             <li>
-              Spring Boot{' '}
+              Steeltoe{' '}
               <strong className='warn'>{get(warnings, 'steeltoe.value')}</strong> is
               not available, <strong>{get(warnings, 'steeltoe.select')}</strong> has
+              been selected.
+            </li>
+          )}
+          {get(warnings, 'dotNetFramework') && (
+            <li>
+              DotNet Framework{' '}
+              <strong className='warn'>{get(warnings, 'dotNetFramework.value')}</strong> is
+              not available, <strong>{get(warnings, 'dotNetFramework.select')}</strong> has
               been selected.
             </li>
           )}
