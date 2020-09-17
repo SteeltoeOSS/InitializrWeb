@@ -53,27 +53,27 @@ const Fields = ({
               </div>
             </div>
 
-            <Control text='Spring Boot'>
+            <Control text='Steeltoe'>
               <Radio
-                name='boot'
-                selected={get(values, 'boot')}
-                error={get(errors, 'boot.value', '')}
-                options={get(config, 'lists.boot')}
+                name='steeltoe'
+                selected={get(values, 'steeltoe')}
+                error={get(errors, 'steeltoe.value', '')}
+                options={get(config, 'lists.steeltoe')}
                 onChange={value => {
                   dispatchInitializr({
                     type: 'UPDATE',
-                    payload: {boot: value},
+                    payload: {steeltoe: value},
                     config: get(dependencies, 'list'),
                   })
                   dispatch({
                     type: 'UPDATE_DEPENDENCIES',
-                    payload: {boot: value},
+                    payload: {steeltoe: value},
                   })
                 }}
               />
-              {get(errors, 'boot') && (
+              {get(errors, 'steeltoe') && (
                 <FieldError>
-                  Spring Boot {get(errors, 'boot.value')} is not supported.
+                  Steeltoe {get(errors, 'steeltoe.value')} is not supported.
                   Please select a valid version.
                 </FieldError>
               )}

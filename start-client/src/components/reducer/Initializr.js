@@ -8,7 +8,7 @@ import {getShareUrl, parseParams} from '../utils/ApiUtils'
 export const defaultInitializrContext = {
   values: {
     language: '',
-    boot: '',
+    steeltoe: '',
     meta: {
       project: '',
       application: '',
@@ -46,8 +46,8 @@ export function reducer(state, action) {
       if (get(changes, 'meta')) {
         meta = {...meta, ...get(changes, 'meta')}
       }
-      if (get(changes, 'boot')) {
-        const {boot, ...err} = errors
+      if (get(changes, 'steeltoe')) {
+        const {steeltoe, ...err} = errors
         errors = err
       }
       if (get(changes, 'meta.project') !== undefined) {
