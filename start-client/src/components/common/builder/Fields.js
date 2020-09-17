@@ -113,15 +113,6 @@ function Fields({
                   update({meta: {description: event.target.value}})
                 }}
               />
-              <FieldRadio
-                id='input-java'
-                value={get(values, 'meta.java')}
-                text='Java'
-                options={get(config, 'lists.meta.java')}
-                onChange={value => {
-                  update({meta: {java: value}})
-                }}
-              />
             </Control>
           </div>
         </div>

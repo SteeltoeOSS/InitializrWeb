@@ -41,16 +41,6 @@ function Warnings() {
               been selected.
             </li>
           )}
-          {get(warnings, 'meta.java') && (
-            <li>
-              <strong className='warn'>
-                {get(warnings, 'meta.java.value')}
-              </strong>{' '}
-              is not a valid Java version,{' '}
-              <strong>{get(warnings, 'meta.java.select')}</strong> has been
-              selected.
-            </li>
-          )}
           {get(warnings, 'dependencies') && (
             <li>
               The following dependencies are not supported:{' '}
