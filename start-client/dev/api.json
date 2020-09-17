@@ -311,6 +311,6 @@
   },
   "description": {
     "type": "text",
-    "default": "Demo project for Spring Boot"
+    "default": "Demo project for Steeltoe Initializr"
   }
 }
