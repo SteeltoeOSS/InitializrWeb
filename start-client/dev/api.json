@@ -1,7 +1,7 @@
 {
   "_links": {
     "project": {
-      "href": "https://start.spring.io/starter.zip?{&dependencies,language,steeltoeVersion,dotNetFramework,project,name,description,namespace}",
+      "href": "https://start.spring.io/starter.zip?{&dependencies,steeltoeVersion,dotNetFramework,language,project,namespace,application,description}",
       "templated": true
     },
     "dependencies": {
@@ -159,16 +159,6 @@
       }
     ]
   },
-  "language": {
-    "type": "single-select",
-    "default": "csharp",
-    "values": [
-      {
-        "id": "csharp",
-        "name": "C#"
-      }
-    ]
-  },
   "steeltoeVersion": {
     "type": "single-select",
     "default": "3.0.0",
@@ -197,17 +187,27 @@
       }
     ]
   },
+  "language": {
+    "type": "single-select",
+    "default": "csharp",
+    "values": [
+      {
+        "id": "csharp",
+        "name": "C#"
+      }
+    ]
+  },
   "project": {
     "type": "text",
     "default": "DemoProject"
   },
-  "application": {
-    "type": "text",
-    "default": "DemoProjectApplication"
-  },
   "namespace": {
     "type": "text",
     "default": "DemoProjectNamespace"
+  },
+  "application": {
+    "type": "text",
+    "default": "DemoProjectApplication"
   },
   "description": {
     "type": "text",
