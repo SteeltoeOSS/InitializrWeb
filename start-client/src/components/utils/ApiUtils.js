@@ -11,7 +11,6 @@ const PROPERTIES_MAPPING_URL = {
   platformVersion: 'boot',
   packaging: 'meta.packaging',
   jvmVersion: 'meta.java',
-  groupId: 'meta.group',
   project: 'meta.project',
   application: 'meta.application',
   description: 'meta.description',
@@ -237,7 +236,6 @@ export const getDefaultValues = json => {
     boot: get(json, 'bootVersion.default'),
     meta: {
       application: get(json, 'application.default'),
-      group: get(json, 'groupId.default'),
       project: get(json, 'project.default'),
       description: get(json, 'description.default'),
       packaging: get(json, 'packaging.default'),
@@ -271,7 +269,6 @@ export const getProject = function getProject(url, values, config) {
       language: get(values, 'language'),
       bootVersion: get(values, 'boot'),
       baseDir: get(values, 'meta.project'),
-      groupId: get(values, 'meta.group'),
       project: get(values, 'meta.project'),
       application: get(values, 'meta.application'),
       description: get(values, 'meta.description'),

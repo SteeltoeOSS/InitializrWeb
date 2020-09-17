@@ -35,10 +35,6 @@ export default function Loading() {
           <Control text='Project Metadata'>
             <div>
               <div className='control control-inline control-placeholder'>
-                <span className='placeholder-label'>Group</span>
-                <Placeholder type='input' />
-              </div>
-              <div className='control control-inline control-placeholder'>
                 <span className='placeholder-label'>Project</span>
                 <Placeholder type='input' />
               </div>
