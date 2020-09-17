@@ -11,9 +11,9 @@ export const defaultInitializrContext = {
     language: '',
     boot: '',
     meta: {
-      name: '',
-      group: '',
       project: '',
+      application: '',
+      group: '',
       description: '',
       packaging: '',
       packageName: '',
@@ -65,7 +65,7 @@ export function reducer(state, action) {
           'packageName',
           `${get(meta, 'group')}.${get(meta, 'project')}`
         )
-        set(meta, 'name', `${get(meta, 'project')}`)
+        set(meta, 'application', `${get(meta, 'project')}Application`)
       }
       const values = {
         ...get(state, 'values'),

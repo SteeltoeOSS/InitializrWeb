@@ -100,19 +100,19 @@ const Fields = ({
                 }}
               />
               <FieldInput
+                id='input-application'
+                value={get(values, 'meta.application')}
+                text='Application'
+                onChange={event => {
+                  update({meta: {application: event.target.value}})
+                }}
+              />
+              <FieldInput
                 id='input-group'
                 value={get(values, 'meta.group')}
                 text='Group'
                 onChange={event => {
                   update({meta: {group: event.target.value}})
-                }}
-              />
-              <FieldInput
-                id='input-name'
-                value={get(values, 'meta.name')}
-                text='Name'
-                onChange={event => {
-                  update({meta: {name: event.target.value}})
                 }}
               />
               <FieldInput
