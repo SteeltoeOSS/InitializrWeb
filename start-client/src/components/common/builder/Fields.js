@@ -94,19 +94,19 @@ function Fields({
             </Control>
             <Control text='Project Metadata'>
               <FieldInput
+                id='input-project'
+                value={get(values, 'meta.project')}
+                text='Project'
+                onChange={event => {
+                  update({meta: {project: event.target.value}})
+                }}
+              />
+              <FieldInput
                 id='input-group'
                 value={get(values, 'meta.group')}
                 text='Group'
                 onChange={event => {
                   update({meta: {group: event.target.value}})
-                }}
-              />
-              <FieldInput
-                id='input-artifact'
-                value={get(values, 'meta.artifact')}
-                text='Artifact'
-                onChange={event => {
-                  update({meta: {artifact: event.target.value}})
                 }}
               />
               <FieldInput

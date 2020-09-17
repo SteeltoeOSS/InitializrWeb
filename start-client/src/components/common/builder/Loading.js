@@ -39,7 +39,7 @@ export default function Loading() {
                 <Placeholder type='input' />
               </div>
               <div className='control control-inline control-placeholder'>
-                <span className='placeholder-label'>Artifact</span>
+                <span className='placeholder-label'>Project</span>
                 <Placeholder type='input' />
               </div>
               <div className='control control-inline control-placeholder'>
