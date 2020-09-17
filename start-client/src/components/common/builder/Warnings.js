@@ -33,11 +33,11 @@ function Warnings() {
               selected.
             </li>
           )}
-          {get(warnings, 'boot') && (
+          {get(warnings, 'steeltoe') && (
             <li>
               Spring Boot{' '}
-              <strong className='warn'>{get(warnings, 'boot.value')}</strong> is
-              not available, <strong>{get(warnings, 'boot.select')}</strong> has
+              <strong className='warn'>{get(warnings, 'steeltoe.value')}</strong> is
+              not available, <strong>{get(warnings, 'steeltoe.select')}</strong> has
               been selected.
             </li>
           )}

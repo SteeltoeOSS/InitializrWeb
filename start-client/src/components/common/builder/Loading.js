@@ -24,7 +24,7 @@ export default function Loading() {
               </Control>
             </div>
           </div>
-          <Control text='Spring Boot'>
+          <Control text='Steeltoe'>
             <Placeholder type='radio' width='100px' />
             <Placeholder type='radio' width='98px' />
             <Placeholder type='radio' width='98px' />

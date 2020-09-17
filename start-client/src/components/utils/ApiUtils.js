@@ -7,7 +7,7 @@ import {isInRange, parseReleases, parseVersion} from './Version'
 
 const PROPERTIES_MAPPING_URL = {
   language: 'language',
-  platformVersion: 'boot',
+  steeltoeVersion: 'steeltoe',
   jvmVersion: 'meta.java',
   project: 'meta.project',
   application: 'meta.application',
@@ -92,7 +92,7 @@ export const parseParams = (values, queryParams, lists) => {
             }
             break
           }
-          case 'boot': {
+          case 'steeltoe': {
             const list = get(lists, key, [])
             const res = list.find(a => a.key.toLowerCase() === value)
             let error = false
@@ -137,7 +137,7 @@ export const parseParams = (values, queryParams, lists) => {
               }
             }
             if (error) {
-              set(errors, 'boot', {
+              set(errors, 'steeltoe', {
                 value: get(queryParams, entry, ''),
               })
             }
@@ -208,9 +208,9 @@ export const getLists = json => {
       key: `${language.id}`,
       text: `${language.name}`,
     })),
-    boot: get(json, 'bootVersion.values', []).map(boot => ({
-      key: `${boot.id}`,
-      text: `${boot.name}`,
+    steeltoe: get(json, 'steeltoeVersion.values', []).map(steeltoe => ({
+      key: `${steeltoe.id}`,
+      text: `${steeltoe.name}`,
     })),
     meta: {
       java: get(json, 'javaVersion.values', []).map(java => ({
@@ -225,7 +225,7 @@ export const getLists = json => {
 export const getDefaultValues = json => {
   return {
     language: get(json, 'language.default'),
-    boot: get(json, 'bootVersion.default'),
+    steeltoe: get(json, 'steeltoeVersion.default'),
     meta: {
       application: get(json, 'application.default'),
       project: get(json, 'project.default'),
@@ -244,12 +244,12 @@ export const getConfig = json => {
   }
 }
 
-export const isValidDependency = function isValidDependency(boot, dependency) {
+export const isValidDependency = function isValidDependency(steeltoe, dependency) {
   if (!dependency) {
     return false
   }
   return get(dependency, 'versionRange')
-    ? isInRange(boot, get(dependency, 'versionRange'))
+    ? isInRange(steeltoe, get(dependency, 'versionRange'))
     : true
 }
 
@@ -257,7 +257,7 @@ export const getProject = function getProject(url, values, config) {
   return new Promise((resolve, reject) => {
     const params = querystring.stringify({
       language: get(values, 'language'),
-      bootVersion: get(values, 'boot'),
+      steeltoeVersion: get(values, 'steeltoe'),
       baseDir: get(values, 'meta.project'),
       project: get(values, 'meta.project'),
       application: get(values, 'meta.application'),
@@ -268,7 +268,7 @@ export const getProject = function getProject(url, values, config) {
     let paramsDependencies = get(values, 'dependencies', [])
       .map(dependency => {
         const dep = config.find(it => it.id === dependency)
-        return isValidDependency(get(values, 'boot'), dep) ? dependency : null
+        return isValidDependency(get(values, 'steeltoe'), dep) ? dependency : null
       })
       .filter(dep => !!dep)
       .join(',')
