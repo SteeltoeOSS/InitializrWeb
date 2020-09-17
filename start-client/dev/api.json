@@ -1,19 +1,19 @@
 {
   "_links": {
     "maven-project": {
-      "href": "https://start.spring.io/starter.zip?type=maven-project{&dependencies,packaging,javaVersion,language,bootVersion,groupId,project,version,name,description,packageName}",
+      "href": "https://start.spring.io/starter.zip?type=maven-project{&dependencies,packaging,javaVersion,language,bootVersion,groupId,project,version,name,description,namespace}",
       "templated": true
     },
     "maven-build": {
-      "href": "https://start.spring.io/pom.xml?type=maven-build{&dependencies,packaging,javaVersion,language,bootVersion,groupId,project,version,name,description,packageName}",
+      "href": "https://start.spring.io/pom.xml?type=maven-build{&dependencies,packaging,javaVersion,language,bootVersion,groupId,project,version,name,description,namespace}",
       "templated": true
     },
     "gradle-project": {
-      "href": "https://start.spring.io/starter.zip?type=gradle-project{&dependencies,packaging,javaVersion,language,bootVersion,groupId,project,version,name,description,packageName}",
+      "href": "https://start.spring.io/starter.zip?type=gradle-project{&dependencies,packaging,javaVersion,language,bootVersion,groupId,project,version,name,description,namespace}",
       "templated": true
     },
     "gradle-build": {
-      "href": "https://start.spring.io/build.gradle?type=gradle-build{&dependencies,packaging,javaVersion,language,bootVersion,groupId,project,version,name,description,packageName}",
+      "href": "https://start.spring.io/build.gradle?type=gradle-build{&dependencies,packaging,javaVersion,language,bootVersion,groupId,project,version,name,description,namespace}",
       "templated": true
     },
     "dependencies": {
@@ -301,6 +301,10 @@
     "type": "text",
     "default": "DemoProjectApplication"
   },
+  "namespace": {
+    "type": "text",
+    "default": "DemoProjectNamespace"
+  },
   "version": {
     "type": "text",
     "default": "0.0.1-SNAPSHOT"
@@ -308,9 +312,5 @@
   "description": {
     "type": "text",
     "default": "Demo project for Spring Boot"
-  },
-  "packageName": {
-    "type": "text",
-    "default": "com.example.demo"
   }
 }
