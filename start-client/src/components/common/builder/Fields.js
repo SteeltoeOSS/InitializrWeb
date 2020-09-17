@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
 import get from 'lodash.get'
-import React, { useContext } from 'react'
+import React, {useContext} from 'react'
 
 import Actions from './Actions'
 import Control from './Control'
@@ -9,34 +9,34 @@ import FieldInput from './FieldInput'
 import FieldRadio from './FieldRadio'
 import Warnings from './Warnings'
 import useWindowsUtils from '../../utils/WindowsUtils'
-import { AppContext } from '../../reducer/App'
-import { Button, Radio } from '../form'
-import { Dependency } from '../dependency'
-import { InitializrContext } from '../../reducer/Initializr'
+import {AppContext} from '../../reducer/App'
+import {Button, Radio} from '../form'
+import {Dependency} from '../dependency'
+import {InitializrContext} from '../../reducer/Initializr'
 
 const Fields = ({
-  onSubmit,
-  onExplore,
-  onShare,
-  refExplore,
-  refSubmit,
-  refDependency,
-  generating,
-}) => {
+                  onSubmit,
+                  onExplore,
+                  onShare,
+                  refExplore,
+                  refSubmit,
+                  refDependency,
+                  generating,
+                }) => {
   const windowsUtils = useWindowsUtils()
-  const { config, dispatch, dependencies } = useContext(AppContext)
-  const { values, dispatch: dispatchInitializr, errors } = useContext(
+  const {config, dispatch, dependencies} = useContext(AppContext)
+  const {values, dispatch: dispatchInitializr, errors} = useContext(
     InitializrContext
   )
   const update = args => {
-    dispatchInitializr({ type: 'UPDATE', payload: args })
+    dispatchInitializr({type: 'UPDATE', payload: args})
   }
 
   return (
     <>
       <div className='colset colset-main'>
         <div className='left'>
-          <Warnings />
+          <Warnings/>
           <div className='col-sticky'>
             <div className='colset'>
               <div className='left'>
@@ -46,7 +46,7 @@ const Fields = ({
                     selected={get(values, 'project')}
                     options={get(config, 'lists.project')}
                     onChange={value => {
-                      update({ project: value })
+                      update({project: value})
                     }}
                   />
                 </Control>
@@ -58,7 +58,7 @@ const Fields = ({
                     selected={get(values, 'language')}
                     options={get(config, 'lists.language')}
                     onChange={value => {
-                      update({ language: value })
+                      update({language: value})
                     }}
                   />
                 </Control>
@@ -74,12 +74,12 @@ const Fields = ({
                 onChange={value => {
                   dispatchInitializr({
                     type: 'UPDATE',
-                    payload: { boot: value },
+                    payload: {boot: value},
                     config: get(dependencies, 'list'),
                   })
                   dispatch({
                     type: 'UPDATE_DEPENDENCIES',
-                    payload: { boot: value },
+                    payload: {boot: value},
                   })
                 }}
               />
@@ -96,7 +96,7 @@ const Fields = ({
                 value={get(values, 'meta.group')}
                 text='Group'
                 onChange={event => {
-                  update({ meta: { group: event.target.value } })
+                  update({meta: {group: event.target.value}})
                 }}
               />
               <FieldInput
@@ -104,7 +104,7 @@ const Fields = ({
                 value={get(values, 'meta.artifact')}
                 text='Artifact'
                 onChange={event => {
-                  update({ meta: { artifact: event.target.value } })
+                  update({meta: {artifact: event.target.value}})
                 }}
               />
               <FieldInput
@@ -112,7 +112,7 @@ const Fields = ({
                 value={get(values, 'meta.name')}
                 text='Name'
                 onChange={event => {
-                  update({ meta: { name: event.target.value } })
+                  update({meta: {name: event.target.value}})
                 }}
               />
               <FieldInput
@@ -120,7 +120,7 @@ const Fields = ({
                 value={get(values, 'meta.description')}
                 text='Description'
                 onChange={event => {
-                  update({ meta: { description: event.target.value } })
+                  update({meta: {description: event.target.value}})
                 }}
               />
               <FieldInput
@@ -128,7 +128,7 @@ const Fields = ({
                 value={get(values, 'meta.packageName')}
                 text='Package name'
                 onChange={event => {
-                  update({ meta: { packageName: event.target.value } })
+                  update({meta: {packageName: event.target.value}})
                 }}
               />
               <FieldRadio
@@ -137,7 +137,7 @@ const Fields = ({
                 text='Packaging'
                 options={get(config, 'lists.meta.packaging')}
                 onChange={value => {
-                  update({ meta: { packaging: value } })
+                  update({meta: {packaging: value}})
                 }}
               />
               <FieldRadio
@@ -146,14 +146,14 @@ const Fields = ({
                 text='Java'
                 options={get(config, 'lists.meta.java')}
                 onChange={value => {
-                  update({ meta: { java: value } })
+                  update({meta: {java: value}})
                 }}
               />
             </Control>
           </div>
         </div>
         <div className='right'>
-          <Dependency refButton={refDependency} />
+          <Dependency refButton={refDependency}/>
         </div>
       </div>
       <Actions>
@@ -196,15 +196,15 @@ Fields.propTypes = {
   onShare: PropTypes.func.isRequired,
   refExplore: PropTypes.oneOfType([
     PropTypes.func,
-    PropTypes.shape({ current: PropTypes.instanceOf(Element) }),
+    PropTypes.shape({current: PropTypes.instanceOf(Element)}),
   ]).isRequired,
   refSubmit: PropTypes.oneOfType([
     PropTypes.func,
-    PropTypes.shape({ current: PropTypes.instanceOf(Element) }),
+    PropTypes.shape({current: PropTypes.instanceOf(Element)}),
   ]).isRequired,
   refDependency: PropTypes.oneOfType([
     PropTypes.func,
-    PropTypes.shape({ current: PropTypes.instanceOf(Element) }),
+    PropTypes.shape({current: PropTypes.instanceOf(Element)}),
   ]).isRequired,
 }
 
