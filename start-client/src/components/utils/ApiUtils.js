@@ -6,10 +6,10 @@ import Extend from '../../Extend.json'
 import {isInRange, parseReleases, parseVersion} from './Version'
 
 const PROPERTIES_MAPPING_URL = {
-  template: 'template',
-  language: 'language',
   steeltoeVersion: 'steeltoe',
   dotNetFramework: 'dotNetFramework',
+  dotNetTemplate: 'template',
+  language: 'language',
   project: 'meta.projectName',
   application: 'meta.application',
   description: 'meta.description',
@@ -190,14 +190,6 @@ export const getLists = json => {
         key: `${type.id}`,
         text: `${type.name}`,
       })),
-    template: get(json, 'template.values', []).map(template => ({
-      key: `${template.id}`,
-      text: `${template.name}`,
-    })),
-    language: get(json, 'language.values', []).map(language => ({
-      key: `${language.id}`,
-      text: `${language.name}`,
-    })),
     steeltoe: get(json, 'steeltoeVersion.values', []).map(steeltoe => ({
       key: `${steeltoe.id}`,
       text: `${steeltoe.name}`,
@@ -205,6 +197,14 @@ export const getLists = json => {
     dotNetFramework: get(json, 'dotNetFramework.values', []).map(dotNetFramework => ({
       key: `${dotNetFramework.id}`,
       text: `${dotNetFramework.name}`,
+    })),
+    template: get(json, 'dotNetTemplate.values', []).map(template => ({
+      key: `${template.id}`,
+      text: `${template.name}`,
+    })),
+    language: get(json, 'language.values', []).map(language => ({
+      key: `${language.id}`,
+      text: `${language.name}`,
     })),
     // meta: {
     // },
@@ -214,10 +214,10 @@ export const getLists = json => {
 
 export const getDefaultValues = json => {
   return {
-    template: get(json, 'template.default'),
-    language: get(json, 'language.default'),
     steeltoe: get(json, 'steeltoeVersion.default'),
     dotNetFramework: get(json, 'dotNetFramework.default'),
+    template: get(json, 'dotNetTemplate.default'),
+    language: get(json, 'language.default'),
     meta: {
       application: get(json, 'application.default'),
       projectName: get(json, 'project.default'),
