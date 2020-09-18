@@ -7,10 +7,10 @@ import {getShareUrl, parseParams} from '../utils/ApiUtils'
 
 export const defaultInitializrContext = {
   values: {
-    template: '',
-    language: '',
     steeltoe: '',
     dotNetFramework: '',
+    dotNetTemplate: '',
+    language: '',
     meta: {
       projectName: '',
       application: '',
