@@ -93,6 +93,17 @@ function Fields({
               )}
             </Control>
 
+            <Control text='Template'>
+              <Radio
+                name='template'
+                selected={get(values, 'template')}
+                options={get(config, 'lists.template')}
+                onChange={value => {
+                  update({template: value})
+                }}
+              />
+            </Control>
+
             <Control text='Language'>
               <Radio
                 name='language'

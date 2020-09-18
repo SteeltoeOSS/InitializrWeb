@@ -187,6 +187,16 @@
       }
     ]
   },
+  "template": {
+    "type": "single-select",
+    "default": "webapi",
+    "values": [
+      {
+        "id": "webapi",
+        "name": "webapi"
+      }
+    ]
+  },
   "language": {
     "type": "single-select",
     "default": "csharp",
@@ -194,6 +204,10 @@
       {
         "id": "csharp",
         "name": "C#"
+      },
+      {
+        "id": "fsharp",
+        "name": "F#"
       }
     ]
   },
