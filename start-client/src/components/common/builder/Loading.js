@@ -9,45 +9,7 @@ export default function Loading() {
     <>
       <div className='colset colset-main'>
         <div className='left'>
-          <div className='colset'>
-            <div className='left'>
-              <Control text='Project'>
-                <Placeholder type='radio' width='97px' />
-                <Placeholder type='radio' width='98px' />
-              </Control>
-            </div>
-            <div className='Template'>
-              <Control text='Language'>
-                <Placeholder type='radio' width='30px' />
-                <Placeholder type='radio' width='36px' />
-                <Placeholder type='radio' width='40px' />
-              </Control>
-            </div>
-            <div className='right'>
-              <Control text='Language'>
-                <Placeholder type='radio' width='30px' />
-                <Placeholder type='radio' width='36px' />
-                <Placeholder type='radio' width='40px' />
-              </Control>
-            </div>
-          </div>
-          <Control text='Steeltoe'>
-            <Placeholder type='radio' width='100px' />
-            <Placeholder type='radio' width='98px' />
-            <Placeholder type='radio' width='98px' />
-            <Placeholder type='radio' width='120px' />
-            <Placeholder type='radio' width='140px' />
-            <Placeholder type='radio' width='98px' />
-          </Control>
-          <Control text='DotNet Framework'>
-            <Placeholder type='radio' width='100px' />
-            <Placeholder type='radio' width='98px' />
-            <Placeholder type='radio' width='98px' />
-            <Placeholder type='radio' width='120px' />
-            <Placeholder type='radio' width='140px' />
-            <Placeholder type='radio' width='98px' />
-          </Control>
-          <Control text='Project Metadata'>
+          <Control text='Project'>
             <div>
               <div className='control control-inline control-placeholder'>
                 <span className='placeholder-label'>Project</span>
@@ -66,6 +28,18 @@ export default function Loading() {
                 <Placeholder type='input' />
               </div>
             </div>
+          </Control>
+          <Control text='Steeltoe'>
+            <Placeholder type='radio' width='100px' />
+          </Control>
+          <Control text='DotNet Framework'>
+            <Placeholder type='radio' width='100px' />
+          </Control>
+          <Control text='Template'>
+            <Placeholder type='radio' width='100px' />
+          </Control>
+          <Control text='Language'>
+            <Placeholder type='radio' width='100px' />
           </Control>
         </div>
         <div className='right'>
