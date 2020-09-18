@@ -204,27 +204,23 @@
       {
         "id": "csharp",
         "name": "C#"
-      },
-      {
-        "id": "fsharp",
-        "name": "F#"
       }
     ]
   },
   "project": {
     "type": "text",
-    "default": "DemoProject"
+    "default": "Sample"
   },
   "namespace": {
     "type": "text",
-    "default": "DemoProjectNamespace"
+    "default": "Sample"
   },
   "application": {
     "type": "text",
-    "default": "DemoProjectApplication"
+    "default": "SampleApplication"
   },
   "description": {
     "type": "text",
-    "default": "Demo project for Steeltoe Initializr"
+    "default": "Sample application project"
   }
 }

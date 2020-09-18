@@ -40,7 +40,40 @@ function Fields({
         <div className='left'>
           <Warnings/>
           <div className='col-sticky'>
-
+            <Control text='Project'>
+              <FieldInput
+                id='input-project'
+                value={get(values, 'meta.project')}
+                text='Name'
+                onChange={event => {
+                  update({meta: {project: event.target.value}})
+                }}
+              />
+              <FieldInput
+                id='input-namespace'
+                value={get(values, 'meta.namespace')}
+                text='Namespace'
+                onChange={event => {
+                  update({meta: {namespace: event.target.value}})
+                }}
+              />
+              <FieldInput
+                id='input-application'
+                value={get(values, 'meta.application')}
+                text='Application'
+                onChange={event => {
+                  update({meta: {application: event.target.value}})
+                }}
+              />
+              <FieldInput
+                id='input-description'
+                value={get(values, 'meta.description')}
+                text='Description'
+                onChange={event => {
+                  update({meta: {description: event.target.value}})
+                }}
+              />
+            </Control>
             <Control text='Steeltoe'>
               <Radio
                 name='steeltoe'
@@ -66,7 +99,6 @@ function Fields({
                 </FieldError>
               )}
             </Control>
-
             <Control text='DotNet Framework'>
               <Radio
                 name='dotNetFramework'
@@ -92,7 +124,6 @@ function Fields({
                 </FieldError>
               )}
             </Control>
-
             <Control text='Template'>
               <Radio
                 name='template'
@@ -103,7 +134,6 @@ function Fields({
                 }}
               />
             </Control>
-
             <Control text='Language'>
               <Radio
                 name='language'
@@ -111,41 +141,6 @@ function Fields({
                 options={get(config, 'lists.language')}
                 onChange={value => {
                   update({language: value})
-                }}
-              />
-            </Control>
-
-            <Control text='Project Metadata'>
-              <FieldInput
-                id='input-project'
-                value={get(values, 'meta.project')}
-                text='Project'
-                onChange={event => {
-                  update({meta: {project: event.target.value}})
-                }}
-              />
-              <FieldInput
-                id='input-application'
-                value={get(values, 'meta.application')}
-                text='Application'
-                onChange={event => {
-                  update({meta: {application: event.target.value}})
-                }}
-              />
-              <FieldInput
-                id='input-namespace'
-                value={get(values, 'meta.namespace')}
-                text='Namespace'
-                onChange={event => {
-                  update({meta: {namespace: event.target.value}})
-                }}
-              />
-              <FieldInput
-                id='input-description'
-                value={get(values, 'meta.description')}
-                text='Description'
-                onChange={event => {
-                  update({meta: {description: event.target.value}})
                 }}
               />
             </Control>
