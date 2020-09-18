@@ -16,6 +16,13 @@ export default function Loading() {
                 <Placeholder type='radio' width='98px' />
               </Control>
             </div>
+            <div className='Template'>
+              <Control text='Language'>
+                <Placeholder type='radio' width='30px' />
+                <Placeholder type='radio' width='36px' />
+                <Placeholder type='radio' width='40px' />
+              </Control>
+            </div>
             <div className='right'>
               <Control text='Language'>
                 <Placeholder type='radio' width='30px' />

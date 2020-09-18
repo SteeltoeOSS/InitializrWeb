@@ -6,6 +6,7 @@ import Extend from '../../Extend.json'
 import {isInRange, parseReleases, parseVersion} from './Version'
 
 const PROPERTIES_MAPPING_URL = {
+  template: 'template',
   language: 'language',
   steeltoeVersion: 'steeltoe',
   dotNetFramework: 'dotNetFramework',
@@ -75,6 +76,7 @@ export const parseParams = (values, queryParams, lists) => {
         const value = get(queryParams, entry, '').toLowerCase()
         switch (key) {
           case 'project':
+          case 'template':
           case 'language':
           case 'dotNetFramework': {
             const list = get(lists, key, [])
@@ -188,6 +190,10 @@ export const getLists = json => {
         key: `${type.id}`,
         text: `${type.name}`,
       })),
+    template: get(json, 'template.values', []).map(template => ({
+      key: `${template.id}`,
+      text: `${template.name}`,
+    })),
     language: get(json, 'language.values', []).map(language => ({
       key: `${language.id}`,
       text: `${language.name}`,
@@ -208,6 +214,7 @@ export const getLists = json => {
 
 export const getDefaultValues = json => {
   return {
+    template: get(json, 'template.default'),
     language: get(json, 'language.default'),
     steeltoe: get(json, 'steeltoeVersion.default'),
     dotNetFramework: get(json, 'dotNetFramework.default'),
@@ -240,6 +247,7 @@ export const isValidDependency = function isValidDependency(steeltoe, dependency
 export const getProject = function getProject(url, values, config) {
   return new Promise((resolve, reject) => {
     const params = querystring.stringify({
+      template: get(values, 'template'),
       language: get(values, 'language'),
       steeltoeVersion: get(values, 'steeltoe'),
       baseDir: get(values, 'meta.project'),
