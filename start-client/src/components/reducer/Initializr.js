@@ -57,7 +57,8 @@ export function reducer(state, action) {
       }
       if (get(changes, 'meta.project') !== undefined) {
         set(meta, 'application', `${get(meta, 'project')}Application`)
-        set(meta, 'namespace', `${get(meta, 'project')}Namespace`)
+        set(meta, 'namespace', `${get(meta, 'project')}`)
+        set(meta, 'description', `${get(meta, 'project')} application project`)
       }
       const values = {
         ...get(state, 'values'),
