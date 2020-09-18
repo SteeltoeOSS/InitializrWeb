@@ -12,15 +12,15 @@ export default function Loading() {
           <Control text='Project'>
             <div>
               <div className='control control-inline control-placeholder'>
-                <span className='placeholder-label'>Project</span>
-                <Placeholder type='input' />
-              </div>
-              <div className='control control-inline control-placeholder'>
-                <span className='placeholder-label'>Application</span>
+                <span className='placeholder-label'>Name</span>
                 <Placeholder type='input' />
               </div>
               <div className='control control-inline control-placeholder'>
                 <span className='placeholder-label'>Namespace</span>
+                <Placeholder type='input' />
+              </div>
+              <div className='control control-inline control-placeholder'>
+                <span className='placeholder-label'>Application</span>
                 <Placeholder type='input' />
               </div>
               <div className='control control-inline control-placeholder'>
