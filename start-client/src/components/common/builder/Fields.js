@@ -42,11 +42,11 @@ function Fields({
           <div className='col-sticky'>
             <Control text='Project'>
               <FieldInput
-                id='input-project'
-                value={get(values, 'meta.project')}
+                id='input-projectName'
+                value={get(values, 'meta.projectName')}
                 text='Name'
                 onChange={event => {
-                  update({meta: {project: event.target.value}})
+                  update({meta: {projectName: event.target.value}})
                 }}
               />
               <FieldInput

@@ -10,7 +10,7 @@ const PROPERTIES_MAPPING_URL = {
   language: 'language',
   steeltoeVersion: 'steeltoe',
   dotNetFramework: 'dotNetFramework',
-  project: 'meta.project',
+  project: 'meta.projectName',
   application: 'meta.application',
   description: 'meta.description',
   namespace: 'meta.namespace',
@@ -75,7 +75,7 @@ export const parseParams = (values, queryParams, lists) => {
       if (key) {
         const value = get(queryParams, entry, '').toLowerCase()
         switch (key) {
-          case 'project':
+          case 'projectName':
           case 'template':
           case 'language':
           case 'dotNetFramework': {
@@ -220,7 +220,7 @@ export const getDefaultValues = json => {
     dotNetFramework: get(json, 'dotNetFramework.default'),
     meta: {
       application: get(json, 'application.default'),
-      project: get(json, 'project.default'),
+      projectName: get(json, 'project.default'),
       description: get(json, 'description.default'),
       namespace: get(json, 'namespace.default'),
     },
@@ -251,7 +251,7 @@ export const getProject = function getProject(url, values, config) {
       language: get(values, 'language'),
       steeltoeVersion: get(values, 'steeltoe'),
       baseDir: get(values, 'meta.project'),
-      project: get(values, 'meta.project'),
+      projectName: get(values, 'meta.project'),
       application: get(values, 'meta.application'),
       description: get(values, 'meta.description'),
       namespace: get(values, 'meta.namespace'),
