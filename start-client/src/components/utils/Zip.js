@@ -1,25 +1,27 @@
 import get from 'lodash.get'
 
 const FILE_EXTENSION = {
-  js: 'javascript',
-  md: 'markdown',
-  kt: 'kotlin',
-  kts: 'kotlin',
-  gradle: 'groovy',
+  config: 'xml',
+  cs: 'csharp',
+  csproj: 'xml',
+  Dockerfile: 'docker',
   gitignore: 'git',
-  java: 'java',
-  xml: 'xml',
+  js: 'javascript',
+  json: 'javascript',
+  md: 'markdown',
   properties: 'properties',
-  groovy: 'groovy',
   yaml: 'yaml',
   yml: 'yaml',
+  xml: 'xml',
 }
 
 export const getLanguage = file => {
-  if (!file.includes(`.`)) {
-    return null
+  let extension
+  if (file.includes(`.`)) {
+    extension = file.split(`.`).pop()
+  } else {
+    extension = file
   }
-  const extension = file.split(`.`).pop()
   return get(FILE_EXTENSION, extension, null)
 }
 
@@ -64,7 +66,7 @@ export const createTree = (files, path, fileName, zip) => {
     const tree = recursive(files, path, fileName, zip, 0)
     const selected = tree.children.find(
       item =>
-        ['pom.xml', 'build.gradle', 'build.gradle.kts'].indexOf(item.filename) >
+        ['Program.cs', 'Startup.cs'].indexOf(item.filename) >
         -1
     )
     if (selected) {
