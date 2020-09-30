@@ -11,13 +11,20 @@ const FILE_EXTENSION = {
   xml: 'xml',
   properties: 'properties',
   groovy: 'groovy',
+  cs: 'csharp',
+  csproj: 'xml',
+  config: 'xml',
+  json: 'javascript',
+  Dockerfile: 'docker',
 }
 
 export const getLanguage = file => {
-  if (!file.includes(`.`)) {
-    return null
+  let extension
+  if (file.includes(`.`)) {
+    extension = file.split(`.`).pop()
+  } else {
+    extension = file
   }
-  const extension = file.split(`.`).pop()
   return get(FILE_EXTENSION, extension, null)
 }
 
@@ -62,7 +69,7 @@ export const createTree = (files, path, fileName, zip) => {
     const tree = recursive(files, path, fileName, zip, 0)
     const selected = tree.children.find(
       item =>
-        ['pom.xml', 'build.gradle', 'build.gradle.kts'].indexOf(item.filename) >
+        ['Program.cs', 'Startup.cs'].indexOf(item.filename) >
         -1
     )
     if (selected) {
