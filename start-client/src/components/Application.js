@@ -53,7 +53,9 @@ export default function Application() {
 
   useEffect(() => {
     if (windowsUtils.origin) {
-      const url = `${windowsUtils.origin}/metadata/client`
+      // const url = `${windowsUtils.origin}/metadata/client`
+      // const url = 'http://127.0.0.1:19200/api/config/projectMetadata'
+      const url = 'https://initializr-api.apps.pcfone.io/api/config/projectMetadata'
       getInfo(url).then(jsonConfig => {
         const response = getConfig(jsonConfig)
         dispatchInitializr({ type: 'COMPLETE', payload: { ...response } })
@@ -67,7 +69,9 @@ export default function Application() {
       return
     }
     setGenerating(true)
-    const url = `${windowsUtils.origin}/starter.zip`
+    // const url = `${windowsUtils.origin}/starter.zip`
+    // const url = 'http://localhost:19200/api/project'
+    const url = 'https://initializr-api.apps.pcfone.io/api/project'
     const project = await getProject(
       url,
       values,
@@ -82,7 +86,9 @@ export default function Application() {
   }
 
   const onExplore = async () => {
-    const url = `${windowsUtils.origin}/starter.zip`
+    // const url = `${windowsUtils.origin}/starter.zip`
+    // const url = 'http://localhost:19200/api/project'
+    const url = 'https://initializr-api.apps.pcfone.io/api/project'
     dispatch({ type: 'UPDATE', payload: { explore: true, list: false } })
     const project = await getProject(
       url,
