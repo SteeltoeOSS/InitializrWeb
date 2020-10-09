@@ -86,7 +86,7 @@ const config = {
           },
       template: './static/index.html',
       title: 'Steeltoe Initializr',
-      description: `Steeltoe Initializr generates Steeltoe DotNet projects with just what you need to start quickly!`,
+      description: 'Steeltoe Initializr generates Steeltoe DotNet projects with just what you need to start quickly!',
       url: 'https://start.steeltoe.io',
       twitter: '@SteeltoeOSS',
       image: 'https://start.steeltoe.io/images/steeltoe-card.png',
@@ -94,10 +94,10 @@ const config = {
     }),
     new WebpackGoogleTagManager(process.env.GOOGLE_TAGMANAGER_ID),
     new WebpackPwaManifest({
-      name: 'spring-initializr',
+      name: 'steeltoe-initializr',
       short_name: 'Start',
-      description: `Initializr generates spring boot project with just what you need to start quickly!`,
-      background_color: '#6db33f',
+      description: 'Steeltoe Initializr generates Steeltoe DotNet projects with just what you need to start quickly!',
+      background_color: '#0066cc',
       inject: true,
       fingerprints: true,
       ios: true,
@@ -105,7 +105,7 @@ const config = {
       crossorigin: null,
       icons: [
         {
-          src: path.resolve('src/images/initializr-icon.png'),
+          src: path.resolve('src/images/steeltoe-icon.png'),
           sizes: [48, 72, 96, 144, 192, 256, 384, 512],
         },
       ],
