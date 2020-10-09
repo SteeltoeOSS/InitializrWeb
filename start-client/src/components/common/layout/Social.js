@@ -15,7 +15,7 @@ function Social() {
     <a
       rel='noreferrer noopener'
       target='_blank'
-      href='https://twitter.com/springboot'
+      href='https://twitter.com/SteeltoeOSS'
     >
       <IconTwitter />
     </a>
