@@ -9,7 +9,8 @@ const Header = () => (
       <h1 className='logo'>
         <a href='/'>
           <span className='logo-content' tabIndex='-1'>
-            <Logo />
+            <img src="images/steeltoe-logo.svg" width="180px" height="60px" />
+            <img src="images/beta.png" height="40px" />
           </span>
         </a>
       </h1>
