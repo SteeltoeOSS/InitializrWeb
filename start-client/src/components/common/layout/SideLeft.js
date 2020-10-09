@@ -102,42 +102,42 @@ function SideLeft() {
                     <ul>
                       <li>
                         <a
-                          id='ql-help-projects'
-                          target='_blank'
-                          rel='noopener noreferrer'
-                          href='https://spring.io/projects'
-                        >
-                          Discover all the Spring projects
-                        </a>
-                      </li>
-                      <li>
-                        <a
                           id='ql-help-guides'
                           target='_blank'
                           rel='noopener noreferrer'
-                          href='https://spring.io/guides'
+                          href='https://steeltoe.io/docs/'
                         >
-                          Discover all the Spring guides
+                          Steeltoe documentation
                         </a>
                       </li>
                       <li>
                         <a
-                          id='ql-help-spring-blog'
+                          id='ql-help-projects'
                           target='_blank'
                           rel='noopener noreferrer'
-                          href='https://spring.io/blog'
+                          href='https://github.com/SteeltoeOSS'
                         >
-                          What&apos;s new with Spring
+                          Steeltoe projects
                         </a>
                       </li>
                       <li>
                         <a
-                          id='ql-help-migration'
+                          id='ql-help-blog'
                           target='_blank'
                           rel='noopener noreferrer'
-                          href='https://github.com/spring-projects/spring-boot/wiki/Spring-Boot-3.0-Migration-Guide'
+                          href='https://steeltoe.io/blog/'
                         >
-                          Migrate Spring Boot 2.7 to 3.0
+                          What&apos;s new with Steeltoe?
+                        </a>
+                      </li>
+                      <li>
+                        <a
+                          id='ql-help-migrate'
+                          target='_blank'
+                          rel='noopener noreferrer'
+                          href='https://docs-dev.steeltoe.io/api/v3/welcome/whats-new.html#breaking-changes'
+                        >
+                          Migrate Steeltoe 2.4.x to 3.0.x
                         </a>
                       </li>
                     </ul>
@@ -169,16 +169,16 @@ function SideLeft() {
                     </ul>
                   </div>
                   <div className='copyright'>
-                    © 2013-{new Date().getFullYear()} VMware, Inc.
+                    © 2016-{new Date().getFullYear()} VMware, Inc.
                     <br />
-                    start.spring.io is powered by{' '}
+                    start.steeltoe.io is powered by{' '}
                     <span>
                       <a
                         target='_blank'
                         rel='noopener noreferrer'
-                        href='https://github.com/spring-io/initializr/'
+                        href='https://github.com/SteeltoeOSS/InitializrApi/'
                       >
-                        Spring Initializr
+                        Steeltoe Initializr API
                       </a>
                     </span>{' '}
                     <span>and</span>{' '}
@@ -186,9 +186,9 @@ function SideLeft() {
                       <a
                         target='_blank'
                         rel='noopener noreferrer'
-                        href='https://buildpacks.io/'
+                        href='https://dotnet.microsoft.com/'
                       >
-                        Cloud Native Buildpacks
+                        Microsoft .NET
                       </a>
                     </span>
                   </div>
