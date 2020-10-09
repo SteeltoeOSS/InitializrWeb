@@ -75,7 +75,7 @@ const SideLeft = () => {
             <a
               rel='noreferrer noopener'
               target='_blank'
-              href='https://twitter.com/springboot'
+              href='https://twitter.com/SteeltoeOSS'
             >
               <span className='a-content' tabIndex='-1'>
                 <IconTwitter />
@@ -159,7 +159,7 @@ const SideLeft = () => {
                         <a
                           rel='noreferrer noopener'
                           target='_blank'
-                          href='https://twitter.com/springboot'
+                          href='https://twitter.com/SteeltoeOSS'
                         >
                           <span className='a-content' tabIndex='-1'>
                             Twitter
