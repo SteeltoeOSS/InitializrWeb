@@ -23,14 +23,6 @@ function Warnings() {
         </a>
         The following attributes could not be handled:
         <ul>
-          {get(warnings, 'project') && (
-            <li>
-              <strong className='warn'>{get(warnings, 'project.value')}</strong>{' '}
-              is not a valid project type,{' '}
-              <strong>{get(warnings, 'project.select')}</strong> has been
-              selected.
-            </li>
-          )}
           {get(warnings, 'language') && (
             <li>
               <strong className='warn'>
@@ -41,32 +33,20 @@ function Warnings() {
               selected.
             </li>
           )}
-          {get(warnings, 'boot') && (
+          {get(warnings, 'steeltoe') && (
             <li>
-              Spring Boot{' '}
-              <strong className='warn'>{get(warnings, 'boot.value')}</strong> is
-              not available, <strong>{get(warnings, 'boot.select')}</strong> has
+              Steeltoe{' '}
+              <strong className='warn'>{get(warnings, 'steeltoe.value')}</strong> is
+              not available, <strong>{get(warnings, 'steeltoe.select')}</strong> has
               been selected.
             </li>
           )}
-          {get(warnings, 'meta.java') && (
+          {get(warnings, 'dotNetFramework') && (
             <li>
-              <strong className='warn'>
-                {get(warnings, 'meta.java.value')}
-              </strong>{' '}
-              is not a valid Java version,{' '}
-              <strong>{get(warnings, 'meta.java.select')}</strong> has been
-              selected.
-            </li>
-          )}
-          {get(warnings, 'meta.packaging') && (
-            <li>
-              <strong className='warn'>
-                {get(warnings, 'meta.packaging.value')}
-              </strong>{' '}
-              is not a valid packaging,{' '}
-              <strong>{get(warnings, 'meta.packaging.select')}</strong> has been
-              selected.
+              DotNet Framework{' '}
+              <strong className='warn'>{get(warnings, 'dotNetFramework.value')}</strong> is
+              not available, <strong>{get(warnings, 'dotNetFramework.select')}</strong> has
+              been selected.
             </li>
           )}
           {get(warnings, 'dependencies') && (

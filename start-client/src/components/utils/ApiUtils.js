@@ -3,19 +3,17 @@ import querystring from 'querystring'
 import set from 'lodash.set'
 
 import Extend from '../../Extend.json'
-import { isInRange, parseReleases, parseVersion } from './Version'
+import {isInRange, parseReleases, parseVersion} from './Version'
 
 const PROPERTIES_MAPPING_URL = {
-  type: 'project',
+  steeltoeVersion: 'steeltoe',
+  dotNetFramework: 'dotNetFramework',
+  dotNetTemplate: 'template',
   language: 'language',
-  platformVersion: 'boot',
-  packaging: 'meta.packaging',
-  jvmVersion: 'meta.java',
-  groupId: 'meta.group',
-  artifactId: 'meta.artifact',
-  name: 'meta.name',
+  project: 'meta.projectName',
+  application: 'meta.application',
   description: 'meta.description',
-  packageName: 'meta.packageName',
+  namespace: 'meta.namespace',
   dependencies: 'dependencies',
 }
 
@@ -77,26 +75,10 @@ export const parseParams = (values, queryParams, lists) => {
       if (key) {
         const value = get(queryParams, entry, '').toLowerCase()
         switch (key) {
-          case 'project':
+          case 'projectName':
+          case 'template':
           case 'language':
-          case 'meta.packaging':
-          case 'meta.java': {
-            const list = get(lists, key, [])
-            const res = list.find(a => a.key.toLowerCase() === value)
-            if (res) {
-              set(values, key, res.key)
-            } else {
-              const currentValue = list.find(
-                a => a.key.toLowerCase() === get(values, key)
-              )
-              set(warnings, key, {
-                value: get(queryParams, entry, ''),
-                select: currentValue.text,
-              })
-            }
-            break
-          }
-          case 'boot': {
+          case 'dotNetFramework': {
             const list = get(lists, key, [])
             const res = list.find(a => a.key.toLowerCase() === value)
             let error = false
@@ -141,7 +123,7 @@ export const parseParams = (values, queryParams, lists) => {
               }
             }
             if (error) {
-              set(errors, 'boot', {
+              set(errors, 'steeltoe', {
                 value: get(queryParams, entry, ''),
               })
             }
@@ -208,41 +190,39 @@ export const getLists = json => {
         key: `${type.id}`,
         text: `${type.name}`,
       })),
+    steeltoe: get(json, 'steeltoeVersion.values', []).map(steeltoe => ({
+      key: `${steeltoe.id}`,
+      text: `${steeltoe.name}`,
+    })),
+    dotNetFramework: get(json, 'dotNetFramework.values', []).map(dotNetFramework => ({
+      key: `${dotNetFramework.id}`,
+      text: `${dotNetFramework.name}`,
+    })),
+    template: get(json, 'dotNetTemplate.values', []).map(template => ({
+      key: `${template.id}`,
+      text: `${template.name}`,
+    })),
     language: get(json, 'language.values', []).map(language => ({
       key: `${language.id}`,
       text: `${language.name}`,
     })),
-    boot: get(json, 'bootVersion.values', []).map(boot => ({
-      key: `${boot.id}`,
-      text: `${boot.name}`,
-    })),
-    meta: {
-      java: get(json, 'javaVersion.values', []).map(java => ({
-        key: `${java.id}`,
-        text: `${java.name}`,
-      })),
-      packaging: get(json, 'packaging.values', []).map(packaging => ({
-        key: `${packaging.id}`,
-        text: `${packaging.name}`,
-      })),
-    },
+    // meta: {
+    // },
     dependencies: deps,
   }
 }
 
 export const getDefaultValues = json => {
   return {
-    project: get(json, 'type.default'),
+    steeltoe: get(json, 'steeltoeVersion.default'),
+    dotNetFramework: get(json, 'dotNetFramework.default'),
+    template: get(json, 'dotNetTemplate.default'),
     language: get(json, 'language.default'),
-    boot: get(json, 'bootVersion.default'),
     meta: {
-      name: get(json, 'name.default'),
-      group: get(json, 'groupId.default'),
-      artifact: get(json, 'artifactId.default'),
+      application: get(json, 'application.default'),
+      projectName: get(json, 'project.default'),
       description: get(json, 'description.default'),
-      packaging: get(json, 'packaging.default'),
-      packageName: get(json, 'packageName.default'),
-      java: get(json, 'javaVersion.default'),
+      namespace: get(json, 'namespace.default'),
     },
     dependencies: [],
   }
@@ -255,34 +235,31 @@ export const getConfig = json => {
   }
 }
 
-export const isValidDependency = function isValidDependency(boot, dependency) {
+export const isValidDependency = function isValidDependency(steeltoe, dependency) {
   if (!dependency) {
     return false
   }
   return get(dependency, 'versionRange')
-    ? isInRange(boot, get(dependency, 'versionRange'))
+    ? isInRange(steeltoe, get(dependency, 'versionRange'))
     : true
 }
 
 export const getProject = function getProject(url, values, config) {
   return new Promise((resolve, reject) => {
     const params = querystring.stringify({
-      type: get(values, 'project'),
+      template: get(values, 'template'),
       language: get(values, 'language'),
-      bootVersion: get(values, 'boot'),
-      baseDir: get(values, 'meta.artifact'),
-      groupId: get(values, 'meta.group'),
-      artifactId: get(values, 'meta.artifact'),
-      name: get(values, 'meta.name'),
+      steeltoeVersion: get(values, 'steeltoe'),
+      baseDir: get(values, 'meta.projectName'),
+      name: get(values, 'meta.projectName'),
+      application: get(values, 'meta.application'),
       description: get(values, 'meta.description'),
-      packageName: get(values, 'meta.packageName'),
-      packaging: get(values, 'meta.packaging'),
-      javaVersion: get(values, 'meta.java'),
+      namespace: get(values, 'meta.namespace'),
     })
     let paramsDependencies = get(values, 'dependencies', [])
       .map(dependency => {
         const dep = config.find(it => it.id === dependency)
-        return isValidDependency(get(values, 'boot'), dep) ? dependency : null
+        return isValidDependency(get(values, 'steeltoe'), dep) ? dependency : null
       })
       .filter(dep => !!dep)
       .join(',')
