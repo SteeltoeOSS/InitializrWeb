@@ -5,23 +5,19 @@ import Logo from './Logo'
 
 function Header() {
   return (
-    <header id='header'>
-      <div className='not-mobile'>
-        <h1 className='logo'>
-          <a href='/'>
-            <span className='logo-content' tabIndex='-1'>
-              <Logo />
-            </span>
-          </a>
-        </h1>
-        <div className='banner'>
-          <a href='https://springone.io/?utm_source=start-spring-io-banner'>
-            Meet the Spring team this August at SpringOne.
-          </a>
-        </div>
-      </div>
-      <HeaderMobile />
-    </header>
+   <header id='header'>
+    <div className='not-mobile'>
+      <h1 className='logo'>
+        <a href='/'>
+          <span className='logo-content' tabIndex='-1'>
+            <img src="images/steeltoe-logo.svg" width="180px" height="60px" />
+            <img src="images/beta.png" height="40px" />
+          </span>
+        </a>
+      </h1>
+    </div>
+    <HeaderMobile />
+  </header>
   )
 }
 
