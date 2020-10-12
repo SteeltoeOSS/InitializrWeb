@@ -130,16 +130,6 @@ function SideLeft() {
                           What&apos;s new with Steeltoe?
                         </a>
                       </li>
-                      <li>
-                        <a
-                          id='ql-help-migrate'
-                          target='_blank'
-                          rel='noopener noreferrer'
-                          href='https://docs-dev.steeltoe.io/api/v3/welcome/whats-new.html#breaking-changes'
-                        >
-                          Migrate Steeltoe 2.4.x to 3.0.x
-                        </a>
-                      </li>
                     </ul>
                   </div>
                   <div className='is-mobile'>
