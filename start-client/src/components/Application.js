@@ -20,12 +20,14 @@ import { Form } from './common/form'
 import { Header, SideLeft, SideRight } from './common/layout'
 import { InitializrContext } from './reducer/Initializr'
 import { getConfig, getInfo, getProject } from './utils/ApiUtils'
+import { InitializrApiUrl } from '../../InitializrApiConfig'
 
 const Explore = lazy(() => import('./common/explore/Explore.js'))
 const Share = lazy(() => import('./common/share/Share.js'))
 const HotKeys = lazy(() => import('./common/builder/HotKeys.js'))
 
 export default function Application() {
+
   const {
     complete,
     dispatch,
@@ -49,11 +51,10 @@ export default function Application() {
   const windowsUtils = useWindowsUtils()
   useHash()
 
-  useEffect(() => {
+
+    useEffect(() => {
     if (windowsUtils.origin) {
-      // const url = `${windowsUtils.origin}/metadata/client`
-      // const url = 'http://127.0.0.1:19200/api/config/projectMetadata'
-      const url = 'https://initializr-api.apps.pcfone.io/api/config/projectMetadata'
+      const url = `${InitializrApiUrl}/config/projectMetadata`
       getInfo(url).then(jsonConfig => {
         const response = getConfig(jsonConfig)
         dispatchInitializr({ type: 'COMPLETE', payload: { ...response } })
@@ -67,9 +68,7 @@ export default function Application() {
       return
     }
     setGenerating(true)
-    // const url = `${windowsUtils.origin}/starter.zip`
-    // const url = 'http://localhost:19200/api/project'
-    const url = 'https://initializr-api.apps.pcfone.io/api/project'
+    const url = `${InitializrApiUrl}/project`
     const project = await getProject(
       url,
       values,
@@ -84,9 +83,7 @@ export default function Application() {
   }
 
   const onExplore = async () => {
-    // const url = `${windowsUtils.origin}/starter.zip`
-    // const url = 'http://localhost:19200/api/project'
-    const url = 'https://initializr-api.apps.pcfone.io/api/project'
+    const url = `${InitializrApiUrl}/project`
     dispatch({ type: 'UPDATE', payload: { explore: true, list: false } })
     const project = await getProject(
       url,
