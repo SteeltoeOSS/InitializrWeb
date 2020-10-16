@@ -159,6 +159,8 @@ function SideLeft() {
                     </ul>
                   </div>
                   <div className='copyright'>
+                    Steeltoe Initializr Web, version 0.1.0
+                    <br />
                     © 2016-{new Date().getFullYear()} VMware, Inc.
                     <br />
                     start.steeltoe.io is powered by{' '}
