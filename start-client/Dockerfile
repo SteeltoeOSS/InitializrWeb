@@ -12,4 +12,4 @@ COPY webpack.common.js ./
 COPY webpack.prod.js ./
 COPY webpack.dev.js ./
 COPY InitializrApiConfig.js ./
-CMD [ "yarn", "cfstart" ]
+CMD [ "yarn", "public-start" ]
