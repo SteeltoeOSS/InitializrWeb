@@ -6,7 +6,7 @@ applications:
   path: ../..
   routes:
     - route: initializr.apps.pcfone.io
-  command: yarn cfstart
+  command: yarn public-start
   memory: 1024M
   env:
     NPM_CONFIG_PRODUCTION: false

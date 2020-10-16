@@ -1,1 +1,1 @@
-export const InitializrApiUrl= 'http://localhost:1920/api'
+export const InitializrApiUrl= 'https://initializr-api.apps.pcfone.io/api'
