@@ -11,7 +11,7 @@
   "license": "Apache-2.0",
   "scripts": {
     "start": "webpack-dev-server --progress --colors --config webpack.dev.js",
-    "cfstart": "webpack-dev-server --host 0.0.0.0 --port 8080 --disable-host-check --progress --colors --config webpack.dev.js",
+    "public-start": "webpack-dev-server --host 0.0.0.0 --port 8080 --disable-host-check --progress --colors --config webpack.dev.js",
     "prebuild": "yarn run test",
     "build": "webpack -p --config webpack.prod.js",
     "test": "jest --reporters=jest-standard-reporter",
