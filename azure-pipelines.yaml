@@ -28,3 +28,5 @@ jobs:
           space: initializr
           deploymentOptions: manifest
           cfManifest: start-client/deploy/cloud-foundry/manifest.yaml
+        condition:
+          and(succeeded(), not(eq(variables['build.reason'], 'PullRequest')))
