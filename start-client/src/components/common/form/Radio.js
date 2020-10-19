@@ -14,8 +14,8 @@ function RadioInput({ handler, value, disabled, error, checked, text }) {
         }`}
       >
         <span className='caret' tabIndex='-1' />
-        <span className='radio-content' tabIndex='-1'>
-          {text}
+        <span className='radio-content' tabIndex='-1' title={text}>
+          {value}
         </span>
       </span>
     )
@@ -27,8 +27,8 @@ function RadioInput({ handler, value, disabled, error, checked, text }) {
       onClick={onClick}
     >
       <span className='caret' tabIndex='-1' />
-      <span className='radio-content' tabIndex='-1'>
-        {text}
+      <span className='radio-content' tabIndex='-1' title={text}>
+        {value}
       </span>
     </a>
   )
