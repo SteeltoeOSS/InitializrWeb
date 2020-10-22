@@ -1,11 +1,9 @@
 ---
 applications:
-- name: initializr-web
+- name: initializr-start
   buildpacks:
     - https://github.com/cloudfoundry/nodejs-buildpack#v1.7.30
   path: ../..
-  routes:
-    - route: initializr.apps.pcfone.io
   command: yarn public-start
   memory: 1024M
   env:
