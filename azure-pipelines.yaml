@@ -25,7 +25,6 @@ jobs:
           Dockerfile: start-client/Dockerfile
           buildContext: start-client/
           tags: |
-            latest
             $(Build.BuildId)
       - task: KubernetesManifest@0
         displayName: Deploy to Staging
