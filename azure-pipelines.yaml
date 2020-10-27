@@ -16,17 +16,12 @@ jobs:
     pool:
       vmImage: ubuntu-latest
     steps:
-      - task: CloudFoundryCLIInstall@0
-        displayName: Install Cloud Foundry CLI
+      - task: Docker@2
+        displayName: Push Docker Image
         inputs:
-          cfVersion: 6.51.0
-      - task: CloudFoundry@1
-        displayName: Deploy
-        inputs:
-          cfEndpoint: PCFone
-          org: group-steeltoe
-          space: initializr
-          deploymentOptions: manifest
-          cfManifest: start-client/deploy/cloud-foundry/manifest.yaml
-        condition:
-          and(succeeded(), not(eq(variables['build.reason'], 'PullRequest')))
+          command: buildAndPush
+          containerRegistry: SteeltoeContainerRegistry
+          repository: initializr-web
+          tags: |
+            latest
+            $(Build.BuildId)
