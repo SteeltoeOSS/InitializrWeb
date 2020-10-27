@@ -22,6 +22,8 @@ jobs:
           command: buildAndPush
           containerRegistry: SteeltoeContainerRegistry
           repository: initializr-web
+          Dockerfile: start-client/Dockerfile
+          buildContext: start-client/
           tags: |
             latest
             $(Build.BuildId)
