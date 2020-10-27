@@ -20,7 +20,6 @@ import { Form } from './common/form'
 import { Header, SideLeft, SideRight } from './common/layout'
 import { InitializrContext } from './reducer/Initializr'
 import { getConfig, getInfo, getProject } from './utils/ApiUtils'
-import { InitializrApiUrl } from '../../InitializrApiConfig'
 
 const Explore = lazy(() => import('./common/explore/Explore.js'))
 const Share = lazy(() => import('./common/share/Share.js'))
@@ -54,7 +53,7 @@ export default function Application() {
 
     useEffect(() => {
     if (windowsUtils.origin) {
-      const url = `${InitializrApiUrl}/config/projectMetadata`
+      const url = '/api/config/projectMetadata'
       getInfo(url).then(jsonConfig => {
         const response = getConfig(jsonConfig)
         dispatchInitializr({ type: 'COMPLETE', payload: { ...response } })
@@ -68,7 +67,7 @@ export default function Application() {
       return
     }
     setGenerating(true)
-    const url = `${InitializrApiUrl}/project`
+    const url = '/api/project'
     const project = await getProject(
       url,
       values,
@@ -83,7 +82,7 @@ export default function Application() {
   }
 
   const onExplore = async () => {
-    const url = `${InitializrApiUrl}/project`
+    const url = '/api/project'
     dispatch({ type: 'UPDATE', payload: { explore: true, list: false } })
     const project = await getProject(
       url,
