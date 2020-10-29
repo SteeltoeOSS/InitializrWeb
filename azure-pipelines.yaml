@@ -19,4 +19,5 @@ jobs:
       - task: Bash@3
         displayName: Noop
         inputs:
+          targetType: inline
           script: echo "someday push to development environment"
