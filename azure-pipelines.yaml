@@ -19,4 +19,4 @@ jobs:
       - task: Bash@3
         displayName: Noop
         inputs:
-          scripts: echo "someday push to development environment"
+          script: echo "someday push to development environment"
