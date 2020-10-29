@@ -1,5 +1,5 @@
 trigger:
-  - staging
+  - dev
 
 variables:
   - name: major
@@ -16,17 +16,7 @@ jobs:
     pool:
       vmImage: ubuntu-latest
     steps:
-      - task: CloudFoundryCLIInstall@0
-        displayName: Install Cloud Foundry CLI
+      - task: Bash@3
+        displayName: Noop
         inputs:
-          cfVersion: 6.51.0
-      - task: CloudFoundry@1
-        displayName: Deploy
-        inputs:
-          cfEndpoint: PCFone
-          org: group-steeltoe
-          space: initializr
-          deploymentOptions: manifest
-          cfManifest: start-client/deploy/cloud-foundry/manifest.yaml
-        condition:
-          and(succeeded(), not(eq(variables['build.reason'], 'PullRequest')))
+          scripts: echo "someday push to development environment"
