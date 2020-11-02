@@ -105,7 +105,7 @@ function SideLeft() {
                           id='ql-help-guides'
                           target='_blank'
                           rel='noopener noreferrer'
-                          href='https://steeltoe.io/docs/'
+                          href='https://docs.steeltoe.io/'
                         >
                           Steeltoe documentation
                         </a>
@@ -125,7 +125,7 @@ function SideLeft() {
                           id='ql-help-blog'
                           target='_blank'
                           rel='noopener noreferrer'
-                          href='https://steeltoe.io/blog/'
+                          href='https://docs.steeltoe.io/articles/'
                         >
                           What&apos;s new with Steeltoe?
                         </a>
