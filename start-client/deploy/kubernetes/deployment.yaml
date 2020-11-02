@@ -1,0 +1,22 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: initializr-web
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: initializr-web
+  template:
+    metadata:
+      labels:
+        app: initializr-web
+    spec:
+      nodeSelector:
+        "beta.kubernetes.io/os": linux
+      containers:
+      - name: initializr-web
+        image: steeltoe.azurecr.io/initializr-web
+        ports:
+        - containerPort: 80
