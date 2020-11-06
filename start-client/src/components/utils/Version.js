@@ -100,11 +100,11 @@ export const rangeToText = range => {
   return `>= ${range}`
 }
 
-export const getValidDependencies = (boot, dependencies) => {
+export const getValidDependencies = (steeltoeVersion, dependencies) => {
   return dependencies
     .map(dep => {
-      const compatibility = dep.versionRange
-        ? isInRange(boot, dep.versionRange)
+      const compatibility = dep.steeltoeVersionRange
+        ? isInRange(steeltoeVersion, dep.steeltoeVersionRange)
         : true
       if (!compatibility) {
         return null

@@ -22,7 +22,7 @@ export const defaultAppContext = {
   },
 }
 
-export function reduceDependencies(boot, items) {
+export function reduceDependencies(steeltoeVersion, items) {
   const groups = []
   const list = []
   const getParent = (m, name) => {
@@ -39,10 +39,10 @@ export function reduceDependencies(boot, items) {
       }
       groups.push(parent)
     }
-    const valid = isValidDependency(boot, dep)
+    const valid = isValidDependency(steeltoeVersion, dep)
     if (!valid) {
-      message = `Requires Spring Boot ${rangeToText(
-        get(dep, 'versionRequirement')
+      message = `Requires Steeltoe ${rangeToText(
+        get(dep, 'steeltoeVersionRange')
       )}.`
     }
     parent.items.push({ ...dep, valid, message })
@@ -85,7 +85,7 @@ export function reducer(state, action) {
     }
     case 'UPDATE_DEPENDENCIES': {
       const dependencies = reduceDependencies(
-        get(action, 'payload.boot'),
+        get(action, 'payload.steeltoeVersion'),
         get(state, 'config.lists.dependencies')
       )
       return { ...state, dependencies }
@@ -93,7 +93,7 @@ export function reducer(state, action) {
     case 'COMPLETE': {
       const json = get(action, 'payload', {})
       const dependencies = reduceDependencies(
-        get(json, 'defaultValues.boot'),
+        get(json, 'defaultValues.steeltoeVersion'),
         get(json, 'lists.dependencies')
       )
       return { ...state, complete: true, config: json, dependencies }
