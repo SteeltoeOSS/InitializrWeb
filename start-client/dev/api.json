@@ -90,12 +90,14 @@
           {
             "description": "Add dependency 1.1",
             "id": "1_1",
-            "name": "Dependency 1.1"
+            "name": "Dependency 1.1",
+            "steeltoeVersionRange": "[2.4.0,3.0.0)"
           },
           {
             "description": "Add dependency 1.2",
             "id": "1_2",
-            "name": "Dependency 1.2"
+            "name": "Dependency 1.2",
+            "steeltoeVersionRange": "[3.0.0, 3.0.1)"
           }
         ]
       },
