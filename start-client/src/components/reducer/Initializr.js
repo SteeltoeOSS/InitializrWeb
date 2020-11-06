@@ -7,17 +7,16 @@ import {getShareUrl, parseParams} from '../utils/ApiUtils'
 
 export const defaultInitializrContext = {
   values: {
-    steeltoe: '',
+    meta: {
+      name: '',
+      namespace: '',
+      applicationName: '',
+      description: '',
+    },
+    steeltoeVersion: '',
     dotNetFramework: '',
     dotNetTemplate: '',
     language: '',
-    meta: {
-      projectName: '',
-      application: '',
-      group: '',
-      description: '',
-      namespace: '',
-    },
     dependencies: [],
   },
   share: '',
@@ -47,18 +46,18 @@ export function reducer(state, action) {
       if (get(changes, 'meta')) {
         meta = {...meta, ...get(changes, 'meta')}
       }
-      if (get(changes, 'steeltoe')) {
-        const {steeltoe, ...err} = errors
+      if (get(changes, 'steeltoeVersion')) {
+        const {steeltoeVersion, ...err} = errors
         errors = err
       }
       if (get(changes, 'dotNetFramework')) {
         const {dotNetFramework, ...err} = errors
         errors = err
       }
-      if (get(changes, 'meta.projectName') !== undefined) {
-        set(meta, 'application', `${get(meta, 'projectName')}Application`)
-        set(meta, 'namespace', `${get(meta, 'projectName')}`)
-        set(meta, 'description', `${get(meta, 'projectName')} application project`)
+      if (get(changes, 'meta.name') !== undefined) {
+        set(meta, 'applicationName', `${get(meta, 'name')}Application`)
+        set(meta, 'namespace', `${get(meta, 'name')}`)
+        set(meta, 'description', `${get(meta, 'name')} application project`)
       }
       const values = {
         ...get(state, 'values'),
