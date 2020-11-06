@@ -33,11 +33,11 @@ function Warnings() {
               selected.
             </li>
           )}
-          {get(warnings, 'steeltoe') && (
+          {get(warnings, 'steeltoeVersion') && (
             <li>
               Steeltoe{' '}
-              <strong className='warn'>{get(warnings, 'steeltoe.value')}</strong> is
-              not available, <strong>{get(warnings, 'steeltoe.select')}</strong> has
+              <strong className='warn'>{get(warnings, 'steeltoeVersion.value')}</strong> is
+              not available, <strong>{get(warnings, 'steeltoeVersion.select')}</strong> has
               been selected.
             </li>
           )}

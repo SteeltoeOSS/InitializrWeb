@@ -29,16 +29,13 @@ export default function Loading() {
               </div>
             </div>
           </Control>
-          <Control text='Steeltoe'>
+          <Control text='SteeltoeVersion'>
             <Placeholder type='radio' width='100px' />
           </Control>
           <Control text='DotNet Framework'>
             <Placeholder type='radio' width='100px' />
           </Control>
           <Control text='Template'>
-            <Placeholder type='radio' width='100px' />
-          </Control>
-          <Control text='Language'>
             <Placeholder type='radio' width='100px' />
           </Control>
         </div>

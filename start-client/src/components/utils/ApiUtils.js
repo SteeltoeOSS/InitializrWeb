@@ -6,14 +6,14 @@ import Extend from '../../Extend.json'
 import {isInRange, parseReleases, parseVersion} from './Version'
 
 const PROPERTIES_MAPPING_URL = {
-  steeltoeVersion: 'steeltoe',
-  dotNetFramework: 'dotNetFramework',
-  dotNetTemplate: 'template',
-  language: 'language',
-  project: 'meta.projectName',
-  application: 'meta.application',
-  description: 'meta.description',
+  name: 'meta.name',
   namespace: 'meta.namespace',
+  applicationName: 'meta.applicationName',
+  description: 'meta.description',
+  steeltoeVersion: 'steeltoeVersion',
+  dotNetFramework: 'dotNetFramework',
+  dotNetTemplate: 'dotNetTemplate',
+  language: 'language',
   dependencies: 'dependencies',
 }
 
@@ -75,10 +75,12 @@ export const parseParams = (values, queryParams, lists) => {
       if (key) {
         const value = get(queryParams, entry, '').toLowerCase()
         switch (key) {
-          case 'projectName':
-          case 'template':
-          case 'language':
-          case 'dotNetFramework': {
+          case 'name':
+          case 'namespace':
+          case 'applicationName':
+          case 'dotNetFramework':
+          case 'dotNetTemplate':
+          case 'language': {
             const list = get(lists, key, [])
             const res = list.find(a => a.key.toLowerCase() === value)
             let error = false
@@ -123,7 +125,7 @@ export const parseParams = (values, queryParams, lists) => {
               }
             }
             if (error) {
-              set(errors, 'steeltoe', {
+              set(errors, 'steeltoeVersion', {
                 value: get(queryParams, entry, ''),
               })
             }
@@ -190,17 +192,17 @@ export const getLists = json => {
         key: `${type.id}`,
         text: `${type.name}`,
       })),
-    steeltoe: get(json, 'steeltoeVersion.values', []).map(steeltoe => ({
-      key: `${steeltoe.id}`,
-      text: `${steeltoe.name}`,
+    steeltoeVersion: get(json, 'steeltoeVersion.values', []).map(steeltoeVersion => ({
+      key: `${steeltoeVersion.id}`,
+      text: `${steeltoeVersion.name}`,
     })),
     dotNetFramework: get(json, 'dotNetFramework.values', []).map(dotNetFramework => ({
       key: `${dotNetFramework.id}`,
       text: `${dotNetFramework.name}`,
     })),
-    template: get(json, 'dotNetTemplate.values', []).map(template => ({
-      key: `${template.id}`,
-      text: `${template.name}`,
+    dotNetTemplate: get(json, 'dotNetTemplate.values', []).map(dotNetTemplate => ({
+      key: `${dotNetTemplate.id}`,
+      text: `${dotNetTemplate.name}`,
     })),
     language: get(json, 'language.values', []).map(language => ({
       key: `${language.id}`,
@@ -214,16 +216,16 @@ export const getLists = json => {
 
 export const getDefaultValues = json => {
   return {
-    steeltoe: get(json, 'steeltoeVersion.default'),
-    dotNetFramework: get(json, 'dotNetFramework.default'),
-    template: get(json, 'dotNetTemplate.default'),
-    language: get(json, 'language.default'),
     meta: {
-      application: get(json, 'application.default'),
-      projectName: get(json, 'project.default'),
-      description: get(json, 'description.default'),
+      name: get(json, 'name.default'),
       namespace: get(json, 'namespace.default'),
+      applicationName: get(json, 'applicationName.default'),
+      description: get(json, 'description.default'),
     },
+    steeltoeVersion: get(json, 'steeltoeVersion.default'),
+    dotNetFramework: get(json, 'dotNetFramework.default'),
+    dotNetTemplate: get(json, 'dotNetTemplate.default'),
+    language: get(json, 'language.default'),
     dependencies: [],
   }
 }
@@ -235,31 +237,32 @@ export const getConfig = json => {
   }
 }
 
-export const isValidDependency = function isValidDependency(steeltoe, dependency) {
+export const isValidDependency = function isValidDependency(steeltoeVersion, dependency) {
   if (!dependency) {
     return false
   }
   return get(dependency, 'versionRange')
-    ? isInRange(steeltoe, get(dependency, 'versionRange'))
+    ? isInRange(steeltoeVersion, get(dependency, 'versionRange'))
     : true
 }
 
 export const getProject = function getProject(url, values, config) {
   return new Promise((resolve, reject) => {
     const params = querystring.stringify({
-      template: get(values, 'template'),
-      language: get(values, 'language'),
-      steeltoeVersion: get(values, 'steeltoe'),
-      baseDir: get(values, 'meta.projectName'),
-      name: get(values, 'meta.projectName'),
-      application: get(values, 'meta.application'),
-      description: get(values, 'meta.description'),
+      name: get(values, 'meta.name'),
       namespace: get(values, 'meta.namespace'),
+      applicationName: get(values, 'meta.applicationName'),
+      description: get(values, 'meta.description'),
+      steeltoeVersion: get(values, 'meta.steeltoeVersion'),
+      dotNetFramework: get(values, 'dotNetFramework'),
+      dotNetTemplate: get(values, 'dotNetTemplate'),
+      language: get(values, 'language'),
+      baseDir: get(values, 'meta.name'),
     })
     let paramsDependencies = get(values, 'dependencies', [])
       .map(dependency => {
         const dep = config.find(it => it.id === dependency)
-        return isValidDependency(get(values, 'steeltoe'), dep) ? dependency : null
+        return isValidDependency(get(values, 'steeltoeVersion'), dep) ? dependency : null
       })
       .filter(dep => !!dep)
       .join(',')
