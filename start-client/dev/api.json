@@ -1,1 +1,230 @@
-{"project":{"type":"text","default":"Sample"},"namespace":{"type":"text","default":"Sample"},"application":{"type":"text","default":"SampleApplication"},"description":{"type":"text","default":"Sample project application"},"steeltoeVersion":{"default":"3.0.1","values":[{"id":"2.4.4","name":"Steeltoe 2.4.4 Maintenance Release"},{"id":"2.5.1","name":"Steeltoe 2.5.1 Maintenance Release"},{"id":"3.0.0","name":"Steeltoe 3.0.0 GA"},{"id":"3.0.1","name":"Steeltoe 3.0.1 Maintenance Release"}],"type":"single-select"},"dotNetFramework":{"default":"netcoreapp3.1","values":[{"id":"netcoreapp2.1","name":".NET Core 2.1"},{"id":"netcoreapp3.1","name":".NET Core 3.1"}],"type":"single-select"},"dotNetTemplate":{"default":"webapi","values":[{"id":"webapi","name":"ASP.NET Core Web API"}],"type":"single-select"},"language":{"default":"csharp","values":[{"id":"csharp","name":"C#"}],"type":"single-select"},"archiveMimeType":{"default":"zip","values":[{"id":"zip","name":"zip"}],"type":"single-select"},"dependencies":{"values":[{"name":"Configuration","values":[{"description":"Add a Spring Cloud Config Server configuration source.","id":"config-server","name":"Spring Cloud Config Server"},{"description":"Add a placeholder configuration source.","id":"placeholder","name":"Placeholder"},{"description":"Add a random value configuration source.","id":"random-value","name":"Random Value"}]},{"name":"Logging","values":[{"description":"Add dynamic logging.","id":"dynamic-logger","name":"Dynamic Logger"}]},{"name":"Ops","values":[{"description":"Add management endpoints.","id":"actuator","name":"Actuators"},{"description":"Add circuit breakers.","id":"circuit-breaker","name":"Circuit Breaker"}]},{"name":"SQL","values":[{"description":"Add a Microsoft SQL Server connector.","id":"sqlserver","name":"Microsoft SQL Server"},{"description":"Add a MySQL connector.","id":"mysql","name":"MySQL"},{"description":"Add a MySQL EFCore connector.","id":"mysql-efcore","name":"MySQL EFCore"},{"description":"Add a PostgreSQL connector.","id":"postgresql","name":"PostgreSQL"},{"description":"Add a PostgreSQL EFCore connector.","id":"postgresql-efcore","name":"PostgreSQL EFCore"}]},{"name":"NoSQL","values":[{"description":"Add a Redis connector.","id":"data-redis","name":"Redis"},{"description":"Add a MongoDB connector.","id":"data-mongodb","name":"MongoDB"}]},{"name":"Messaging","values":[{"description":"Add a RabbitMQ (AMQP) connector","id":"amqp","name":"RabbitMQ"}]},{"name":"Discovery","values":[{"description":"Add a Eureka discovery client.","id":"eureka-client","name":"Eureka Discovery Client"}]},{"name":"Security","values":[{"description":"Add an OAuth connector.","id":"oauth","name":"OAuth Connector"}]},{"name":"Hosting","values":[{"description":"Add a Dockerfile.","id":"docker","name":"Docker"},{"description":"Target Microsoft Azure Spring Cloud hosting.","steeltoeVersionRange":"3.0.0","id":"azure-spring-cloud","name":"Azure Spring Cloud"},{"description":"Target Cloud Foundry hosting.","id":"cloud-foundry","name":"Cloud Foundry"}]}],"type":"hierarchical-multi-select"}}
+{
+  "name": {
+    "type": "text",
+    "default": "Sample"
+  },
+  "namespace": {
+    "type": "text",
+    "default": "Sample"
+  },
+  "applicationName": {
+    "type": "text",
+    "default": "SampleApplication"
+  },
+  "description": {
+    "type": "text",
+    "default": "Sample project application"
+  },
+  "steeltoeVersion": {
+    "default": "3.0.1",
+    "values": [
+      {
+        "id": "2.4.4",
+        "name": "Steeltoe 2.4.4 Maintenance Release"
+      },
+      {
+        "id": "2.5.1",
+        "name": "Steeltoe 2.5.1 Maintenance Release"
+      },
+      {
+        "id": "3.0.0",
+        "name": "Steeltoe 3.0.0 GA"
+      },
+      {
+        "id": "3.0.1",
+        "name": "Steeltoe 3.0.1 Maintenance Release"
+      }
+    ],
+    "type": "single-select"
+  },
+  "dotNetFramework": {
+    "default": "netcoreapp3.1",
+    "values": [
+      {
+        "id": "netcoreapp2.1",
+        "name": ".NET Core 2.1"
+      },
+      {
+        "id": "netcoreapp3.1",
+        "name": ".NET Core 3.1"
+      }
+    ],
+    "type": "single-select"
+  },
+  "dotNetTemplate": {
+    "default": "webapi",
+    "values": [
+      {
+        "id": "webapi",
+        "name": "ASP.NET Core Web API"
+      }
+    ],
+    "type": "single-select"
+  },
+  "language": {
+    "default": "csharp",
+    "values": [
+      {
+        "id": "csharp",
+        "name": "C#"
+      }
+    ],
+    "type": "single-select"
+  },
+  "packaging": {
+    "default": "zip",
+    "values": [
+      {
+        "id": "zip",
+        "name": "zip"
+      }
+    ],
+    "type": "single-select"
+  },
+  "dependencies": {
+    "values": [
+      {
+        "name": "Configuration",
+        "values": [
+          {
+            "description": "Add a Spring Cloud Config Server configuration source.",
+            "id": "config-server",
+            "name": "Spring Cloud Config Server"
+          },
+          {
+            "description": "Add a placeholder configuration source.",
+            "id": "placeholder",
+            "name": "Placeholder"
+          },
+          {
+            "description": "Add a random value configuration source.",
+            "id": "random-value",
+            "name": "Random Value"
+          }
+        ]
+      },
+      {
+        "name": "Logging",
+        "values": [
+          {
+            "description": "Add dynamic logging.",
+            "id": "dynamic-logger",
+            "name": "Dynamic Logger"
+          }
+        ]
+      },
+      {
+        "name": "Ops",
+        "values": [
+          {
+            "description": "Add management endpoints.",
+            "id": "actuator",
+            "name": "Actuators"
+          },
+          {
+            "description": "Add circuit breakers.",
+            "id": "circuit-breaker",
+            "name": "Circuit Breaker"
+          }
+        ]
+      },
+      {
+        "name": "SQL",
+        "values": [
+          {
+            "description": "Add a Microsoft SQL Server connector.",
+            "id": "sqlserver",
+            "name": "Microsoft SQL Server"
+          },
+          {
+            "description": "Add a MySQL connector.",
+            "id": "mysql",
+            "name": "MySQL"
+          },
+          {
+            "description": "Add a MySQL EFCore connector.",
+            "id": "mysql-efcore",
+            "name": "MySQL EFCore"
+          },
+          {
+            "description": "Add a PostgreSQL connector.",
+            "id": "postgresql",
+            "name": "PostgreSQL"
+          },
+          {
+            "description": "Add a PostgreSQL EFCore connector.",
+            "id": "postgresql-efcore",
+            "name": "PostgreSQL EFCore"
+          }
+        ]
+      },
+      {
+        "name": "NoSQL",
+        "values": [
+          {
+            "description": "Add a Redis connector.",
+            "id": "data-redis",
+            "name": "Redis"
+          },
+          {
+            "description": "Add a MongoDB connector.",
+            "id": "data-mongodb",
+            "name": "MongoDB"
+          }
+        ]
+      },
+      {
+        "name": "Messaging",
+        "values": [
+          {
+            "description": "Add a RabbitMQ (AMQP) connector",
+            "id": "amqp",
+            "name": "RabbitMQ"
+          }
+        ]
+      },
+      {
+        "name": "Discovery",
+        "values": [
+          {
+            "description": "Add a Eureka discovery client.",
+            "id": "eureka-client",
+            "name": "Eureka Discovery Client"
+          }
+        ]
+      },
+      {
+        "name": "Security",
+        "values": [
+          {
+            "description": "Add an OAuth connector.",
+            "id": "oauth",
+            "name": "OAuth Connector"
+          }
+        ]
+      },
+      {
+        "name": "Hosting",
+        "values": [
+          {
+            "description": "Add a Dockerfile.",
+            "id": "docker",
+            "name": "Docker"
+          },
+          {
+            "description": "Target Microsoft Azure Spring Cloud hosting.",
+            "steeltoeVersionRange": "3.0.0",
+            "id": "azure-spring-cloud",
+            "name": "Azure Spring Cloud"
+          },
+          {
+            "description": "Target Cloud Foundry hosting.",
+            "id": "cloud-foundry",
+            "name": "Cloud Foundry"
+          }
+        ]
+      }
+    ],
+    "type": "hierarchical-multi-select"
+  }
+}
