@@ -1,19 +1,19 @@
 {
   "name": {
     "type": "text",
-    "default": "Sample"
+    "default": "Dev"
   },
   "namespace": {
     "type": "text",
-    "default": "Sample"
+    "default": "DevNamespace"
   },
   "applicationName": {
     "type": "text",
-    "default": "SampleApplication"
+    "default": "DevApplication"
   },
   "description": {
     "type": "text",
-    "default": "Sample project application"
+    "default": "Development project application"
   },
   "steeltoeVersion": {
     "default": "3.0.1",
@@ -82,149 +82,40 @@
     "type": "single-select"
   },
   "dependencies": {
+    "type": "hierarchical-multi-select",
     "values": [
       {
-        "name": "Configuration",
+        "name": "Group One",
         "values": [
           {
-            "description": "Add a Spring Cloud Config Server configuration source.",
-            "id": "config-server",
-            "name": "Spring Cloud Config Server"
+            "description": "Add dependency 1.1",
+            "id": "1_1",
+            "name": "Dependency 1.1",
+            "steeltoeVersionRange": "[2.4.0,3.0.0)"
           },
           {
-            "description": "Add a placeholder configuration source.",
-            "id": "placeholder",
-            "name": "Placeholder"
-          },
-          {
-            "description": "Add a random value configuration source.",
-            "id": "random-value",
-            "name": "Random Value"
+            "description": "Add dependency 1.2",
+            "id": "1_2",
+            "name": "Dependency 1.2",
+            "steeltoeVersionRange": "[3.0.0, 3.0.1)"
           }
         ]
       },
       {
-        "name": "Logging",
+        "name": "Group Two",
         "values": [
           {
-            "description": "Add dynamic logging.",
-            "id": "dynamic-logger",
-            "name": "Dynamic Logger"
-          }
-        ]
-      },
-      {
-        "name": "Ops",
-        "values": [
-          {
-            "description": "Add management endpoints.",
-            "id": "actuator",
-            "name": "Actuators"
+            "description": "Add dependency 2.1",
+            "id": "2_1",
+            "name": "Dependency 2.1"
           },
           {
-            "description": "Add circuit breakers.",
-            "id": "circuit-breaker",
-            "name": "Circuit Breaker"
-          }
-        ]
-      },
-      {
-        "name": "SQL",
-        "values": [
-          {
-            "description": "Add a Microsoft SQL Server connector.",
-            "id": "sqlserver",
-            "name": "Microsoft SQL Server"
-          },
-          {
-            "description": "Add a MySQL connector.",
-            "id": "mysql",
-            "name": "MySQL"
-          },
-          {
-            "description": "Add a MySQL EFCore connector.",
-            "id": "mysql-efcore",
-            "name": "MySQL EFCore"
-          },
-          {
-            "description": "Add a PostgreSQL connector.",
-            "id": "postgresql",
-            "name": "PostgreSQL"
-          },
-          {
-            "description": "Add a PostgreSQL EFCore connector.",
-            "id": "postgresql-efcore",
-            "name": "PostgreSQL EFCore"
-          }
-        ]
-      },
-      {
-        "name": "NoSQL",
-        "values": [
-          {
-            "description": "Add a Redis connector.",
-            "id": "data-redis",
-            "name": "Redis"
-          },
-          {
-            "description": "Add a MongoDB connector.",
-            "id": "data-mongodb",
-            "name": "MongoDB"
-          }
-        ]
-      },
-      {
-        "name": "Messaging",
-        "values": [
-          {
-            "description": "Add a RabbitMQ (AMQP) connector",
-            "id": "amqp",
-            "name": "RabbitMQ"
-          }
-        ]
-      },
-      {
-        "name": "Discovery",
-        "values": [
-          {
-            "description": "Add a Eureka discovery client.",
-            "id": "eureka-client",
-            "name": "Eureka Discovery Client"
-          }
-        ]
-      },
-      {
-        "name": "Security",
-        "values": [
-          {
-            "description": "Add an OAuth connector.",
-            "id": "oauth",
-            "name": "OAuth Connector"
-          }
-        ]
-      },
-      {
-        "name": "Hosting",
-        "values": [
-          {
-            "description": "Add a Dockerfile.",
-            "id": "docker",
-            "name": "Docker"
-          },
-          {
-            "description": "Target Microsoft Azure Spring Cloud hosting.",
-            "steeltoeVersionRange": "3.0.0",
-            "id": "azure-spring-cloud",
-            "name": "Azure Spring Cloud"
-          },
-          {
-            "description": "Target Cloud Foundry hosting.",
-            "id": "cloud-foundry",
-            "name": "Cloud Foundry"
+            "description": "Add dependency 2.2",
+            "id": "2_2",
+            "name": "Dependency 2.2"
           }
         ]
       }
-    ],
-    "type": "hierarchical-multi-select"
+    ]
   }
 }

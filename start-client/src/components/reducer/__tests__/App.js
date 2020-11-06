@@ -69,7 +69,7 @@ describe('UPDATE_DEPENDENCIES action', () => {
           {
             id: 'foo1',
             group: 'bar2',
-            versionRange: '',
+            steeltoeVersionRange: '',
           },
         ],
       },
@@ -77,7 +77,7 @@ describe('UPDATE_DEPENDENCIES action', () => {
     const result = reducer(state, {
       type: 'UPDATE_DEPENDENCIES',
       payload: {
-        boot: '1.0.0.RELEASE',
+        steeltoeVersion: '1.0.0',
       },
     })
     expect(get(result, 'dependencies.list').length).toBe(1)
@@ -147,14 +147,14 @@ describe('COMPLETE action', () => {
       type: 'COMPLETE',
       payload: {
         defaultValues: {
-          boot: '1.0.0',
+          steeltoeVersion: '1.0.0',
         },
         lists: {
           dependencies: [
             {
               id: 'foo1',
               group: 'bar2',
-              versionRange: '',
+              steeltoeVersionRange: '',
             },
           ],
         },
