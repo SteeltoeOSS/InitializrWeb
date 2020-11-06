@@ -180,8 +180,8 @@ export const getLists = json => {
         name: `${get(item, 'name', '')}`,
         group: `${group.name}`,
         description: `${get(item, 'description', '')}`,
-        versionRange: `${get(item, 'versionRange', '')}`,
-        versionRequirement: `${get(item, 'versionRange', '')}`,
+        steeltoeVersionRange: `${get(item, 'steeltoeVersionRange', '')}`,
+        steeltoeVersionRequirement: `${get(item, 'steeltoeVersionRequirement', '')}`,
         weight: get(extend, 'weight', 50),
       }
       deps.push(val)
@@ -248,8 +248,8 @@ export const isValidDependency = function isValidDependency(steeltoeVersion, dep
   if (!dependency) {
     return false
   }
-  return get(dependency, 'versionRange')
-    ? isInRange(steeltoeVersion, get(dependency, 'versionRange'))
+  return get(dependency, 'steeltoeVersionRange')
+    ? isInRange(steeltoeVersion, get(dependency, 'steeltoeVersionRange'))
     : true
 }
 

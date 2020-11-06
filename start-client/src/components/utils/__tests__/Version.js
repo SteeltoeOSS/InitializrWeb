@@ -99,17 +99,19 @@ describe('parseReleases', () => {
  */
 describe('isInRange', () => {
   it('should return true', () => {
-    let result = isInRange('2.1.1.RELEASE', '[2.0.0.RELEASE,2.2.0.M1)')
+    let result = isInRange('2.0.0', '')
     expect(result).toBe(true)
-    result = isInRange('2.0.0.RELEASE', '[2.0.0.RELEASE,2.2.0.M1)')
+    result = isInRange('2.0.0', '[2.0.0,2.2.0)')
     expect(result).toBe(true)
-    result = isInRange('2.0.0.RELEASE', '')
+    result = isInRange('2.1.1', '[2.0.0,2.2.0)')
     expect(result).toBe(true)
   })
   it('should return false', () => {
-    let result = isInRange('1.9.8.RELEASE', '[2.0.0.RELEASE,2.2.0.M1)')
+    let result = isInRange('1.9.8', '[2.0.0,2.2.0)')
     expect(result).toBe(false)
-    result = isInRange('2.0.0.M1', '[2.0.0.RELEASE,2.2.0.M1)')
+    result = isInRange('2.2.0', '[2.0.0,2.2.0)')
+    expect(result).toBe(false)
+    result = isInRange('3.0.0', '[2.0.0,2.2.0)')
     expect(result).toBe(false)
   })
 })
@@ -119,14 +121,14 @@ describe('isInRange', () => {
  */
 describe('rangeToText', () => {
   it('should return the correct string', () => {
-    let result = rangeToText('[2.0.0.RELEASE,2.2.0.M1)')
-    expect(result).toBe('>= 2.0.0.RELEASE and < 2.2.0.M1')
-    result = rangeToText('[2.0.0.RELEASE,2.2.0.M1]')
-    expect(result).toBe('>= 2.0.0.RELEASE and <= 2.2.0.M1')
-    result = rangeToText('(2.0.0.RELEASE,2.2.0.M1]')
-    expect(result).toBe('> 2.0.0.RELEASE and <= 2.2.0.M1')
-    result = rangeToText('2.0.0.RELEASE')
-    expect(result).toBe('>= 2.0.0.RELEASE')
+    let result = rangeToText('[2.0.0,2.2.0)')
+    expect(result).toBe('>= 2.0.0 and < 2.2.0')
+    result = rangeToText('[2.0.0,2.2.0]')
+    expect(result).toBe('>= 2.0.0 and <= 2.2.0')
+    result = rangeToText('(2.0.0,2.2.0]')
+    expect(result).toBe('> 2.0.0 and <= 2.2.0')
+    result = rangeToText('2.0.0')
+    expect(result).toBe('>= 2.0.0')
   })
 })
 
@@ -135,22 +137,22 @@ describe('rangeToText', () => {
  */
 describe('getValidDependencies', () => {
   it('should return the valid dependencies', () => {
-    const result = getValidDependencies('2.0.0.RELEASE', [
+    const result = getValidDependencies('2.0.0', [
       {
         name: 'foo1',
-        versionRange: '[2.0.0.RELEASE,2.2.0.M1)',
+        steeltoeVersionRange: '[2.0.0,2.2.0)',
       },
       {
         name: 'foo2',
-        versionRange: '(2.0.0.RELEASE,2.2.0.M1]',
+        steeltoeVersionRange: '(2.0.0,2.2.0]',
       },
       {
         name: 'foo3',
-        versionRange: '2.0.0.RELEASE',
+        steeltoeVersionRange: '2.0.0',
       },
       {
         name: 'foo4',
-        versionRange: '',
+        steeltoeVersionRange: '',
       },
       {
         name: 'foo5',
