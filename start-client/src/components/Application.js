@@ -77,7 +77,7 @@ export default function Application() {
     })
     setGenerating(false)
     if (project) {
-      FileSaver.saveAs(project, `${get(values, 'meta.projectName')}.zip`)
+      FileSaver.saveAs(project, `${get(values, 'meta.name')}.zip`)
     }
   }
 
@@ -157,7 +157,7 @@ export default function Application() {
       <Suspense fallback=''>
         <Share open={shareOpen || false} shareUrl={share} onClose={onEscape} />
         <Explore
-          projectName={`${get(values, 'meta.projectName')}.zip`}
+          projectName={`${get(values, 'meta.name')}.zip`}
           blob={blob}
           open={exploreOpen || false}
           onClose={onEscape}

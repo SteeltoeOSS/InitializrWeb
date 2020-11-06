@@ -40,11 +40,11 @@ const Fields = ({
           <div className='col-sticky'>
             <Control text='Project'>
               <FieldInput
-                id='input-projectName'
-                value={get(values, 'meta.projectName')}
+                id='input-name'
+                value={get(values, 'meta.name')}
                 text='Name'
                 onChange={event => {
-                  update({meta: {projectName: event.target.value}})
+                  update({meta: {name: event.target.value}})
                 }}
               />
               <FieldInput
@@ -56,11 +56,11 @@ const Fields = ({
                 }}
               />
               <FieldInput
-                id='input-application'
-                value={get(values, 'meta.application')}
+                id='input-applicationName'
+                value={get(values, 'meta.applicationName')}
                 text='Application'
                 onChange={event => {
-                  update({meta: {application: event.target.value}})
+                  update({meta: {applicationName: event.target.value}})
                 }}
               />
               <FieldInput
@@ -74,30 +74,30 @@ const Fields = ({
             </Control>
             <Control text='Steeltoe'>
               <Radio
-                name='steeltoe'
-                selected={get(values, 'steeltoe')}
-                error={get(errors, 'steeltoe.value', '')}
-                options={get(config, 'lists.steeltoe')}
+                name='steeltoeVersion'
+                selected={get(values, 'steeltoeVersion')}
+                error={get(errors, 'steeltoeVersion.value', '')}
+                options={get(config, 'lists.steeltoeVersion')}
                 onChange={value => {
                   dispatchInitializr({
                     type: 'UPDATE',
-                    payload: {steeltoe: value},
+                    payload: {steeltoeVersion: value},
                     config: get(dependencies, 'list'),
                   })
                   dispatch({
                     type: 'UPDATE_DEPENDENCIES',
-                    payload: {steeltoe: value},
+                    payload: {steeltoeVersion: value},
                   })
                 }}
               />
-              {get(errors, 'steeltoe') && (
+              {get(errors, 'steeltoeVersion') && (
                 <FieldError>
-                  Steeltoe {get(errors, 'steeltoe.value')} is not supported.
+                  Steeltoe {get(errors, 'steeltoeVersion.value')} is not supported.
                   Please select a valid version.
                 </FieldError>
               )}
             </Control>
-            <Control text='DotNet Framework'>
+            <Control text='.NET Framework'>
               <Radio
                 name='dotNetFramework'
                 selected={get(values, 'dotNetFramework')}
@@ -122,13 +122,13 @@ const Fields = ({
                 </FieldError>
               )}
             </Control>
-            <Control text='Template'>
+            <Control text='.NET Template'>
               <Radio
-                name='template'
-                selected={get(values, 'template')}
-                options={get(config, 'lists.template')}
+                name='dotNetTemplate'
+                selected={get(values, 'dotNetTemplate')}
+                options={get(config, 'lists.dotNetTemplate')}
                 onChange={value => {
-                  update({template: value})
+                  update({dotNetTemplate: value})
                 }}
               />
             </Control>
