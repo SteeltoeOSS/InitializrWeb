@@ -16,33 +16,32 @@ describe('getDefaultValues', () => {
   it('parse correctly', () => {
     const json = { ...MockClient }
     const defaultValues = getDefaultValues(json)
-    expect(get(defaultValues, 'project')).toBe(get(MockClient, 'type.default'))
-    expect(get(defaultValues, 'boot')).toBe(
-      get(MockClient, 'bootVersion.default')
-    )
-    expect(get(defaultValues, 'language')).toBe(
-      get(MockClient, 'language.default')
-    )
     expect(get(defaultValues, 'meta.name')).toBe(
       get(MockClient, 'name.default')
     )
-    expect(get(defaultValues, 'meta.group')).toBe(
-      get(MockClient, 'groupId.default')
+    expect(get(defaultValues, 'meta.applicationName')).toBe(
+      get(MockClient, 'applicationName.default')
     )
-    expect(get(defaultValues, 'meta.artifact')).toBe(
-      get(MockClient, 'artifactId.default')
+    expect(get(defaultValues, 'meta.namespace')).toBe(
+      get(MockClient, 'namespace.default')
     )
     expect(get(defaultValues, 'meta.description')).toBe(
       get(MockClient, 'description.default')
     )
-    expect(get(defaultValues, 'meta.packaging')).toBe(
+    expect(get(defaultValues, 'steeltoeVersion')).toBe(
+      get(MockClient, 'steeltoeVersion.default')
+    )
+    expect(get(defaultValues, 'dotNetFramework')).toBe(
+      get(MockClient, 'dotNetFramework.default')
+    )
+    expect(get(defaultValues, 'dotNetTemplate')).toBe(
+      get(MockClient, 'dotNetTemplate.default')
+    )
+    expect(get(defaultValues, 'language')).toBe(
+      get(MockClient, 'language.default')
+    )
+    expect(get(defaultValues, 'packaging')).toBe(
       get(MockClient, 'packaging.default')
-    )
-    expect(get(defaultValues, 'meta.packageName')).toBe(
-      get(MockClient, 'packageName.default')
-    )
-    expect(get(defaultValues, 'meta.java')).toBe(
-      get(MockClient, 'javaVersion.default')
     )
   })
 })
