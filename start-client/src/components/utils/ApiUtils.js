@@ -14,6 +14,7 @@ const PROPERTIES_MAPPING_URL = {
   dotNetFramework: 'dotNetFramework',
   dotNetTemplate: 'dotNetTemplate',
   language: 'language',
+  packaging: 'packaging',
   dependencies: 'dependencies',
 }
 
@@ -80,7 +81,8 @@ export const parseParams = (values, queryParams, lists) => {
           case 'applicationName':
           case 'dotNetFramework':
           case 'dotNetTemplate':
-          case 'language': {
+          case 'language':
+          case 'packaging': {
             const list = get(lists, key, [])
             const res = list.find(a => a.key.toLowerCase() === value)
             let error = false
@@ -208,6 +210,10 @@ export const getLists = json => {
       key: `${language.id}`,
       text: `${language.name}`,
     })),
+    packaging: get(json, 'packaging.values', []).map(packaging => ({
+      key: `${packaging.id}`,
+      text: `${packaging.name}`,
+    })),
     // meta: {
     // },
     dependencies: deps,
@@ -226,6 +232,7 @@ export const getDefaultValues = json => {
     dotNetFramework: get(json, 'dotNetFramework.default'),
     dotNetTemplate: get(json, 'dotNetTemplate.default'),
     language: get(json, 'language.default'),
+    packaging: get(json, 'packaging.default'),
     dependencies: [],
   }
 }
@@ -257,6 +264,7 @@ export const getProject = function getProject(url, values, config) {
       dotNetFramework: get(values, 'dotNetFramework'),
       dotNetTemplate: get(values, 'dotNetTemplate'),
       language: get(values, 'language'),
+      packaging: get(values, 'packaging'),
       baseDir: get(values, 'meta.name'),
     })
     let paramsDependencies = get(values, 'dependencies', [])
