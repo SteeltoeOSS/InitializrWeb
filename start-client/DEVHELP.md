@@ -1,6 +1,6 @@
-# Recipes
+# Developer Help
 
-## Fields
+## Project Metadata Fields
 
 * `src/components/reducer/Initializr.js`
   * define field:
@@ -11,7 +11,7 @@
         foo: '',
         ...
     ```
-  * error messages
+  * auto update
     ```
     export function reducer(state, action) {
       switch (action.type) {
@@ -51,6 +51,13 @@
       return {
         ...
         foo: get(json, 'foo.default'),
+        ...
+    ```
+  * add to `getProject`:
+    ```
+    const params = querystring.stringify({
+        ...
+        foo: get(values, 'foo'),
         ...
     ```
 * `src/components/common/builder/Warnings.js`
