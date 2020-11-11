@@ -85,34 +85,41 @@
     "type": "hierarchical-multi-select",
     "values": [
       {
-        "name": "Group One",
+        "name": "A Group",
         "values": [
+          {
+            "description": "Add dependency 0.0",
+            "id": "0_0",
+            "name": "Dependency 0.0"
+          },
+          {
+            "description": "Add dependency 1.0",
+            "id": "1_0",
+            "name": "Dependency 1.0",
+            "steeltoeVersionRange": "3.0.0"
+          },
+          {
+            "description": "Add dependency 0.1",
+            "id": "0_1",
+            "name": "Dependency 0.1",
+            "dotNetFrameworkRange": "netcoreapp3.0"
+          },
           {
             "description": "Add dependency 1.1",
             "id": "1_1",
             "name": "Dependency 1.1",
-            "steeltoeVersionRange": "[2.4.0,3.0.0)"
-          },
-          {
-            "description": "Add dependency 1.2",
-            "id": "1_2",
-            "name": "Dependency 1.2",
-            "steeltoeVersionRange": "[3.0.0, 3.0.1)"
+            "steeltoeVersionRange": "[2.4.0,3.0.0)",
+            "dotNetFrameworkRange": "[netcoreapp2.1,netcoreapp3.0)"
           }
         ]
       },
       {
-        "name": "Group Two",
+        "name": "Another Group",
         "values": [
           {
-            "description": "Add dependency 2.1",
-            "id": "2_1",
-            "name": "Dependency 2.1"
-          },
-          {
-            "description": "Add dependency 2.2",
-            "id": "2_2",
-            "name": "Dependency 2.2"
+            "description": "Add dependency foo",
+            "id": "foo",
+            "name": "Foo Dependency"
           }
         ]
       }
