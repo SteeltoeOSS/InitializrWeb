@@ -28,8 +28,8 @@ export const parseVersion = version => {
 }
 
 export const compare = (a, b) => {
-  let prefixA = a.match(/[A-z]+/)
-  let prefixB = b.match(/[A-z]+/)
+  let prefixA = a.match(/^[A-z]+/)
+  let prefixB = b.match(/^[A-z]+/)
   if (prefixA || prefixB) {
     if (!prefixA) {
       return -1

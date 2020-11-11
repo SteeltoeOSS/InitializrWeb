@@ -76,6 +76,8 @@ describe('compare', () => {
     expect(result > 0).toBe(true)
     result = compare('1.0.1', '1.0.1.RELEASE')
     expect(result < 0).toBe(true)
+    result = compare('foo1.1', 'foo1.2')
+    expect(result < 0).toBe(true)
   })
 })
 
