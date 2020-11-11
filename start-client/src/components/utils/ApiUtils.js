@@ -182,6 +182,8 @@ export const getLists = json => {
         description: `${get(item, 'description', '')}`,
         steeltoeVersionRange: `${get(item, 'steeltoeVersionRange', '')}`,
         steeltoeVersionRequirement: `${get(item, 'steeltoeVersionRequirement', '')}`,
+        dotNetFrameworkRange: `${get(item, 'dotNetFrameworkRange', '')}`,
+        dotNetFrameworkRequirement: `${get(item, 'dotNetFrameworkRequirement', '')}`,
         weight: get(extend, 'weight', 50),
       }
       deps.push(val)
@@ -244,15 +246,27 @@ export const getConfig = json => {
   }
 }
 
-export const isValidDependency = function isValidDependency(steeltoeVersion, dependency) {
+export const isValidSteeltoeVersionDependency = function isValidSteeltoeVersionDependency(steeltoeVersion, dependency) {
   if (!steeltoeVersion) {
-    return true;
+    return true
   }
   if (!dependency) {
     return false
   }
   return get(dependency, 'steeltoeVersionRange')
     ? isInRange(steeltoeVersion, get(dependency, 'steeltoeVersionRange'))
+    : true
+}
+
+export const isValidDotNetFrameworkDependency = function isValidDotNetFrameworkDependency(dotNetFramework, dependency) {
+  if (!dotNetFramework) {
+    return true
+  }
+  if (!dependency) {
+    return false
+  }
+  return get(dependency, 'dotNetFrameworkRange')
+    ? isInRange(dotNetFramework, get(dependency, 'dotNetFrameworkRange'))
     : true
 }
 
