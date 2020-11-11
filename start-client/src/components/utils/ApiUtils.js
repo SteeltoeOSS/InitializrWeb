@@ -245,6 +245,9 @@ export const getConfig = json => {
 }
 
 export const isValidDependency = function isValidDependency(steeltoeVersion, dependency) {
+  if (!steeltoeVersion) {
+    return true;
+  }
   if (!dependency) {
     return false
   }
