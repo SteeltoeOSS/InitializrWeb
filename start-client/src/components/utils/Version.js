@@ -28,6 +28,21 @@ export const parseVersion = version => {
 }
 
 export const compare = (a, b) => {
+  let prefixA = a.match(/[A-z]+/)
+  let prefixB = b.match(/[A-z]+/)
+  if (prefixA || prefixB) {
+    if (!prefixA) {
+      return -1
+    }
+    if (!prefixB) {
+      return 1
+    }
+    if (prefixA[0] !== prefixB[0]) {
+      return prefixA[0].localeCompare(prefixB[0])
+    }
+    a = a.substring(prefixA[0].length)
+    b = b.substring(prefixB[0].length)
+  }
   let result
   const versionA = a.split('.')
   const versionB = b.split('.')

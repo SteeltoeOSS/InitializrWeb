@@ -4,7 +4,7 @@ import set from 'lodash.set'
 import React, { useReducer } from 'react'
 
 import useTheme from '../utils/Theme'
-import { isValidDependency } from '../utils/ApiUtils'
+import { isValidSteeltoeVersionDependency, isValidDotNetFrameworkDependency } from '../utils/ApiUtils'
 import { rangeToText } from '../utils/Version'
 
 export const defaultAppContext = {
@@ -22,7 +22,7 @@ export const defaultAppContext = {
   },
 }
 
-export function reduceDependencies(steeltoeVersion, items) {
+export function reduceDependencies(steeltoeVersion, dotNetFramework, items) {
   const groups = []
   const list = []
   const getParent = (m, name) => {
@@ -39,12 +39,27 @@ export function reduceDependencies(steeltoeVersion, items) {
       }
       groups.push(parent)
     }
-    const valid = isValidDependency(steeltoeVersion, dep)
-    if (!valid) {
-      message = `Requires Steeltoe ${rangeToText(
+    const validSteeltoeVersion = isValidSteeltoeVersionDependency(steeltoeVersion, dep)
+    if (!validSteeltoeVersion) {
+      message += `Requires Steeltoe ${rangeToText(
         get(dep, 'steeltoeVersionRange')
-      )}.`
+      )}`
     }
+    const validDotNetFramework = isValidDotNetFrameworkDependency(dotNetFramework, dep)
+    if (!validDotNetFramework) {
+      if (message) {
+        message += `,`
+      } else {
+        message += `Requires`
+      }
+      message += ` .NET Framework ${rangeToText(
+        get(dep, 'dotNetFrameworkRange')
+      )}`
+    }
+    if (message) {
+      message += '.'
+    }
+    const valid = validSteeltoeVersion && validDotNetFramework
     parent.items.push({ ...dep, valid, message })
     list.push({ ...dep, valid, message })
   }
@@ -86,6 +101,7 @@ export function reducer(state, action) {
     case 'UPDATE_DEPENDENCIES': {
       const dependencies = reduceDependencies(
         get(action, 'payload.steeltoeVersion'),
+        get(action, 'payload.dotNetFramework'),
         get(state, 'config.lists.dependencies')
       )
       return { ...state, dependencies }
@@ -94,6 +110,7 @@ export function reducer(state, action) {
       const json = get(action, 'payload', {})
       const dependencies = reduceDependencies(
         get(json, 'defaultValues.steeltoeVersion'),
+        get(json, 'defaultValues.dotNetFramework'),
         get(json, 'lists.dependencies')
       )
       return { ...state, complete: true, config: json, dependencies }
