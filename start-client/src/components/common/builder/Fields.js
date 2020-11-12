@@ -83,12 +83,12 @@ function Fields({
                 onChange={value => {
                   dispatchInitializr({
                     type: 'UPDATE',
-                    payload: {steeltoeVersion: value},
+                    payload: {steeltoeVersion: value, dotNetFramework: get(values, 'dotNetFramework')},
                     config: get(dependencies, 'list'),
                   })
                   dispatch({
                     type: 'UPDATE_DEPENDENCIES',
-                    payload: {steeltoeVersion: value},
+                    payload: {steeltoeVersion: value, dotNetFramework: get(values, 'dotNetFramework')},
                   })
                 }}
               />
@@ -108,12 +108,12 @@ function Fields({
                 onChange={value => {
                   dispatchInitializr({
                     type: 'UPDATE',
-                    payload: {dotNetFramework: value},
+                    payload: {dotNetFramework: value, steeltoeVersion: get(values, 'steeltoeVersion')},
                     config: get(dependencies, 'list'),
                   })
                   dispatch({
                     type: 'UPDATE_DEPENDENCIES',
-                    payload: {dotNetFramework: value},
+                    payload: {dotNetFramework: value, steeltoeVersion: get(values, 'steeltoeVersion')},
                   })
                 }}
               />
