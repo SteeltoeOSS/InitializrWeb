@@ -119,7 +119,7 @@ function Fields({
               />
               {get(errors, 'dotNetFramework') && (
                 <FieldError>
-                  Steeltoe {get(errors, 'dotNetFramework.value')} is not supported.
+                  .NET Framework {get(errors, 'dotNetFramework.value')} is not supported.
                   Please select a valid version.
                 </FieldError>
               )}
