@@ -85,7 +85,19 @@
     "type": "hierarchical-multi-select",
     "values": [
       {
-        "name": "A Group",
+        "name": "Focus Group",
+        "values": [
+          {
+            "description": "Add this dependency",
+            "id": "focus",
+            "name": "Focus Dependency",
+            "steeltoeVersionRange": "[2.4.0,3.0.0)",
+            "dotNetFrameworkRange": "netcoreapp3.1"
+          }
+        ]
+      },
+      {
+        "name": "Grid Group",
         "values": [
           {
             "description": "Add dependency 0.0",
@@ -110,16 +122,6 @@
             "name": "Dependency 1.1",
             "steeltoeVersionRange": "[2.4.0,3.0.0)",
             "dotNetFrameworkRange": "[netcoreapp2.1,netcoreapp3.0)"
-          }
-        ]
-      },
-      {
-        "name": "Another Group",
-        "values": [
-          {
-            "description": "Add dependency foo",
-            "id": "foo",
-            "name": "Foo Dependency"
           }
         ]
       }
