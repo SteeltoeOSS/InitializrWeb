@@ -46,20 +46,29 @@ export const compare = (a, b) => {
   let result
   const versionA = a.split('.')
   const versionB = b.split('.')
-  const len = Math.min(versionA.length, versionB.length)
+  const len = Math.min(versionA.length, versionB.length, 3)
   for (let i = 0; i < len; i += 1) {
     result = parseInt(versionA[i], 10) - parseInt(versionB[i], 10)
     if (result !== 0) {
       return result
     }
   }
-  return versionA.length - versionB.length
-  // const qualify = version => qualifiers.indexOf(parseQualifier(version))
-  // result = qualify(a) - qualify(b)
-  // if (result !== 0) {
-  //   return result
-  // }
-  // return versionA[3].localeCompare(versionB[3])
+  if (Math.max(versionA.length, versionB.length) <= 3) {
+    return 0
+  }
+
+  if (versionA.length === 3) {
+    versionA[3] = ''
+  }
+  if (versionB.length === 3) {
+    versionB[3] = ''
+  }
+  const qualify = version => qualifiers.indexOf(parseQualifier(version))
+  result = qualify(a) - qualify(b)
+  if (result !== 0) {
+    return result
+  }
+  return versionA[3].localeCompare(versionB[3])
 }
 
 export const parseReleases = releases => {
