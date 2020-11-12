@@ -46,17 +46,22 @@ export const compare = (a, b) => {
   let result
   const versionA = a.split('.')
   const versionB = b.split('.')
+  const len = Math.min(versionA.length, versionB.length, 3)
+  for (let i = 0; i < len; i += 1) {
+    result = parseInt(versionA[i], 10) - parseInt(versionB[i], 10)
+    if (result !== 0) {
+      return result
+    }
+  }
+  if (Math.max(versionA.length, versionB.length) <= 3) {
+    return 0
+  }
+
   if (versionA.length === 3) {
     versionA[3] = ''
   }
   if (versionB.length === 3) {
     versionB[3] = ''
-  }
-  for (let i = 0; i < 3; i += 1) {
-    result = parseInt(versionA[i], 10) - parseInt(versionB[i], 10)
-    if (result !== 0) {
-      return result
-    }
   }
   const qualify = version => qualifiers.indexOf(parseQualifier(version))
   result = qualify(a) - qualify(b)
