@@ -1,5 +1,5 @@
 trigger:
-  - staging
+  - master
 
 variables:
   - name: major
@@ -30,10 +30,10 @@ jobs:
         condition:
           and(succeeded(), not(eq(variables['build.reason'], 'PullRequest')))
       - task: KubernetesManifest@0
-        displayName: Deploy to Staging
+        displayName: Deploy to Production
         inputs:
           action: deploy
-          kubernetesServiceConnection: SteeltoeStagingAKS
+          kubernetesServiceConnection: SteeltoeProductionAKS
           namespace: initializr
           manifests: |
             start-client/deploy/kubernetes/deployment.yaml
