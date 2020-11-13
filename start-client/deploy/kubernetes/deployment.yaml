@@ -18,5 +18,8 @@ spec:
       containers:
       - name: initializr-web
         image: steeltoe.azurecr.io/initializr-web
+        env:
+        - name: GOOGLE_TAGMANAGER_ID
+          value: GTM-MPTZGWL
         ports:
         - containerPort: 80
