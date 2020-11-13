@@ -1,4 +1,5 @@
 FROM node:10 AS build
+ENV GOOGLE_TAGMANAGER_ID GTM-MPTZGWL
 WORKDIR /usr/src
 COPY package.json ./
 COPY yarn.lock ./
@@ -19,5 +20,3 @@ RUN chown -R app:app usr/share/initializr/www
 RUN rm /etc/nginx/sites-enabled/default
 RUN rm -f /etc/service/nginx/down
 COPY deploy/docker/initializr-web.conf /etc/nginx/sites-enabled/
-
-
