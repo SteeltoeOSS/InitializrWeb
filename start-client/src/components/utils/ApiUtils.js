@@ -287,7 +287,7 @@ export const getProject = function getProject(url, values, config) {
     let paramsDependencies = get(values, 'dependencies', [])
       .map(dependency => {
         const dep = config.find(it => it.id === dependency)
-        return isValidDependency(get(values, 'steeltoeVersion'), dep) ? dependency : null
+        return isValidSteeltoeVersionDependency(get(values, 'steeltoeVersion'), dep) ? dependency : null
       })
       .filter(dep => !!dep)
       .join(',')
