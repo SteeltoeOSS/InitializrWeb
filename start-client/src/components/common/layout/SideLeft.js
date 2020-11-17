@@ -131,6 +131,16 @@ function SideLeft() {
                           What&apos;s new with Steeltoe?
                         </a>
                       </li>
+                      <li>
+                        <a
+                          id='ql-help-blog'
+                          target='_blank'
+                          rel='noopener noreferrer'
+                          href='https://github.com/SteeltoeOSS/InitializrWeb/issues/new?assignees=&labels=feedback%2C+question&template=feedback-or-question.md&title=%5BFeedback%5D'
+                        >
+                          Leave feedback
+                        </a>
+                      </li>
                     </ul>
                   </div>
                   <div className='is-mobile'>
