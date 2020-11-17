@@ -10,6 +10,7 @@ COPY start-client/static/ ./static/
 COPY start-client/webpack.common.js ./
 COPY start-client/webpack.prod.js ./
 COPY start-client/webpack.dev.js ./
+COPY start-client/BuildVersion.json ./
 RUN yarn install
 RUN yarn build
 
