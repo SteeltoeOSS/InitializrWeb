@@ -6,6 +6,7 @@ import { clearAllBodyScrollLocks, disableBodyScroll } from 'body-scroll-lock'
 import Header from './Header'
 import { AppContext } from '../../reducer/App'
 import { IconGithub, IconTwitter } from '../icons'
+import BuildVersion from '../../../../BuildVersion.json'
 
 const SideLeft = () => {
   const [isOpen, setIsOpen] = useState(false)
@@ -159,7 +160,7 @@ const SideLeft = () => {
                     </ul>
                   </div>
                   <div className='copyright'>
-                    Steeltoe Initializr Web, version 0.1.0
+                    Steeltoe Initializr Web, {BuildVersion.label}
                     <br />
                     © 2016-{new Date().getFullYear()} VMware, Inc.
                     <br />
