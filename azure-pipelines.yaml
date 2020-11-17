@@ -9,7 +9,7 @@ variables:
   - name: micro
     value: 0
 
-name: $(major).$(minor).$(micro)-$(Rev:r)
+name: $(major).$(minor).$(micro)
 
 jobs:
   - job: Build
