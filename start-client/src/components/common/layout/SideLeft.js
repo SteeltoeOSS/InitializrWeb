@@ -160,29 +160,56 @@ function SideLeft() {
                     </ul>
                   </div>
                   <div className='copyright'>
-                    Steeltoe Initializr Web, {BuildVersion.label}
+                    start.steeltoe.io, {BuildVersion.label}, © 2016-{new Date().getFullYear()} VMware, Inc.
                     <br />
-                    © 2016-{new Date().getFullYear()} VMware, Inc.
-                    <br />
-                    start.steeltoe.io is powered by{' '}
+                    Powered by{' '}
+                    {'Steeltoe Initializr '}
                     <span>
                       <a
                         target='_blank'
                         rel='noopener noreferrer'
-                        href='https://github.com/SteeltoeOSS/InitializrApi/'
+                        href='https://github.com/SteeltoeOSS/InitializrWeb'
                       >
-                        Steeltoe Initializr API
+                        Web
                       </a>
-                    </span>{' '}
-                    <span>and</span>{' '}
+                    </span>{', '}
                     <span>
                       <a
                         target='_blank'
                         rel='noopener noreferrer'
-                        href='https://dotnet.microsoft.com/'
+                        href='https://github.com/SteeltoeOSS/InitializrApi'
                       >
-                        Microsoft .NET
+                        API
                       </a>
+                    </span>{', and '}
+                    <span>
+                      <a
+                        target='_blank'
+                        rel='noopener noreferrer'
+                        href='https://github.com/SteeltoeOSS/InitializrConfig'
+                      >
+                        Config
+                      </a>
+                    </span>
+                    <br />
+                    <span>
+                      Special thanks to the{' '}
+                      <a
+                        target='_blank'
+                        rel='noopener noreferrer'
+                        href='https://github.com/spring-io/initializr'
+                      >
+                        Spring Initializr
+                      </a>
+                      {' '}for inspiration and particularly to{' '}
+                      <a
+                        target='_blank'
+                        rel='noopener noreferrer'
+                        href='https://github.com/spring-io/start.spring.io'
+                      >
+                        start.spring.io
+                      </a>
+                      {' '}for providing the basis for our Web UI.
                     </span>
                   </div>
                 </div>
