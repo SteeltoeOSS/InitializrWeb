@@ -3,11 +3,11 @@ trigger:
 
 variables:
   - name: major
-    value: 0
-  - name: minor
     value: 1
-  - name: micro
+  - name: minor
     value: 0
+  - name: micro
+    value: x
 
 name: $(major).$(minor).$(micro)-$(Rev:r)
 
