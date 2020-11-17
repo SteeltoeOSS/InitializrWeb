@@ -16,14 +16,20 @@ jobs:
     pool:
       vmImage: ubuntu-latest
     steps:
+      - task: Bash@3
+        displayName: Configure Version Label
+        inputs:
+          targetType: inline
+          script: |
+            echo '{ "label" : "'$LABEL'" }' > start-client/BuildVersion.json
+        env:
+          LABEL: $(Build.BuildNumber)
       - task: Docker@2
         displayName: Push Docker Image
         inputs:
           command: buildAndPush
           containerRegistry: SteeltoeContainerRegistry
           repository: initializr-web
-          Dockerfile: start-client/Dockerfile
-          buildContext: start-client/
           tags: |
             $(Build.BuildId)
             latest
@@ -35,10 +41,7 @@ jobs:
           action: deploy
           kubernetesServiceConnection: SteeltoeProductionAKS
           namespace: initializr
-          manifests: |
-            start-client/deploy/kubernetes/deployment.yaml
-            start-client/deploy/kubernetes/service.yaml
-          containers: |
-            steeltoe.azurecr.io/initializr-web:$(Build.BuildId)
+          manifests: deploy/kubernetes/*.yaml
+          containers: steeltoe.azurecr.io/initializr-web:$(Build.BuildId)
         condition:
           and(succeeded(), not(eq(variables['build.reason'], 'PullRequest')))

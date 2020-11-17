@@ -4,7 +4,7 @@ kind: Deployment
 metadata:
   name: initializr-web
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: initializr-web
