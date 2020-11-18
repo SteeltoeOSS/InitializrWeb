@@ -11,7 +11,7 @@ function HeaderMobile() {
       <h1 className='logo logo-mobile'>
         <a href='/'>
           <span className='logo-content' tabIndex='-1'>
-            <LogoMobile />
+            <img src="images/steeltoe-initializr-logo.svg" height="36px" />
           </span>
         </a>
       </h1>
