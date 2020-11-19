@@ -220,7 +220,7 @@ function Dialog({ onClose }) {
               <div className='control-input'>
                 <input
                   className='input'
-                  placeholder='Web, Security, JPA, Actuator, Devtools...'
+                  placeholder='Configuration, Logging, Hosting...'
                   ref={input}
                   value={query}
                   onKeyUp={onKeyUp}
