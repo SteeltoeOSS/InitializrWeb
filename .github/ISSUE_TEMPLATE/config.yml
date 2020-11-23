@@ -1,8 +1,5 @@
 blank_issues_enabled: false
 contact_links:
   - name: Questions
-    url: https://gitter.im/spring-io/initializr
-    about: Please ask questions on Gitter or StackOverflow.
-  - name: Spring Initializr (Library)
-    url: https://github.com/spring-io/initializr/issues/new
-    about: Please report issues that aren't specific to start.spring.io here.
+    url: https://slack.steeltoe.io/
+    about: Please ask questions on Slack
