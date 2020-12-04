@@ -3,6 +3,7 @@ import React, { useContext, useEffect, useRef, useState } from 'react'
 import { CSSTransition, TransitionGroup } from 'react-transition-group'
 import { clearAllBodyScrollLocks, disableBodyScroll } from 'body-scroll-lock'
 
+
 import Header from './Header'
 import { AppContext } from '../../reducer/App'
 import { IconGithub, IconTwitter } from '../icons'
@@ -25,6 +26,26 @@ function SideLeft() {
   }, [wrapper, isOpen, nav])
 
   const onEnter = () => {
+    const webVersion = document.getElementById('webVersion')
+    if (webVersion) {
+      webVersion.textContent = BuildVersion.label
+    }
+    fetch('/api/config/about').then(response => {
+      if (!response.ok) {
+        console.log("HTTP error getting About: -S", response.status)
+        return
+      }
+      response.json().then(about => {
+        const apiVersion = document.getElementById('apiVersion')
+        if (apiVersion) {
+          apiVersion.textContent = about.version
+        }
+        const configVersion = document.getElementById('configVersion')
+        if (configVersion) {
+          configVersion.textContent = about.commit.substring(0, 7)
+        }
+      })
+    })
     setLock(true)
     setTimeout(() => {
       setIsOpen(true)
@@ -170,36 +191,40 @@ function SideLeft() {
                     </ul>
                   </div>
                   <div className='copyright'>
-                    start.steeltoe.io, {BuildVersion.label}, © 2016-{new Date().getFullYear()} VMware, Inc.
+                    start.steeltoe.io, © 2016-{new Date().getFullYear()} VMware, Inc.
                     <br />
                     Powered by{' '}
-                    {'Steeltoe Initializr '}
                     <span>
                       <a
                         target='_blank'
                         rel='noopener noreferrer'
                         href='https://github.com/SteeltoeOSS/InitializrWeb'
                       >
-                        Web
-                      </a>
-                    </span>{', '}
+                        InitializrWeb
+                      </a>{' '}
+                      <text id='webVersion' />
+                    </span>
+                    {', '}
                     <span>
                       <a
                         target='_blank'
                         rel='noopener noreferrer'
                         href='https://github.com/SteeltoeOSS/InitializrApi'
                       >
-                        API
-                      </a>
-                    </span>{', and '}
+                        InitializrAPI
+                      </a>{' '}
+                      <text id='apiVersion' />
+                    </span>
+                    {', and '}
                     <span>
                       <a
                         target='_blank'
                         rel='noopener noreferrer'
                         href='https://github.com/SteeltoeOSS/InitializrConfig'
                       >
-                        Config
-                      </a>
+                        InitializrConfig
+                      </a>{' '}
+                      <text id='configVersion' />
                     </span>
                     <br />
                     <span>
