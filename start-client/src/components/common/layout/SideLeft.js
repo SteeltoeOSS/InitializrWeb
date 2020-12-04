@@ -30,7 +30,7 @@ function SideLeft() {
     if (webVersion) {
       webVersion.textContent = BuildVersion.label
     }
-    fetch('/api/config/about').then(response => {
+    fetch('/api/about').then(response => {
       if (!response.ok) {
         console.log("HTTP error getting About: -S", response.status)
         return
