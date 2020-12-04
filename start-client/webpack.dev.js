@@ -5,6 +5,7 @@ const common = require('./webpack.common.js')
 const path = require('path')
 
 const mock = require('./dev/api.json')
+const mockAbout = require('./dev/about.json')
 const fs = require('fs')
 
 const config = {
@@ -19,6 +20,11 @@ const config = {
       app.get('/api/config/projectMetadata', function(req, res) {
         setTimeout(() => {
           res.json(mock)
+        }, 800)
+      })
+      app.get('/api/config/about', function(req, res) {
+        setTimeout(() => {
+          res.json(mockAbout)
         }, 800)
       })
       app.get('/api/project', function(req, res) {
