@@ -22,7 +22,7 @@ const config = {
           res.json(mock)
         }, 800)
       })
-      app.get('/api/config/about', function(req, res) {
+      app.get('/api/about', function(req, res) {
         setTimeout(() => {
           res.json(mockAbout)
         }, 800)
