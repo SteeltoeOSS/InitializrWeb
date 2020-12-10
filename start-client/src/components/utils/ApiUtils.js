@@ -277,7 +277,7 @@ export const getProject = function getProject(url, values, config) {
       namespace: get(values, 'meta.namespace'),
       applicationName: get(values, 'meta.applicationName'),
       description: get(values, 'meta.description'),
-      steeltoeVersion: get(values, 'meta.steeltoeVersion'),
+      steeltoeVersion: get(values, 'steeltoeVersion'),
       dotNetFramework: get(values, 'dotNetFramework'),
       dotNetTemplate: get(values, 'dotNetTemplate'),
       language: get(values, 'language'),
