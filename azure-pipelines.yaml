@@ -7,7 +7,7 @@ variables:
   - name: minor
     value: 0
   - name: micro
-    value: 0
+    value: 1
 
 name: $(major).$(minor).$(micro)
 
