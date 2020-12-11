@@ -17,6 +17,6 @@ spec:
         "beta.kubernetes.io/os": linux
       containers:
       - name: initializr-web
-        image: steeltoe.azurecr.io/initializr-web
+        image: localhost:5000/initializr-web
         ports:
         - containerPort: 80
