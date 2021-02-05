@@ -110,7 +110,7 @@ export const rangeToText = range => {
   if (holMatch) {
     return `> ${holMatch[1]} and <= ${holMatch[2]}`
   }
-  return `= ${range}`
+  return `>= ${range}`
 }
 
 export const getValidDependencies = (steeltoeVersion, dependencies) => {
