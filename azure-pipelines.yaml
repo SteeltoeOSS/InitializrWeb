@@ -11,37 +11,58 @@ variables:
 
 name: $(major).$(minor).$(micro)-$(Rev:r)
 
-jobs:
-  - job: Build
-    pool:
-      vmImage: ubuntu-latest
-    steps:
-      - task: Bash@3
-        displayName: Configure Version Label
-        inputs:
-          targetType: inline
-          script: |
-            echo '{ "label" : "'$LABEL'" }' > start-client/BuildVersion.json
-        env:
-          LABEL: $(Build.BuildNumber)
-      - task: Docker@2
-        displayName: Push Docker Image
-        inputs:
-          command: buildAndPush
-          containerRegistry: SteeltoeContainerRegistry
-          repository: initializr-web
-          tags: |
-            $(Build.BuildId)
-            latest
-        condition:
-          and(succeeded(), not(eq(variables['build.reason'], 'PullRequest')))
-      - task: KubernetesManifest@0
-        displayName: Deploy to Staging
-        inputs:
-          action: deploy
-          kubernetesServiceConnection: SteeltoeStagingAKS
-          namespace: initializr
-          manifests: deploy/kubernetes/*.yaml
-          containers: steeltoe.azurecr.io/initializr-web:$(Build.BuildId)
-        condition:
-          and(succeeded(), not(eq(variables['build.reason'], 'PullRequest')))
+stages:
+  - stage: assemble
+    displayName: Assemble
+    jobs:
+      - job: build
+        displayName: Build
+        pool:
+          vmImage: ubuntu-latest
+        steps:
+          - task: NodeTool@0
+            displayName: Set Node Version
+            inputs:
+              versionSpec: 10.x
+          - script: yarn install
+            displayName: yarn install
+            workingDirectory: start-client
+          - script: yarn build
+            displayName: yarn build
+            workingDirectory: start-client
+  - stage: deploy
+    displayName: Deploy
+    dependsOn: assemble
+    condition:
+          not(eq(variables['build.reason'], 'PullRequest'))
+    jobs:
+    - job: deployToStaging
+      displayName: Deploy to Staging
+      pool:
+        vmImage: ubuntu-latest
+      steps:
+        - task: Bash@3
+          displayName: Configure Version
+          inputs:
+            targetType: inline
+            script: |
+              echo '{ "label" : "'$LABEL'" }' > start-client/BuildVersion.json
+          env:
+            LABEL: $(Build.BuildNumber)
+        - task: Docker@2
+          displayName: Push Docker Image
+          inputs:
+            command: buildAndPush
+            containerRegistry: SteeltoeContainerRegistry
+            repository: initializr-web
+            tags: |
+              $(Build.BuildId)
+              latest
+        - task: KubernetesManifest@0
+          displayName: Deploy to Staging Cluster
+          inputs:
+            action: deploy
+            kubernetesServiceConnection: SteeltoeStagingAKS
+            namespace: initializr
+            manifests: deploy/kubernetes/*.yaml
+            containers: steeltoe.azurecr.io/initializr-web:$(Build.BuildId)
