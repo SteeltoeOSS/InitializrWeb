@@ -28,5 +28,5 @@ stages:
             displayName: yarn install
             workingDirectory: start-client
           - script: yarn build
-            displayName: install build
+            displayName: yarn build
             workingDirectory: start-client
