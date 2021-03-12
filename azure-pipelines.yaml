@@ -23,6 +23,10 @@ stages:
           - task: NodeTool@0
             displayName: Set Node Version
             inputs:
-              versionSpec: 10.0
+              versionSpec: 10.x
           - script: yarn install
+            displayName: yarn install
+            cwd: start-client
           - script: yarn build
+            displayName: install build
+            cwd: start-client
