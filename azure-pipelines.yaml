@@ -11,20 +11,24 @@ variables:
 
 name: $(major).$(minor).$(micro)-$(Rev:r)
 
-jobs:
-  - job: Build
-    pool:
-      vmImage: ubuntu-latest
-    steps:
-      - task: Bash@3
-        displayName: Configure Version Label
-        inputs:
-          targetType: inline
-          script: |
-            echo '{ "label" : "'$LABEL'" }' > start-client/BuildVersion.json
-        env:
-          LABEL: $(Build.BuildNumber)
-      - task: Docker@2
-        displayName: Build Docker Image
-        inputs:
-          command: build
+stages:
+  - stage: assemble
+    displayName: Assemble
+    jobs:
+      - job: build
+        displayName: Build
+        pool:
+          vmImage: ubuntu-latest
+        steps:
+          - task: Bash@3
+            displayName: Configure Version Label
+            inputs:
+              targetType: inline
+              script: |
+                echo '{ "label" : "'$LABEL'" }' > start-client/BuildVersion.json
+            env:
+              LABEL: $(Build.BuildNumber)
+          - task: Docker@2
+            displayName: Build Docker Image
+            inputs:
+              command: build
