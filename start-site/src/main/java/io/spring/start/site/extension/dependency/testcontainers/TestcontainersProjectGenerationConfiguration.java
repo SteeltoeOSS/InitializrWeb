@@ -13,11 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package io.spring.start.site.extension.dependency.testcontainers;
 
 import io.spring.initializr.generator.buildsystem.Build;
 import io.spring.initializr.generator.condition.ConditionalOnRequestedDependency;
 import io.spring.initializr.generator.project.ProjectGenerationConfiguration;
+import io.spring.start.site.support.implicit.ImplicitDependency;
+import io.spring.start.site.support.implicit.ImplicitDependencyBuildCustomizer;
+import io.spring.start.site.support.implicit.ImplicitDependencyHelpDocumentCustomizer;
 
 import org.springframework.context.annotation.Bean;
 
@@ -30,22 +34,22 @@ import org.springframework.context.annotation.Bean;
 @ProjectGenerationConfiguration
 public class TestcontainersProjectGenerationConfiguration {
 
-	@Bean
-	public TestContainerModuleRegistry testContainerModuleRegistry() {
-		return TestContainerModuleRegistry.create();
+	private final Iterable<ImplicitDependency> dependencies;
+
+	public TestcontainersProjectGenerationConfiguration() {
+		this.dependencies = TestcontainersModuleRegistry.create();
 	}
 
 	@Bean
 	@ConditionalOnRequestedDependency("testcontainers")
-	public TestcontainersBuildCustomizer testContainersBuildCustomizer(TestContainerModuleRegistry modulesRegistry) {
-		return new TestcontainersBuildCustomizer(modulesRegistry);
+	public ImplicitDependencyBuildCustomizer testContainersBuildCustomizer() {
+		return new ImplicitDependencyBuildCustomizer(this.dependencies);
 	}
 
 	@Bean
 	@ConditionalOnRequestedDependency("testcontainers")
-	public TestcontainersHelpCustomizer testcontainersHelpCustomizer(TestContainerModuleRegistry modulesRegistry,
-			Build build) {
-		return new TestcontainersHelpCustomizer(modulesRegistry, build);
+	public ImplicitDependencyHelpDocumentCustomizer testcontainersHelpCustomizer(Build build) {
+		return new ImplicitDependencyHelpDocumentCustomizer(this.dependencies, build);
 	}
 
 }

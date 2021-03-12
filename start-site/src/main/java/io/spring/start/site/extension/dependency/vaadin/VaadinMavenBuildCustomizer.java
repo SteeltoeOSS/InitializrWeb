@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2019 the original author or authors.
+ * Copyright 2012-2021 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,24 +14,25 @@
  * limitations under the License.
  */
 
-package io.spring.start.site.extension.dependency.springboot;
+package io.spring.start.site.extension.dependency.vaadin;
 
-import io.spring.initializr.generator.buildsystem.Dependency;
 import io.spring.initializr.generator.buildsystem.maven.MavenBuild;
-import io.spring.initializr.generator.buildsystem.maven.MavenDependency;
 import io.spring.initializr.generator.spring.build.BuildCustomizer;
 
 /**
- * Maven {@link BuildCustomizer} that sets the "optional" flag when devtools is selected.
+ * A {@link BuildCustomizer} that adds a production profile to enable Vaadin's production
+ * mode.
  *
  * @author Stephane Nicoll
  */
-class DevToolsMavenBuildCustomizer implements BuildCustomizer<MavenBuild> {
+class VaadinMavenBuildCustomizer implements BuildCustomizer<MavenBuild> {
 
 	@Override
 	public void customize(MavenBuild build) {
-		Dependency devtools = build.dependencies().get("devtools");
-		build.dependencies().add("devtools", MavenDependency.from(devtools).optional(true));
+		build.profiles().id("production").plugins().add("com.vaadin", "vaadin-maven-plugin",
+				(plugin) -> plugin.version("${vaadin.version}").execution("frontend",
+						(execution) -> execution.goal("prepare-frontend").goal("build-frontend").phase("compile")
+								.configuration((configuration) -> configuration.add("productionMode", "true"))));
 	}
 
 }
