@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2019 the original author or authors.
+ * Copyright 2012-2021 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,26 +14,30 @@
  * limitations under the License.
  */
 
-package io.spring.start.site.extension.dependency.springintegration;
+package io.spring.start.site.support.implicit;
 
 import io.spring.initializr.generator.buildsystem.Build;
-import io.spring.initializr.generator.buildsystem.Dependency;
-import io.spring.initializr.generator.buildsystem.DependencyScope;
 import io.spring.initializr.generator.spring.build.BuildCustomizer;
 
 /**
- * A {@link BuildCustomizer} that automatically adds {@code spring-integration-test} when
- * Spring Integration is selected.
+ * A {@link BuildCustomizer} that customize the build if necessary based on
+ * {@link ImplicitDependency implicit dependencies}.
  *
  * @author Stephane Nicoll
  */
-class SpringIntegrationTestBuildCustomizer implements BuildCustomizer<Build> {
+public class ImplicitDependencyBuildCustomizer implements BuildCustomizer<Build> {
+
+	private final Iterable<ImplicitDependency> dependencies;
+
+	public ImplicitDependencyBuildCustomizer(Iterable<ImplicitDependency> dependencies) {
+		this.dependencies = dependencies;
+	}
 
 	@Override
 	public void customize(Build build) {
-		build.dependencies().add("spring-integration-test",
-				Dependency.withCoordinates("org.springframework.integration", "spring-integration-test")
-						.scope(DependencyScope.TEST_COMPILE));
+		for (ImplicitDependency dependency : this.dependencies) {
+			dependency.customize(build);
+		}
 	}
 
 }
