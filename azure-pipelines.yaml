@@ -26,7 +26,9 @@ stages:
               versionSpec: 10.x
           - script: yarn install
             displayName: yarn install
-            cwd: start-client
+            inputs:
+              workingDirectory: start-client
           - script: yarn build
             displayName: install build
-            cwd: start-client
+            inputs:
+              workingDirectory: start-client
