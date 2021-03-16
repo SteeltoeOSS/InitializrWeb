@@ -6,10 +6,10 @@ variables:
     value: 1
   - name: minor
     value: 0
-  - name: micro
+  - name: patch
     value: 3
 
-name: $(major).$(minor).$(micro)-$(Rev:r)
+name: $(major).$(minor).$(patch)-$(Rev:r)
 
 stages:
   - stage: assemble
