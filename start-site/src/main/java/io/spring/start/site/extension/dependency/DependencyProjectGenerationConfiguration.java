@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2020 the original author or authors.
+ * Copyright 2012-2021 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,15 +18,15 @@ package io.spring.start.site.extension.dependency;
 
 import io.spring.initializr.generator.buildsystem.gradle.GradleBuildSystem;
 import io.spring.initializr.generator.condition.ConditionalOnBuildSystem;
-import io.spring.initializr.generator.condition.ConditionalOnPlatformVersion;
 import io.spring.initializr.generator.condition.ConditionalOnRequestedDependency;
-import io.spring.initializr.generator.project.ProjectDescription;
+import io.spring.initializr.generator.io.template.MustacheTemplateRenderer;
 import io.spring.initializr.generator.project.ProjectGenerationConfiguration;
 import io.spring.initializr.generator.spring.build.gradle.ConditionalOnGradleVersion;
 import io.spring.initializr.metadata.InitializrMetadata;
 import io.spring.start.site.extension.dependency.flyway.FlywayProjectContributor;
 import io.spring.start.site.extension.dependency.liquibase.LiquibaseProjectContributor;
 import io.spring.start.site.extension.dependency.lombok.LombokGradleBuildCustomizer;
+import io.spring.start.site.extension.dependency.okta.OktaHelpDocumentCustomizer;
 import io.spring.start.site.extension.dependency.reactor.ReactorTestBuildCustomizer;
 import io.spring.start.site.extension.dependency.springbatch.SpringBatchTestBuildCustomizer;
 import io.spring.start.site.extension.dependency.springkafka.SpringKafkaBuildCustomizer;
@@ -50,15 +50,11 @@ public class DependencyProjectGenerationConfiguration {
 
 	private final InitializrMetadata metadata;
 
-	private final ProjectDescription description;
-
-	public DependencyProjectGenerationConfiguration(InitializrMetadata metadata, ProjectDescription description) {
+	public DependencyProjectGenerationConfiguration(InitializrMetadata metadata) {
 		this.metadata = metadata;
-		this.description = description;
 	}
 
 	@Bean
-	@ConditionalOnPlatformVersion("2.0.0.M2")
 	public ReactorTestBuildCustomizer reactorTestBuildCustomizer() {
 		return new ReactorTestBuildCustomizer(this.metadata);
 	}
@@ -97,7 +93,7 @@ public class DependencyProjectGenerationConfiguration {
 	@Bean
 	@ConditionalOnRequestedDependency("session")
 	public SpringSessionBuildCustomizer springSessionBuildCustomizer() {
-		return new SpringSessionBuildCustomizer(this.description);
+		return new SpringSessionBuildCustomizer();
 	}
 
 	@Bean
@@ -116,6 +112,12 @@ public class DependencyProjectGenerationConfiguration {
 	@ConditionalOnRequestedDependency("liquibase")
 	public LiquibaseProjectContributor liquibaseProjectContributor() {
 		return new LiquibaseProjectContributor();
+	}
+
+	@Bean
+	@ConditionalOnRequestedDependency("okta")
+	public OktaHelpDocumentCustomizer oktaHelpDocumentCustomizer(MustacheTemplateRenderer templateRenderer) {
+		return new OktaHelpDocumentCustomizer(templateRenderer);
 	}
 
 }
