@@ -55,7 +55,7 @@ export default function Application() {
 
     useEffect(() => {
     if (windowsUtils.origin) {
-      const url = '/api/config/projectMetadata'
+      const url = '/api/uiconfig'
       getInfo(url).then(jsonConfig => {
         const response = getConfig(jsonConfig)
         dispatchInitializr({ type: 'COMPLETE', payload: { ...response } })
