@@ -17,7 +17,7 @@ const config = {
     compress: true,
     open: false,
     before: function(app, server, compiler) {
-      app.get('/api/config/projectMetadata', function(req, res) {
+      app.get('/api/uiconfig', function(req, res) {
         setTimeout(() => {
           res.json(mock)
         }, 800)
