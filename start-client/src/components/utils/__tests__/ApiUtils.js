@@ -19,9 +19,6 @@ describe('getDefaultValues', () => {
     expect(get(defaultValues, 'meta.name')).toBe(
       get(MockClient, 'name.default')
     )
-    expect(get(defaultValues, 'meta.applicationName')).toBe(
-      get(MockClient, 'applicationName.default')
-    )
     expect(get(defaultValues, 'meta.namespace')).toBe(
       get(MockClient, 'namespace.default')
     )
@@ -33,9 +30,6 @@ describe('getDefaultValues', () => {
     )
     expect(get(defaultValues, 'dotNetFramework')).toBe(
       get(MockClient, 'dotNetFramework.default')
-    )
-    expect(get(defaultValues, 'dotNetTemplate')).toBe(
-      get(MockClient, 'dotNetTemplate.default')
     )
     expect(get(defaultValues, 'language')).toBe(
       get(MockClient, 'language.default')
