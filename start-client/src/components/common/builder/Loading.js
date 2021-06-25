@@ -16,10 +16,6 @@ export default function Loading() {
                 <Placeholder type='input' />
               </div>
               <div className='control control-inline control-placeholder'>
-                <span className='placeholder-label'>Namespace</span>
-                <Placeholder type='input' />
-              </div>
-              <div className='control control-inline control-placeholder'>
                 <span className='placeholder-label'>Application</span>
                 <Placeholder type='input' />
               </div>
