@@ -274,12 +274,10 @@ export const getProject = function getProject(url, values, config) {
   return new Promise((resolve, reject) => {
     const params = querystring.stringify({
       name: get(values, 'meta.name'),
-      namespace: get(values, 'meta.namespace'),
-      applicationName: get(values, 'meta.applicationName'),
+      application: get(values, 'meta.applicationName'),
       description: get(values, 'meta.description'),
       steeltoeVersion: get(values, 'steeltoeVersion'),
       dotNetFramework: get(values, 'dotNetFramework'),
-      dotNetTemplate: get(values, 'dotNetTemplate'),
       language: get(values, 'language'),
       packaging: get(values, 'packaging'),
       baseDir: get(values, 'meta.name'),

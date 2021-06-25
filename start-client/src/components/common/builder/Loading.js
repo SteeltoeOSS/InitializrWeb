@@ -16,10 +16,6 @@ export default function Loading() {
                 <Placeholder type='input' />
               </div>
               <div className='control control-inline control-placeholder'>
-                <span className='placeholder-label'>Namespace</span>
-                <Placeholder type='input' />
-              </div>
-              <div className='control control-inline control-placeholder'>
                 <span className='placeholder-label'>Application</span>
                 <Placeholder type='input' />
               </div>
@@ -29,13 +25,10 @@ export default function Loading() {
               </div>
             </div>
           </Control>
-          <Control text='SteeltoeVersion'>
+          <Control text='Steeltoe'>
             <Placeholder type='radio' width='100px' />
           </Control>
-          <Control text='DotNet Framework'>
-            <Placeholder type='radio' width='100px' />
-          </Control>
-          <Control text='Template'>
+          <Control text='.NET Framework'>
             <Placeholder type='radio' width='100px' />
           </Control>
         </div>

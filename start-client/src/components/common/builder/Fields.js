@@ -47,6 +47,7 @@ const Fields = ({
                   update({meta: {name: event.target.value}})
                 }}
               />
+              {/*
               <FieldInput
                 id='input-namespace'
                 value={get(values, 'meta.namespace')}
@@ -55,6 +56,7 @@ const Fields = ({
                   update({meta: {namespace: event.target.value}})
                 }}
               />
+              */}
               <FieldInput
                 id='input-applicationName'
                 value={get(values, 'meta.applicationName')}
@@ -122,6 +124,7 @@ const Fields = ({
                 </FieldError>
               )}
             </Control>
+            {/*
             <Control text='.NET Template'>
               <Radio
                 name='dotNetTemplate'
@@ -132,7 +135,9 @@ const Fields = ({
                 }}
               />
             </Control>
-{/*            <Control text='Language'>
+            */}
+            {/*
+*           <Control text='Language'>
               <Radio
                 name='language'
                 selected={get(values, 'language')}
@@ -142,7 +147,8 @@ const Fields = ({
                 }}
               />
             </Control>
- */}         </div>
+            */}
+          </div>
         </div>
         <div className='right'>
           <Dependency refButton={refDependency}/>
