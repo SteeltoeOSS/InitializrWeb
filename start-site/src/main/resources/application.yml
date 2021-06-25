@@ -3,6 +3,14 @@ logging:
     org.springframework.core.env: warn
     org.springframework.jndi: warn
 
+management:
+  endpoints:
+    web:
+      exposure:
+        include:
+          - health
+          - info
+
 server:
   compression:
     enabled: true
@@ -36,7 +44,9 @@ initializr:
             groupId: com.microsoft.azure
             version: 2.2.4
           - compatibilityRange: "[2.3.0.M1,2.4.0-M1)"
-            version: 3.1.0
+            version: 3.2.0
+          - compatibilityRange: "[2.4.0.M1,2.5.0-M1)"
+            version: 3.5.0
       codecentric-spring-boot-admin:
         groupId: de.codecentric
         artifactId: spring-boot-admin-dependencies
@@ -53,7 +63,7 @@ initializr:
         mappings:
           - compatibilityRange: "[2.2.0.RELEASE,2.3.0.M1)"
             version: 1.0.0
-          - compatibilityRange: "[2.3.0.M1,2.5.0-M1)"
+          - compatibilityRange: "[2.3.0.M1,2.6.0-M1)"
             version: 1.1.0
       solace-spring-cloud:
         groupId: com.solace.spring.cloud
@@ -64,8 +74,8 @@ initializr:
             version: 1.0.0
           - compatibilityRange: "[2.3.0.M1,2.4.0-M1)"
             version: 1.1.1
-          - compatibilityRange: "[2.4.0.M1,2.5.0-M1)"
-            version: 2.0.0
+          - compatibilityRange: "[2.4.0.M1,2.6.0-M1)"
+            version: 2.1.0
       spring-cloud:
         groupId: org.springframework.cloud
         artifactId: spring-cloud-dependencies
@@ -73,7 +83,7 @@ initializr:
         order: 50
         mappings:
           - compatibilityRange: "[2.2.0.RELEASE,2.3.x.BUILD-SNAPSHOT)"
-            version: Hoxton.SR10
+            version: Hoxton.SR11
           - compatibilityRange: "[2.3.x.BUILD-SNAPSHOT, 2.4.0.M1)"
             version: Hoxton.BUILD-SNAPSHOT
             repositories: spring-snapshots,spring-milestones
@@ -85,10 +95,10 @@ initializr:
             repositories: spring-milestones
           - compatibilityRange: "[2.4.0.M4,2.4.0]"
             version: 2020.0.0
-          - compatibilityRange: "[2.4.1,2.5.0-M1)"
-            version: 2020.0.1
-          - compatibilityRange: "2.4.x-SNAPSHOT"
-            version: 2020.0.2-SNAPSHOT
+          - compatibilityRange: "[2.4.1,2.5.x-SNAPSHOT)"
+            version: 2020.0.3
+          - compatibilityRange: "2.5.x-SNAPSHOT"
+            version: 2020.0.4-SNAPSHOT
             repositories: spring-snapshots,spring-milestones
       spring-cloud-alibaba:
         groupId: com.alibaba.cloud
@@ -104,7 +114,7 @@ initializr:
         additionalBoms: [ spring-cloud ]
         mappings:
           - compatibilityRange: "[2.4.0-M1,2.5.0-M1)"
-            version: 2.0.0
+            version: 2.0.3
       spring-cloud-services:
         groupId: io.pivotal.spring.cloud
         artifactId: spring-cloud-services-dependencies
@@ -115,6 +125,8 @@ initializr:
             version: 2.2.6.RELEASE
           - compatibilityRange: "[2.3.0.RELEASE,2.4.0-M1)"
             version: 2.3.0.RELEASE
+          - compatibilityRange: "[2.4.0-M1,2.5.0-M1)"
+            version: 2.4.1
       spring-geode:
         groupId: org.springframework.geode
         artifactId: spring-geode-bom
@@ -123,24 +135,23 @@ initializr:
           - compatibilityRange: "[2.2.0.RELEASE,2.3.0.M1)"
             version: 1.2.12.RELEASE
           - compatibilityRange: "[2.3.0.M1,2.4.0-M1)"
-            version: 1.3.9.RELEASE
+            version: 1.3.12.RELEASE
           - compatibilityRange: "[2.4.0-M1,2.5.0-M1)"
-            version: 1.4.3
+            version: 1.4.7
           - compatibilityRange: "2.5.0-M1"
-            version: 1.5.0-M2
-            repositories: spring-milestones
+            version: 1.5.1
       testcontainers:
         groupId: org.testcontainers
         artifactId: testcontainers-bom
-        version: 1.15.2
+        version: 1.15.3
         versionProperty: testcontainers.version
       vaadin:
         groupId: com.vaadin
         artifactId: vaadin-bom
         versionProperty: vaadin.version
         mappings:
-          - compatibilityRange: "[2.1.0.RELEASE,2.5.0-M1)"
-            version: 14.4.9
+          - compatibilityRange: "[2.1.0.RELEASE,2.6.0-M1)"
+            version: 14.6.4
       wavefront:
         groupId: com.wavefront
         artifactId: wavefront-spring-boot-bom
@@ -148,8 +159,10 @@ initializr:
         mappings:
           - compatibilityRange: "[2.1.0.RELEASE,2.4.0-M1)"
             version: 2.0.2
-          - compatibilityRange: "2.4.0-M1"
-            version: 2.1.0
+          - compatibilityRange: "[2.4.0-M1,2.5.0-M1)"
+            version: 2.1.1
+          - compatibilityRange: "2.5.0-M1"
+            version: 2.2.0
     gradle:
       dependency-management-plugin-version: 1.0.11.RELEASE
     kotlin:
@@ -157,7 +170,7 @@ initializr:
         - compatibilityRange: "[1.5.0.RELEASE,2.0.0.M1)"
           version: 1.2.51
     platform:
-      compatibility-range: "2.2.0.RELEASE"
+      compatibility-range: "2.2.2.RELEASE"
       v1-format-compatibility-range: "[2.0.0.RELEASE,2.4.0-M1)"
       v2-format-compatibility-range: "2.4.0-M1"
     repositories:
@@ -167,25 +180,32 @@ initializr:
       sonatype-snapshots:
         name: Sonatype Snapshots
         url: https://oss.sonatype.org/content/repositories/snapshots/
+        releasesEnabled: false
         snapshotsEnabled: true
   dependencies:
     - name: Developer Tools
       content:
         - name: Spring Native [Experimental]
           id: native
-          compatibilityRange: "[2.4.3,2.5.0-M1)"
+          compatibilityRange: "[2.4.3,2.6.0-M1)"
           groupId: org.springframework.experimental
           artifactId: spring-native
           description: Incubating support for compiling Spring applications to native executables using the GraalVM native-image compiler.
           facets:
             - native
           starter: false
+          repository: spring-releases
           mappings:
-            - compatibilityRange: "[2.4.3,2.4.4-SNAPSHOT)"
+            - compatibilityRange: "[2.4.3,2.4.4)"
               version: 0.9.0
-              repository: spring-releases
-            - compatibilityRange: "[2.4.4-SNAPSHOT,2.5.0-M1)"
-              version: 0.9.1-SNAPSHOT
+            - compatibilityRange: "[2.4.4,2.4.5)"
+              version: 0.9.1
+            - compatibilityRange: "[2.4.5,2.5.0-M1)"
+              version: 0.9.2
+            - compatibilityRange: "[2.5.0-M1,2.5.2-M1)"
+              version: 0.10.0
+            - compatibilityRange: "[2.5.2-M1,2.6.0-M1)"
+              version: 0.10.1-SNAPSHOT
               repository: spring-snapshots
           links:
             - rel: reference
@@ -311,9 +331,9 @@ initializr:
            - web
           groupId: com.vaadin
           artifactId: vaadin-spring-boot-starter
-          description: Java framework for building rich client apps based on Web components.
+          description: A web framework that allows you to write UI in pure Java without getting bogged down in JS, HTML, and CSS.
           bom: vaadin
-          compatibilityRange: "[2.0.0.RELEASE,2.5.0-M1)"
+          compatibilityRange: "[2.0.0.RELEASE,2.6.0-M1)"
           links:
            - rel: guide
              href: https://spring.io/guides/gs/crud-with-vaadin/
@@ -402,7 +422,7 @@ initializr:
           description: Okta specific configuration for Spring Security/Spring Boot OAuth2 features. Enable your Spring Boot application to work with Okta via OAuth 2.0/OIDC.
           groupId: com.okta.spring
           artifactId: okta-spring-boot-starter
-          compatibilityRange: "[2.1.2.RELEASE,2.5.0-M1)"
+          compatibilityRange: "[2.1.2.RELEASE,2.6.0-M1)"
           mappings:
             - compatibilityRange: "[2.2.0.RELEASE,2.4.0-M1)"
               version: 1.4.0
@@ -410,6 +430,8 @@ initializr:
               version: 1.5.1
             - compatibilityRange: "[2.4.1,2.5.0-M1)"
               version: 2.0.1
+            - compatibilityRange: "[2.5.0-M1,2.6.0-M1)"
+              version: 2.1.0
           links:
             - rel: guide
               href: https://github.com/okta/samples-java-spring/tree/master/okta-hosted-login
@@ -482,7 +504,7 @@ initializr:
               description: R2DBC Homepage
         - name: MyBatis Framework
           id: mybatis
-          compatibilityRange: "[2.0.0.RELEASE,2.5.0-M1)"
+          compatibilityRange: "[2.0.0.RELEASE,2.6.0-M1)"
           description: Persistence framework with support for custom SQL, stored procedures and advanced mappings. MyBatis couples objects with stored procedures or SQL statements using a XML descriptor or annotations.
           links:
             - rel: guide
@@ -495,6 +517,8 @@ initializr:
           mappings:
             - compatibilityRange: "[2.1.0.RELEASE,2.5.0-M1)"
               version: 2.1.4
+            - compatibilityRange: "2.5.0-M1"
+              version: 2.2.0
         - name: Liquibase Migration
           id: liquibase
           description: Liquibase database migration and source control library.
@@ -808,7 +832,7 @@ initializr:
             - compatibilityRange: "[2.3.0.M1,2.4.0-M1)"
               version: 3.5.0
             - compatibilityRange: "[2.4.0.M1,2.5.0-M1)"
-              version: 3.8.0
+              version: 3.10.0
           description: Apache Camel is an open source integration framework that empowers you to quickly and easily integrate various systems consuming or producing data.
           groupId: org.apache.camel.springboot
           artifactId: camel-spring-boot-starter
@@ -819,7 +843,7 @@ initializr:
         - name: Solace PubSub+
           bom: solace-spring-boot
           id: solace
-          compatibilityRange: "[2.2.0.RELEASE,2.5.0-M1)"
+          compatibilityRange: "[2.2.0.RELEASE,2.6.0-M1)"
           description: Connect to a Solace PubSub+ Advanced Event Broker to publish, subscribe, request/reply and store/replay messages
           groupId: com.solace.spring.boot
           artifactId: solace-spring-boot-starter
@@ -959,6 +983,8 @@ initializr:
           description: Distributed tracing via logs with Spring Cloud Sleuth.
           groupId: org.springframework.cloud
           artifactId: spring-cloud-starter-sleuth
+          facets:
+            - native
           bom: spring-cloud
         - name: Wavefront
           id: wavefront
@@ -1120,6 +1146,10 @@ initializr:
             - native
           groupId: org.springframework.cloud
           artifactId: spring-cloud-starter-config
+          links:
+            - rel: reference
+              href: https://docs.spring.io/spring-cloud-config/docs/current/reference/html/#_client_side_usage
+              description: Config Client Quick Start
         - name: Config Server
           id: cloud-config-server
           description: Central management for configuration via Git, SVN, or HashiCorp Vault.
@@ -1136,16 +1166,28 @@ initializr:
           description: Provides client-side support for externalized configuration in a distributed system. Using HashiCorp's Vault you have a central place to manage external secret properties for applications across all environments.
           groupId: org.springframework.cloud
           artifactId: spring-cloud-starter-vault-config
+          links:
+            - rel: reference
+              href: https://docs.spring.io/spring-cloud-vault/docs/current/reference/html/#client-side-usage
+              description: Vault Client Quick Start
         - name: Apache Zookeeper Configuration
           id: cloud-starter-zookeeper-config
           description: Enable and configure common patterns inside your application and build large distributed systems with Apache Zookeeper based components. The provided patterns include Service Discovery and Configuration.
           groupId: org.springframework.cloud
           artifactId: spring-cloud-starter-zookeeper-config
+          links:
+            - rel: reference
+              href: https://docs.spring.io/spring-cloud-zookeeper/docs/current/reference/html/#distributed-configuration-usage
+              description: Apache Zookeeper Quick Start
         - name: Consul Configuration
           id: cloud-starter-consul-config
           description: Enable and configure the common patterns inside your application and build large distributed systems with Hashicorp’s Consul. The patterns provided include Service Discovery, Distributed Configuration and Control Bus.
           groupId: org.springframework.cloud
           artifactId: spring-cloud-starter-consul-config
+          links:
+            - rel: reference
+              href: https://docs.spring.io/spring-cloud-consul/docs/current/reference/html/#distributed-configuration-usage
+              description: Spring Cloud Consul Quick Start
     - name: Spring Cloud Discovery
       bom: spring-cloud
       content:
@@ -1315,17 +1357,19 @@ initializr:
           artifactId: spring-cloud-stream
     - name: VMware Tanzu Application Service
       bom: spring-cloud-services
-      compatibilityRange: "[2.0.0.RELEASE,2.4.0-M1)"
+      compatibilityRange: "[2.0.0.RELEASE,2.5.0-M1)"
       content:
         - name: Config Client (TAS)
           id: scs-config-client
           description: Config client on VMware Tanzu Application Service.
           groupId: io.pivotal.spring.cloud
           artifactId: spring-cloud-services-starter-config-client
-          starter: false
           links:
             - rel: reference
               href: https://docs.pivotal.io/spring-cloud-services/
+          mappings:
+            - compatibilityRange: "[2.0.0.RELEASE,2.4.0-M1)"
+              starter: false
         - name: Service Registry (TAS)
           id: scs-service-registry
           description: Eureka service discovery client on VMware Tanzu Application Service.
@@ -1366,7 +1410,7 @@ initializr:
           starter: false
     - name: Microsoft Azure
       bom: azure
-      compatibilityRange: "[2.2.11.RELEASE,2.4.0-M1)"
+      compatibilityRange: "[2.2.11.RELEASE,2.5.0-M1)"
       content:
         - name: Azure Support
           id: azure-support
@@ -1375,7 +1419,7 @@ initializr:
           description: Auto-configuration for Azure Services (Service Bus, Storage, Active Directory, Cosmos DB, Key Vault, and more).
           links:
             - rel: reference
-              href: https://github.com/Microsoft/azure-spring-boot/tree/master/azure-spring-boot
+              href: https://github.com/Azure/azure-sdk-for-java/tree/master/sdk/spring
           mappings:
             - compatibilityRange: "[2.0.0.RELEASE,2.3.0.M1)"
               groupId: com.microsoft.azure
@@ -1386,10 +1430,10 @@ initializr:
           description: Spring Security integration with Azure Active Directory for authentication.
           links:
             - rel: guide
-              href: https://github.com/Microsoft/azure-spring-boot/tree/master/azure-spring-boot-samples/azure-active-directory-spring-boot-sample
+              href: https://github.com/Azure/azure-sdk-for-java/tree/master/sdk/spring/azure-spring-boot-samples/azure-spring-boot-sample-active-directory-webapp
               description: Using Active Directory
             - rel: reference
-              href: https://github.com/Microsoft/azure-spring-boot/tree/master/azure-spring-boot-starters/azure-active-directory-spring-boot-starter
+              href: https://github.com/Azure/azure-sdk-for-java/tree/master/sdk/spring/azure-spring-boot-starter-active-directory
           mappings:
             - compatibilityRange: "[2.0.0.RELEASE,2.3.0.M1)"
               groupId: com.microsoft.azure
@@ -1401,10 +1445,10 @@ initializr:
           description: Manage application secrets and keys.
           links:
             - rel: guide
-              href: https://github.com/Microsoft/azure-spring-boot/tree/master/azure-spring-boot-samples/azure-keyvault-secrets-spring-boot-sample
+              href: https://github.com/Azure/azure-sdk-for-java/tree/master/sdk/spring/azure-spring-boot-samples/azure-spring-boot-sample-keyvault-secrets
               description: Using Key Vault
             - rel: reference
-              href: https://github.com/Microsoft/azure-spring-boot/tree/master/azure-spring-boot-starters/azure-keyvault-secrets-spring-boot-starter
+              href: https://github.com/Azure/azure-sdk-for-java/tree/master/sdk/spring/azure-spring-boot-starter-keyvault-secrets
           mappings:
             - compatibilityRange: "[2.0.0.RELEASE,2.3.0.M1)"
               groupId: com.microsoft.azure
@@ -1416,10 +1460,10 @@ initializr:
           description: Azure Storage service integration.
           links:
             - rel: guide
-              href: https://github.com/Microsoft/azure-spring-boot/tree/master/azure-spring-boot-samples/azure-storage-spring-boot-sample
+              href: https://github.com/Azure/azure-sdk-for-java/tree/master/sdk/spring/azure-spring-boot-samples/azure-spring-boot-sample-storage-resource
               description: Using Azure Storage
             - rel: reference
-              href: https://github.com/Microsoft/azure-spring-boot/tree/master/azure-spring-boot-starters/azure-storage-spring-boot-starter
+              href: https://github.com/Azure/azure-sdk-for-java/tree/master/sdk/spring/azure-spring-boot-starter-storage
           mappings:
             - compatibilityRange: "[2.0.0.RELEASE,2.3.0.M1)"
               groupId: com.microsoft.azure
@@ -1552,7 +1596,7 @@ initializr:
       id: war
       default: false
   javaVersions:
-    - id: 15
+    - id: 16
       default: false
     - id: 11
       default: true

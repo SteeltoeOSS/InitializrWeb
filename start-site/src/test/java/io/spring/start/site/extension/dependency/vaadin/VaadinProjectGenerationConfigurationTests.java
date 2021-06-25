@@ -16,6 +16,7 @@
 
 package io.spring.start.site.extension.dependency.vaadin;
 
+import io.spring.initializr.web.project.ProjectRequest;
 import io.spring.start.site.extension.AbstractExtensionTests;
 import org.junit.jupiter.api.Test;
 
@@ -56,7 +57,7 @@ class VaadinProjectGenerationConfigurationTests extends AbstractExtensionTests {
 
 	@Test
 	void gradleBuildWithVaadinAddPlugin() {
-		assertThat(gradleBuild(createProjectRequest("vaadin", "data-jpa"))).hasPlugin("com.vaadin", "0.14.3.7");
+		assertThat(gradleBuild(createProjectRequest("vaadin", "data-jpa"))).hasPlugin("com.vaadin", "0.14.6.0");
 	}
 
 	@Test
@@ -74,6 +75,13 @@ class VaadinProjectGenerationConfigurationTests extends AbstractExtensionTests {
 	void gitIgnoreWithoutVaadinDoesNotIgnoreNodeModules() {
 		assertThat(generateProject(createProjectRequest("data-jpa"))).textFile(".gitignore")
 				.doesNotContain("node_modules");
+	}
+
+	@Override
+	protected ProjectRequest createProjectRequest(String... styles) {
+		ProjectRequest request = super.createProjectRequest(styles);
+		request.setBootVersion("2.4.6");
+		return request;
 	}
 
 }
