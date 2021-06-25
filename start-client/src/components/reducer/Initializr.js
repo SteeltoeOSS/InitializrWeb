@@ -56,6 +56,9 @@ export function reducer(state, action) {
         set(meta, 'applicationName', `${get(meta, 'name')}`)
         set(meta, 'description', `${get(meta, 'name')} application project`)
       }
+      if (get(changes, 'meta.applicationName') !== undefined) {
+        set(meta, 'description', `${get(meta, 'applicationName')} application project`)
+      }
       const values = {
         ...get(state, 'values'),
         ...changes,
