@@ -49,6 +49,7 @@ function Fields({
                   update({meta: {name: event.target.value}})
                 }}
               />
+              {/*
               <FieldInput
                 id='input-namespace'
                 value={get(values, 'meta.namespace')}
@@ -57,6 +58,7 @@ function Fields({
                   update({meta: {namespace: event.target.value}})
                 }}
               />
+              */}
               <FieldInput
                 id='input-applicationName'
                 value={get(values, 'meta.applicationName')}
