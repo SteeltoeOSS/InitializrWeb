@@ -9,7 +9,7 @@ export const defaultInitializrContext = {
   values: {
     meta: {
       name: '',
-      applicationName: '',
+      namespace: '',
       description: '',
     },
     steeltoeVersion: '',
@@ -53,11 +53,8 @@ export function reducer(state, action) {
         errors = err
       }
       if (get(changes, 'meta.name') !== undefined) {
-        set(meta, 'applicationName', `${get(meta, 'name')}`)
-        set(meta, 'description', `${get(meta, 'name')} application project`)
-      }
-      if (get(changes, 'meta.applicationName') !== undefined) {
-        set(meta, 'description', `${get(meta, 'applicationName')} application project`)
+        set(meta, 'namespace', `${get(meta, 'name')}`)
+        set(meta, 'description', `${get(meta, 'name')} project`)
       }
       const values = {
         ...get(state, 'values'),

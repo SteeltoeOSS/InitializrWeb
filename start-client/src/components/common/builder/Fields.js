@@ -47,22 +47,12 @@ const Fields = ({
                   update({meta: {name: event.target.value}})
                 }}
               />
-              {/*
               <FieldInput
                 id='input-namespace'
                 value={get(values, 'meta.namespace')}
                 text='Namespace'
                 onChange={event => {
                   update({meta: {namespace: event.target.value}})
-                }}
-              />
-              */}
-              <FieldInput
-                id='input-applicationName'
-                value={get(values, 'meta.applicationName')}
-                text='Application'
-                onChange={event => {
-                  update({meta: {applicationName: event.target.value}})
                 }}
               />
               <FieldInput
@@ -124,18 +114,6 @@ const Fields = ({
                 </FieldError>
               )}
             </Control>
-            {/*
-            <Control text='.NET Template'>
-              <Radio
-                name='dotNetTemplate'
-                selected={get(values, 'dotNetTemplate')}
-                options={get(config, 'lists.dotNetTemplate')}
-                onChange={value => {
-                  update({dotNetTemplate: value})
-                }}
-              />
-            </Control>
-            */}
             {/*
 *           <Control text='Language'>
               <Radio
