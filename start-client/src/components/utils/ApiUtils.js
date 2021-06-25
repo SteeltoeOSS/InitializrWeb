@@ -8,7 +8,6 @@ import {isInRange, parseReleases, parseVersion} from './Version'
 const PROPERTIES_MAPPING_URL = {
   name: 'meta.name',
   namespace: 'meta.namespace',
-  applicationName: 'meta.applicationName',
   description: 'meta.description',
   steeltoeVersion: 'steeltoeVersion',
   dotNetFramework: 'dotNetFramework',
@@ -78,9 +77,7 @@ export const parseParams = (values, queryParams, lists) => {
         switch (key) {
           case 'name':
           case 'namespace':
-          case 'applicationName':
           case 'dotNetFramework':
-          case 'dotNetTemplate':
           case 'language':
           case 'packaging': {
             const list = get(lists, key, [])
@@ -227,12 +224,10 @@ export const getDefaultValues = json => {
     meta: {
       name: get(json, 'name.default'),
       namespace: get(json, 'namespace.default'),
-      applicationName: get(json, 'applicationName.default'),
       description: get(json, 'description.default'),
     },
     steeltoeVersion: get(json, 'steeltoeVersion.default'),
     dotNetFramework: get(json, 'dotNetFramework.default'),
-    dotNetTemplate: get(json, 'dotNetTemplate.default'),
     language: get(json, 'language.default'),
     packaging: get(json, 'packaging.default'),
     dependencies: [],
@@ -274,7 +269,7 @@ export const getProject = function getProject(url, values, config) {
   return new Promise((resolve, reject) => {
     const params = querystring.stringify({
       name: get(values, 'meta.name'),
-      application: get(values, 'meta.applicationName'),
+      namespace: get(values, 'meta.namespace'),
       description: get(values, 'meta.description'),
       steeltoeVersion: get(values, 'steeltoeVersion'),
       dotNetFramework: get(values, 'dotNetFramework'),

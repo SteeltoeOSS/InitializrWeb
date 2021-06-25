@@ -7,10 +7,6 @@
     "type": "text",
     "default": "DevNamespace"
   },
-  "applicationName": {
-    "type": "text",
-    "default": "DevApplication"
-  },
   "description": {
     "type": "text",
     "default": "Development project application"
@@ -43,16 +39,6 @@
       {
         "id": "netcoreapp2.1",
         "name": ".NET Core 2.1"
-      }
-    ],
-    "type": "single-select"
-  },
-  "dotNetTemplate": {
-    "default": "webapi",
-    "values": [
-      {
-        "id": "webapi",
-        "name": "ASP.NET Core Web API"
       }
     ],
     "type": "single-select"
