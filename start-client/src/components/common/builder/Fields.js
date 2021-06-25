@@ -122,6 +122,7 @@ const Fields = ({
                 </FieldError>
               )}
             </Control>
+            {/*
             <Control text='.NET Template'>
               <Radio
                 name='dotNetTemplate'
@@ -132,7 +133,9 @@ const Fields = ({
                 }}
               />
             </Control>
-{/*            <Control text='Language'>
+            */}
+            {/*
+*           <Control text='Language'>
               <Radio
                 name='language'
                 selected={get(values, 'language')}
@@ -142,7 +145,8 @@ const Fields = ({
                 }}
               />
             </Control>
- */}         </div>
+            */}
+          </div>
         </div>
         <div className='right'>
           <Dependency refButton={refDependency}/>

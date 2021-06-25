@@ -35,9 +35,6 @@ export default function Loading() {
           <Control text='DotNet Framework'>
             <Placeholder type='radio' width='100px' />
           </Control>
-          <Control text='Template'>
-            <Placeholder type='radio' width='100px' />
-          </Control>
         </div>
         <div className='right'>
           <div className='control'>
