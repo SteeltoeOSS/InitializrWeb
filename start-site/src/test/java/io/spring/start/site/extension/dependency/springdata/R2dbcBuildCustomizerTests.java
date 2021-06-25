@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2020 the original author or authors.
+ * Copyright 2012-2021 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,9 +19,12 @@ package io.spring.start.site.extension.dependency.springdata;
 import io.spring.initializr.generator.buildsystem.Build;
 import io.spring.initializr.generator.buildsystem.maven.MavenBuild;
 import io.spring.initializr.generator.version.Version;
+import io.spring.initializr.metadata.InitializrMetadata;
 import io.spring.initializr.metadata.support.MetadataBuildItemResolver;
 import io.spring.start.site.extension.AbstractExtensionTests;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -34,7 +37,7 @@ class R2dbcBuildCustomizerTests extends AbstractExtensionTests {
 
 	@Test
 	void r2dbcWithH2() {
-		Build build = createBuild("2.3.0.RELEASE");
+		Build build = createBuild();
 		build.dependencies().add("data-r2dbc");
 		build.dependencies().add("h2");
 		customize(build);
@@ -43,7 +46,7 @@ class R2dbcBuildCustomizerTests extends AbstractExtensionTests {
 
 	@Test
 	void r2dbcWithMariadb() {
-		Build build = createBuild("2.3.0.RELEASE");
+		Build build = createBuild();
 		build.dependencies().add("data-r2dbc");
 		build.dependencies().add("mariadb");
 		customize(build);
@@ -52,7 +55,7 @@ class R2dbcBuildCustomizerTests extends AbstractExtensionTests {
 
 	@Test
 	void r2dbcWithMysql() {
-		Build build = createBuild("2.3.0.RELEASE");
+		Build build = createBuild();
 		build.dependencies().add("data-r2dbc");
 		build.dependencies().add("mysql");
 		customize(build);
@@ -61,7 +64,7 @@ class R2dbcBuildCustomizerTests extends AbstractExtensionTests {
 
 	@Test
 	void r2dbcWithPostgresql() {
-		Build build = createBuild("2.3.0.RELEASE");
+		Build build = createBuild();
 		build.dependencies().add("data-r2dbc");
 		build.dependencies().add("postgresql");
 		customize(build);
@@ -70,15 +73,57 @@ class R2dbcBuildCustomizerTests extends AbstractExtensionTests {
 
 	@Test
 	void r2dbcWithSqlserver() {
-		Build build = createBuild("2.3.0.RELEASE");
+		Build build = createBuild();
 		build.dependencies().add("data-r2dbc");
 		build.dependencies().add("sqlserver");
 		customize(build);
 		assertThat(build.dependencies().ids()).containsOnly("data-r2dbc", "sqlserver", "r2dbc-mssql");
 	}
 
-	private Build createBuild(String platformVersion) {
-		return new MavenBuild(new MetadataBuildItemResolver(getMetadata(), Version.parse(platformVersion)));
+	@Test
+	void r2dbcWithFlywayAddSpringJdbc() {
+		Build build = createBuild();
+		build.dependencies().add("data-r2dbc");
+		build.dependencies().add("flyway");
+		customize(build);
+		assertThat(build.dependencies().ids()).containsOnly("data-r2dbc", "flyway", "spring-jdbc");
+	}
+
+	@ParameterizedTest
+	@ValueSource(strings = { "jdbc", "data-jdbc", "data-jpa" })
+	void r2dbcWithFlywayAndJdbcStaterDoesNotAddSpringJdbc(String jdbcStarter) {
+		Build build = createBuild();
+		build.dependencies().add("data-r2dbc");
+		build.dependencies().add("flyway");
+		build.dependencies().add(jdbcStarter);
+		customize(build);
+		assertThat(build.dependencies().ids()).containsOnly("data-r2dbc", "flyway", jdbcStarter);
+	}
+
+	@Test
+	void r2dbcWithLiquibaseAddSpringJdbc() {
+		Build build = createBuild();
+		build.dependencies().add("data-r2dbc");
+		build.dependencies().add("liquibase");
+		customize(build);
+		assertThat(build.dependencies().ids()).containsOnly("data-r2dbc", "liquibase", "spring-jdbc");
+	}
+
+	@ParameterizedTest
+	@ValueSource(strings = { "jdbc", "data-jdbc", "data-jpa" })
+	void r2dbcWithLiquibaseAndJdbcStaterDoesNotAddSpringJdbc(String jdbcStarter) {
+		Build build = createBuild();
+		build.dependencies().add("data-r2dbc");
+		build.dependencies().add("liquibase");
+		build.dependencies().add(jdbcStarter);
+		customize(build);
+		assertThat(build.dependencies().ids()).containsOnly("data-r2dbc", "liquibase", jdbcStarter);
+	}
+
+	private Build createBuild() {
+		InitializrMetadata metadata = getMetadata();
+		return new MavenBuild(new MetadataBuildItemResolver(metadata,
+				Version.parse(metadata.getBootVersions().getDefault().getId())));
 	}
 
 	private void customize(Build build) {
