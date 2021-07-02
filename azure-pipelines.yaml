@@ -5,9 +5,9 @@ variables:
   - name: major
     value: 1
   - name: minor
-    value: 0
+    value: 1
   - name: patch
-    value: 3
+    value: 0
 
 name: $(major).$(minor).$(patch)-$(Rev:r)
 
