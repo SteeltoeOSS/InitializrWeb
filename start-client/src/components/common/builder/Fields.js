@@ -56,14 +56,6 @@ const Fields = ({
                 }}
               />
               <FieldInput
-                id='input-applicationName'
-                value={get(values, 'meta.applicationName')}
-                text='Application'
-                onChange={event => {
-                  update({meta: {applicationName: event.target.value}})
-                }}
-              />
-              <FieldInput
                 id='input-description'
                 value={get(values, 'meta.description')}
                 text='Description'
@@ -122,17 +114,8 @@ const Fields = ({
                 </FieldError>
               )}
             </Control>
-            <Control text='.NET Template'>
-              <Radio
-                name='dotNetTemplate'
-                selected={get(values, 'dotNetTemplate')}
-                options={get(config, 'lists.dotNetTemplate')}
-                onChange={value => {
-                  update({dotNetTemplate: value})
-                }}
-              />
-            </Control>
-{/*            <Control text='Language'>
+            {/*
+*           <Control text='Language'>
               <Radio
                 name='language'
                 selected={get(values, 'language')}
@@ -142,7 +125,8 @@ const Fields = ({
                 }}
               />
             </Control>
- */}         </div>
+            */}
+          </div>
         </div>
         <div className='right'>
           <Dependency refButton={refDependency}/>
