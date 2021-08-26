@@ -29,32 +29,29 @@ import org.springframework.core.Ordered;
 abstract class SpringNativeGradleBuildCustomizer implements BuildCustomizer<GradleBuild>, Ordered {
 
 	@Override
-	public void customize(GradleBuild build) {
+	public final void customize(GradleBuild build) {
 		String springNativeVersion = build.dependencies().get("native").getVersion().getValue();
 
 		// AOT plugin
 		build.plugins().add("org.springframework.experimental.aot", (plugin) -> plugin.setVersion(springNativeVersion));
-
-		// Native buildtools plugin
-		String nativeBuildtoolsVersion = SpringNativeBuildtoolsVersionResolver.resolve(springNativeVersion);
-		if (nativeBuildtoolsVersion != null) {
-			// Gradle plugin is not yet available on the Gradle portal
-			build.pluginRepositories().add("maven-central");
-
-			build.plugins().add("org.graalvm.buildtools.native",
-					(plugin) -> plugin.setVersion(nativeBuildtoolsVersion));
-		}
 
 		// The AOT plugin includes the native dependency automatically
 		build.dependencies().remove("native");
 
 		// Spring Boot plugin
 		customizeSpringBootPlugin(build);
+
+		// Additional customizations
+		customize(build, springNativeVersion);
 	}
 
 	@Override
 	public int getOrder() {
 		return Ordered.LOWEST_PRECEDENCE - 10;
+	}
+
+	protected void customize(GradleBuild build, String springNativeVersion) {
+
 	}
 
 	protected abstract void customizeSpringBootPlugin(GradleBuild build);

@@ -126,6 +126,15 @@ class SpringNativeProjectGenerationConfigurationTests extends AbstractExtensionT
 	}
 
 	@Test
+	void gradleBuildConfigureNativePlugin() {
+		assertThat(gradleBuild(createProjectRequest("native"))).lines()
+				.containsSequence("nativeBuild {", "	classpath processAotResources.outputs, compileAotJava.outputs",
+						"}")
+				.containsSequence("nativeTest {",
+						"	classpath processAotTestResources.outputs, compileAotTestJava.outputs", "}");
+	}
+
+	@Test
 	void gradleBuildWithoutJpaDoesNotConfigureHibernateEnhancePlugin() {
 		assertThat(gradleBuild(createProjectRequest("native"))).doesNotContain("org.hibernate.orm");
 	}
