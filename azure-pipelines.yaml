@@ -9,7 +9,7 @@ variables:
   - name: patch
     value: 1
 
-name: $(major).$(minor).$(patch)-$(Rev:r)
+name: $(major).$(minor).$(patch)
 
 stages:
   - stage: assemble
