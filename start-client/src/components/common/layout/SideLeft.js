@@ -220,11 +220,10 @@ function SideLeft() {
                       <a
                         target='_blank'
                         rel='noopener noreferrer'
-                        href='https://github.com/SteeltoeOSS/InitializrConfig'
+                        href='https://github.com/SteeltoeOSS/InitializrConfig/blob/main/SteeltoeInitializr.yaml'
                       >
                         InitializrConfig
-                      </a>{' '}
-                      <text id='configVersion' />
+                      </a>
                     </span>
                     <br />
                     <span>
