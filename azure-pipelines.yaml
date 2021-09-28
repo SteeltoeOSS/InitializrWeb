@@ -59,3 +59,31 @@ stages:
             inputs:
               targetPath: manifests
               artifactName: manifests
+  - stage: Deploy
+    displayName: Deploy
+    dependsOn: assemble
+    condition:
+      not(eq(variables['build.reason'], 'PullRequest'))
+    jobs:
+      - job: push
+        displayName: Push
+        pool:
+          vmImage: ubuntu-latest
+        steps:
+          - task: Bash@3
+            displayName: Configure Version
+            inputs:
+              targetType: inline
+              script: |
+                echo '{ "label" : "'$LABEL'" }' > start-client/BuildVersion.json
+            env:
+              LABEL: $(Build.BuildNumber)
+          - task: Docker@2
+            displayName: Build and Push
+            inputs:
+              command: buildAndPush
+              containerRegistry: SteeltoeContainerRegistry
+              repository: initializr-web
+              tags: |
+                $(Build.BuildId)
+                latest
