@@ -1,89 +1,90 @@
+---
 trigger:
-  - main
+- main
 
 variables:
-  - name: major
-    value: 1
-  - name: minor
-    value: 2
-  - name: patch
-    value: 0
+- name: major
+  value: 1
+- name: minor
+  value: 2
+- name: patch
+  value: 0
 
 name: $(major).$(minor).$(patch)-$(Rev:r)
 
 stages:
-  - stage: assemble
-    displayName: Assemble
-    jobs:
-      - job: build
-        displayName: Build
-        pool:
-          vmImage: ubuntu-latest
-        steps:
-          - task: NodeTool@0
-            displayName: Set Node Version
-            inputs:
-              versionSpec: 10.x
-          - script: yarn install
-            displayName: yarn install
-            workingDirectory: start-client
-          - script: yarn build
-            displayName: yarn build
-            workingDirectory: start-client
-      - job: kubernetes
-        displayName: Kubernetes
-        pool:
-          vmImage: ubuntu-latest
-        steps:
-          - task: ShellScript@2
-            displayName: Generate Staging Manifest
-            inputs:
-              scriptPath: ./yttw.sh
-              args: >
-                -f kubernetes
-                -v image_tag=$(Build.BuildId)
-                -v hostname=start-staging.steeltoe.io
-                --output-files manifests/staging
-          - task: ShellScript@2
-            displayName: Generate Production Manifest
-            inputs:
-              scriptPath: ./yttw.sh
-              args: >
-                -f kubernetes
-                -v image_tag=$(Build.BuildId)
-                -v replica_count=2
-                -v hostname=start.steeltoe.io
-                --output-files manifests/production
-          - task: PublishPipelineArtifact@1
-            displayName: Publish Manifests
-            inputs:
-              targetPath: manifests
-              artifactName: manifests
-  - stage: Deploy
-    displayName: Deploy
-    dependsOn: assemble
-    condition:
-      not(eq(variables['build.reason'], 'PullRequest'))
-    jobs:
-      - job: push
-        displayName: Push
-        pool:
-          vmImage: ubuntu-latest
-        steps:
-          - task: Bash@3
-            displayName: Configure Version
-            inputs:
-              targetType: inline
-              script: |
-                echo '{ "label" : "'$LABEL'" }' > start-client/BuildVersion.json
-            env:
-              LABEL: $(Build.BuildNumber)
-          - task: Docker@2
-            displayName: Build and Push
-            inputs:
-              command: buildAndPush
-              containerRegistry: SteeltoeContainerRegistry
-              repository: initializr-web
-              tags: |
-                $(Build.BuildId)
-                latest
+- stage: assemble
+  displayName: Assemble
+  jobs:
+  - job: build
+    displayName: Build
+    pool:
+      vmImage: ubuntu-latest
+    steps:
+    - task: NodeTool@0
+      displayName: Set Node Version
+      inputs:
+        versionSpec: 10.x
+    - script: yarn install
+      displayName: yarn install
+      workingDirectory: start-client
+    - script: yarn build
+      displayName: yarn build
+      workingDirectory: start-client
+  - job: kubernetes
+    displayName: Kubernetes
+    pool:
+      vmImage: ubuntu-latest
+    steps:
+    - task: ShellScript@2
+      displayName: Generate Staging Manifest
+      inputs:
+        scriptPath: ./yttw.sh
+        args: >
+          -f kubernetes
+          -v image_tag=$(Build.BuildId)
+          -v hostname=start-staging.steeltoe.io
+          --output-files manifests/staging
+    - task: ShellScript@2
+      displayName: Generate Production Manifest
+      inputs:
+        scriptPath: ./yttw.sh
+        args: >
+          -f kubernetes
+          -v image_tag=$(Build.BuildId)
+          -v replica_count=2
+          -v hostname=start.steeltoe.io
+          --output-files manifests/production
+    - task: PublishPipelineArtifact@1
+      displayName: Publish Manifests
+      inputs:
+        targetPath: manifests
+        artifactName: manifests
+- stage: Deploy
+  displayName: Deploy
+  dependsOn: assemble
+  condition:
+    not(eq(variables['build.reason'], 'PullRequest'))
+  jobs:
+  - job: push
+    displayName: Push
+    pool:
+      vmImage: ubuntu-latest
+    steps:
+    - task: Bash@3
+      displayName: Configure Version
+      inputs:
+        targetType: inline
+        script: |
+          echo '{ "label" : "'$LABEL'" }' > start-client/BuildVersion.json
+      env:
+        LABEL: $(Build.BuildNumber)
+    - task: Docker@2
+      displayName: Build and Push
+      inputs:
+        command: buildAndPush
+        containerRegistry: SteeltoeContainerRegistry
+        repository: initializr-web
+        tags: |
+          $(Build.BuildId)
+          latest
