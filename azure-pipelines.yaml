@@ -30,3 +30,32 @@ stages:
           - script: yarn build
             displayName: yarn build
             workingDirectory: start-client
+      - job: kubernetes
+        displayName: Kubernetes
+        pool:
+          vmImage: ubuntu-latest
+        steps:
+          - task: ShellScript@2
+            displayName: Generate Staging Manifest
+            inputs:
+              scriptPath: ./yttw.sh
+              args: >
+                -f kubernetes
+                -v image_tag=$(Build.BuildId)
+                -v hostname=start-staging.steeltoe.io
+                --output-files manifests/staging
+          - task: ShellScript@2
+            displayName: Generate Production Manifest
+            inputs:
+              scriptPath: ./yttw.sh
+              args: >
+                -f kubernetes
+                -v image_tag=$(Build.BuildId)
+                -v replica_count=2
+                -v hostname=start.steeltoe.io
+                --output-files manifests/production
+          - task: PublishPipelineArtifact@1
+            displayName: Publish Manifests
+            inputs:
+              targetPath: manifests
+              artifactName: manifests

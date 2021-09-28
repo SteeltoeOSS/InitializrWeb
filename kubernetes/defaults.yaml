@@ -1,0 +1,11 @@
+#@data/values-schema
+#@schema/type any=True
+---
+name: initializr-web
+image_name: steeltoe.azurecr.io/initializr-web
+image_tag: latest
+container_port: 80
+service_port: 80
+replica_count: 1
+args: ""
+hostname: ""

@@ -1,0 +1,60 @@
+#@ load("@ytt:data", "data")
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: #@ data.values.name
+spec:
+  selector:
+    matchLabels:
+      app: #@ data.values.name
+  template:
+    metadata:
+      labels:
+        app: #@ data.values.name
+    spec:
+      nodeSelector:
+        "beta.kubernetes.io/os": linux
+      containers:
+      - name: #@ data.values.name
+        image: #@ "{}:{}".format(data.values.image_name, data.values.image_tag)
+        ports:
+        - containerPort: #@ int(data.values.container_port)
+  replicas: #@ int(data.values.replica_count)
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: #@ data.values.name
+spec:
+  ports:
+  - port: #@ int(data.values.service_port)
+    targetPort: #@ int(data.values.container_port)
+  selector:
+    app: #@ data.values.name
+
+#@ if/end data.values.hostname:
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: #@ data.values.name
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+    nginx.ingress.kubernetes.io/use-regex: "true"
+    nginx.ingress.kubernetes.io/rewrite-target: /$1
+spec:
+  rules:
+  - host: #@ data.values.hostname
+    http:
+      paths:
+      - path: /(.*)
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: #@ data.values.name
+            port:
+              number: #@ int(data.values.service_port)
