@@ -45,7 +45,7 @@ initializr:
           - compatibilityRange: "[2.4.0.M1,2.5.0-M1)"
             version: 3.5.0
           - compatibilityRange: "[2.5.0.M1,2.6.0-M1)"
-            version: 3.6.1
+            version: 3.10.0
       codecentric-spring-boot-admin:
         groupId: de.codecentric
         artifactId: spring-boot-admin-dependencies
@@ -82,8 +82,14 @@ initializr:
           - compatibilityRange: "[2.5.x-SNAPSHOT,2.6.0-M1)"
             version: 2020.0.5-SNAPSHOT
             repositories: spring-snapshots,spring-milestones
-          - compatibilityRange: "[2.6.0.M1,2.6.x-SNAPSHOT)"
+          - compatibilityRange: "[2.6.0-M1,2.6.0-M3)"
             version: 2021.0.0-M1
+            repositories: spring-milestones
+          - compatibilityRange: "[2.6.0-M3,2.6.0-RC1)"
+            version: 2021.0.0-M3
+            repositories: spring-milestones
+          - compatibilityRange: "[2.6.0-RC1,2.6.x-SNAPSHOT)"
+            version: 2021.0.0-RC1
             repositories: spring-milestones
           - compatibilityRange: "2.6.x-SNAPSHOT"
             version: 2021.0.0-SNAPSHOT
@@ -106,6 +112,8 @@ initializr:
             version: 2.3.0.RELEASE
           - compatibilityRange: "[2.4.0-M1,2.5.0-M1)"
             version: 2.4.1
+          - compatibilityRange: "[2.5.0-M1,2.6.0-M1)"
+            version: 3.3.0          
       spring-geode:
         groupId: org.springframework.geode
         artifactId: spring-geode-bom
@@ -114,11 +122,11 @@ initializr:
           - compatibilityRange: "[2.3.0.M1,2.4.0-M1)"
             version: 1.3.12.RELEASE
           - compatibilityRange: "[2.4.0-M1,2.5.0-M1)"
-            version: 1.4.10
+            version: 1.4.12
           - compatibilityRange: "[2.5.0-M1,2.6.0-M1)"
-            version: 1.5.4
+            version: 1.5.6
           - compatibilityRange: "2.6.0-M1"
-            version: 1.6.0-M2
+            version: 1.6.0-RC1
             repository: spring-milestones
       testcontainers:
         groupId: org.testcontainers
@@ -131,7 +139,7 @@ initializr:
         versionProperty: vaadin.version
         mappings:
           - compatibilityRange: "[2.1.0.RELEASE,2.6.0-M1)"
-            version: 14.7.1
+            version: 14.7.5
       wavefront:
         groupId: com.wavefront
         artifactId: wavefront-spring-boot-bom
@@ -142,7 +150,7 @@ initializr:
           - compatibilityRange: "[2.4.0-M1,2.5.0-M1)"
             version: 2.1.1
           - compatibilityRange: "2.5.0-M1"
-            version: 2.2.0
+            version: 2.2.2
     gradle:
       dependency-management-plugin-version: 1.0.11.RELEASE
     kotlin:
@@ -167,7 +175,7 @@ initializr:
       content:
         - name: Spring Native [Experimental]
           id: native
-          compatibilityRange: "[2.4.3,2.6.0-M1)"
+          compatibilityRange: "[2.4.3,2.7.0-M1)"
           groupId: org.springframework.experimental
           artifactId: spring-native
           description: Incubating support for compiling Spring applications to native executables using the GraalVM native-image compiler.
@@ -190,10 +198,21 @@ initializr:
               version: 0.10.2
             - compatibilityRange: "[2.5.4,2.5.5)"
               version: 0.10.3
-            - compatibilityRange: "[2.5.5,2.5.x-SNAPSHOT)"
+            - compatibilityRange: "[2.5.5,2.5.6)"
               version: 0.10.4
+            - compatibilityRange: "[2.5.6,2.5.x-SNAPSHOT)"
+              version: 0.10.5
             - compatibilityRange: "[2.5.x-SNAPSHOT,2.6.0-M1)"
-              version: 0.10.5-SNAPSHOT
+              version: 0.10.6-SNAPSHOT
+              repository: spring-snapshots
+            - compatibilityRange: "[2.6.0-M1,2.6.0-RC1)"
+              version: 0.11.0-M1
+              repository: spring-milestones
+            - compatibilityRange: "[2.6.0-RC1,2.6.x-SNAPSHOT)"
+              version: 0.11.0-M2
+              repository: spring-milestones
+            - compatibilityRange: "[2.6.x-SNAPSHOT,2.7.0-M1)"
+              version: 0.11.0-SNAPSHOT
               repository: spring-snapshots
           links:
             - rel: reference
@@ -419,7 +438,7 @@ initializr:
             - compatibilityRange: "[2.4.1,2.5.0-M1)"
               version: 2.0.1
             - compatibilityRange: "[2.5.0-M1,2.6.0-M1)"
-              version: 2.1.1
+              version: 2.1.3
           links:
             - rel: guide
               href: https://github.com/okta/samples-java-spring/tree/master/okta-hosted-login
@@ -809,7 +828,7 @@ initializr:
             - compatibilityRange: "[2.4.0.M1,2.5.0-M1)"
               version: 3.10.0
             - compatibilityRange: "[2.5.0.M1,2.6.0-M1)"
-              version: 3.11.1
+              version: 3.13.0
           description: Apache Camel is an open source integration framework that empowers you to quickly and easily integrate various systems consuming or producing data.
           groupId: org.apache.camel.springboot
           artifactId: camel-spring-boot-starter
@@ -870,6 +889,18 @@ initializr:
               description: Caching Data with Spring
             - rel: reference
               href: https://docs.spring.io/spring-boot/docs/{bootVersion}/reference/htmlsingle/#boot-features-caching
+        - name: Picocli
+          id: picocli
+          groupId: info.picocli
+          artifactId: picocli-spring-boot-starter
+          compatibilityRange: "[2.4.0.RELEASE,2.6.0-SNAPSHOT)"
+          description: Build command line applications with picocli.
+          mappings:
+            - compatibilityRange: "[2.4.0.RELEASE,2.6.0-SNAPSHOT)"
+              version: 4.6.2
+          links:
+            - rel: reference
+              href: https://picocli.info/#_spring_boot_example
     - name: Ops
       content:
         - name: Spring Boot Actuator
@@ -1078,7 +1109,7 @@ initializr:
       content:
         - name: Open Service Broker
           id: open-service-broker
-          compatibilityRange: "[2.0.0.RELEASE,2.5.0-M1)"
+          compatibilityRange: "[2.0.0.RELEASE,2.6.0-M1)"
           description: Framework for building Spring Boot apps that implement the Open Service Broker API, which can deliver services to applications running within cloud native platforms such as Cloud Foundry, Kubernetes and OpenShift.
           groupId: org.springframework.cloud
           artifactId: spring-cloud-starter-open-service-broker
@@ -1086,7 +1117,10 @@ initializr:
             - compatibilityRange: "[2.3.0.M1,2.4.0-M1)"
               version: 3.2.0
             - compatibilityRange: "[2.4.0-M1,2.5.0-M1)"
-              version: 3.3.0
+              version: 3.3.1
+            - compatibilityRange: "[2.5.0-M1,2.6.0-M1)"
+              version: 3.4.0-M2
+              repository: spring-milestones
           links:
             - rel: reference
               href: https://docs.spring.io/spring-cloud-open-service-broker/docs/current/reference/
@@ -1245,7 +1279,7 @@ initializr:
           artifactId: spring-cloud-stream
     - name: VMware Tanzu Application Service
       bom: spring-cloud-services
-      compatibilityRange: "[2.0.0.RELEASE,2.5.0-M1)"
+      compatibilityRange: "[2.0.0.RELEASE,2.6.0-M1)"
       content:
         - name: Config Client (TAS)
           id: scs-config-client
@@ -1266,14 +1300,6 @@ initializr:
           links:
             - rel: reference
               href: https://docs.pivotal.io/spring-cloud-services/
-        - name: Circuit Breaker (TAS)
-          id: scs-circuit-breaker
-          description: Hystrix circuit breaker client on VMware Tanzu Application Service.
-          groupId: io.pivotal.spring.cloud
-          artifactId: spring-cloud-services-starter-circuit-breaker
-          links:
-            - rel: reference
-              href: https://docs.pivotal.io/spring-cloud-services/
     - name: Microsoft Azure
       bom: azure
       compatibilityRange: "[2.2.11.RELEASE,2.6.0-M1)"
@@ -1282,7 +1308,7 @@ initializr:
           id: azure-support
           groupId: com.azure.spring
           artifactId: azure-spring-boot-starter
-          description: Auto-configuration for Azure Services (Service Bus, Storage, Active Directory, Cosmos DB, Key Vault, and more).
+          description: Auto-configuration for Azure Services (Service Bus, Storage, Active Directory, Key Vault, and more).
           links:
             - rel: guide
               href: https://spring.io/guides/gs/spring-boot-for-azure/
@@ -1307,6 +1333,17 @@ initializr:
             - compatibilityRange: "[2.0.0.RELEASE,2.3.0.M1)"
               groupId: com.microsoft.azure
               artifactId: azure-active-directory-spring-boot-starter
+        - name: Azure Cosmos DB
+          id: azure-cosmos-db
+          groupId: com.azure.spring
+          artifactId: azure-spring-boot-starter-cosmos
+          description: Fully managed NoSQL database service for modern app development, including Spring Data support.
+          links:
+            - rel: guide
+              href: https://github.com/Azure-Samples/azure-spring-boot-samples/tree/main/cosmos/azure-spring-boot-starter-cosmos/cosmos
+              description: Using Azure Cosmos DB with Spring Data
+            - rel: reference
+              href: https://docs.microsoft.com/en-us/azure/developer/java/spring-framework/configure-spring-boot-starter-java-app-with-cosmos-db
         - name: Azure Key Vault
           id: azure-keyvault-secrets
           groupId: com.azure.spring

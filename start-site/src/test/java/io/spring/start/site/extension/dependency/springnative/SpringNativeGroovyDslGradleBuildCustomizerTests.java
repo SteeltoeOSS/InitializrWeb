@@ -78,6 +78,37 @@ public class SpringNativeGroovyDslGradleBuildCustomizerTests extends SpringNativ
 	}
 
 	@Test
+	void gradleBuildWithNative010AddNativeBuildAndTestTask() {
+		SpringNativeGradleBuildCustomizer customizer = createCustomizer();
+		GradleBuild build = createBuild("0.10.0");
+		customizer.customize(build);
+		assertThat(build.tasks().has("nativeBuild")).isTrue();
+		assertThat(build.tasks().has("nativeTest")).isTrue();
+	}
+
+	@Test
+	void gradleBuildWithNative011AddNativeBuildTaskOnly() {
+		SpringNativeGradleBuildCustomizer customizer = createCustomizer();
+		GradleBuild build = createBuild("0.11.0-M1");
+		customizer.customize(build);
+		assertThat(build.tasks().has("nativeBuild")).isTrue();
+		assertThat(build.tasks().has("nativeTest")).isFalse();
+	}
+
+	@Test
+	void gradleBuildWithNative011SnapshotDoesNotAddNativeBuildToolsPlugin() {
+		SpringNativeGradleBuildCustomizer customizer = createCustomizer();
+		GradleBuild build = createBuild("0.11.0-SNAPSHOT");
+		customizer.customize(build);
+		GradlePlugin springAotPlugin = build.plugins().values()
+				.filter((plugin) -> plugin.getId().equals("org.graalvm.buildtools.native")).findAny().orElse(null);
+		assertThat(springAotPlugin).isNull();
+		assertThat(build.tasks().has("nativeCompile")).isFalse();
+		assertThat(build.tasks().has("nativeBuild")).isFalse();
+		assertThat(build.tasks().has("nativeTest")).isFalse();
+	}
+
+	@Test
 	@Override
 	void gradleBuildCustomizeSpringBootPlugin() {
 		SpringNativeGradleBuildCustomizer customizer = createCustomizer();
