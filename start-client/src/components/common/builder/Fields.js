@@ -116,8 +116,7 @@ function Fields({
                 </FieldError>
               )}
             </Control>
-            {/*
-*           <Control text='Language'>
+            <Control text='Language'>
               <Radio
                 name='language'
                 selected={get(values, 'language')}
@@ -127,7 +126,6 @@ function Fields({
                 }}
               />
             </Control>
-            */}
           </div>
         </div>
         <div className='right'>

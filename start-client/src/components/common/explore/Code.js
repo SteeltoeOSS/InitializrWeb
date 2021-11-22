@@ -13,6 +13,7 @@ if (typeof global !== 'undefined') {
   require('prismjs/components/prism-groovy') // eslint-disable-line
   require('prismjs/components/prism-git') // eslint-disable-line
   require('prismjs/components/prism-csharp') // eslint-disable-line
+  require('prismjs/components/prism-fsharp') // eslint-disable-line
   require('prismjs/components/prism-docker') // eslint-disable-line
 }
 

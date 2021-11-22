@@ -5,6 +5,9 @@ const FILE_EXTENSION = {
   cs: 'csharp',
   csproj: 'xml',
   Dockerfile: 'docker',
+  fs: 'fsharp',
+  fsproj: 'xml',
+  json: 'javascript',
   gitignore: 'git',
   js: 'javascript',
   json: 'javascript',
@@ -66,7 +69,7 @@ export const createTree = (files, path, fileName, zip) => {
     const tree = recursive(files, path, fileName, zip, 0)
     const selected = tree.children.find(
       item =>
-        ['Program.cs', 'Startup.cs'].indexOf(item.filename) >
+        ['Program.cs', 'Startup.cs', 'Program.fs', 'Startup.fs'].indexOf(item.filename) >
         -1
     )
     if (selected) {

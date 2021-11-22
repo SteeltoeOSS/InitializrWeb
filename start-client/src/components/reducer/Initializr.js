@@ -52,6 +52,10 @@ export function reducer(state, action) {
         const {dotNetFramework, ...err} = errors
         errors = err
       }
+      if (get(changes, 'language')) {
+        const {language, ...err} = errors
+        errors = err
+      }
       if (get(changes, 'meta.name') !== undefined) {
         set(meta, 'namespace', `${get(meta, 'name')}`)
         set(meta, 'description', `${get(meta, 'name')} project`)
