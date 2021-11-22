@@ -31,6 +31,9 @@ export default function Loading() {
           <Control text='.NET Framework'>
             <Placeholder type='radio' width='100px' />
           </Control>
+          <Control text='Language'>
+            <Placeholder type='radio' width='100px' />
+          </Control>
         </div>
         <div className='right'>
           <div className='control'>
