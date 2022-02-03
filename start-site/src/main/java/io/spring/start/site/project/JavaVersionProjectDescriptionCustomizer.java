@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2021 the original author or authors.
+ * Copyright 2012-2022 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -49,6 +49,10 @@ public class JavaVersionProjectDescriptionCustomizer implements ProjectDescripti
 
 	private static final VersionRange SPRING_BOOT_2_5_5_OR_LATER = VersionParser.DEFAULT.parseRange("2.5.5");
 
+	private static final VersionRange SPRING_BOOT_2_6_0_OR_LATER = VersionParser.DEFAULT.parseRange("2.6.0");
+
+	private static final VersionRange SPRING_BOOT_3_0_0_OR_LATER = VersionParser.DEFAULT.parseRange("3.0.0-M1");
+
 	private static final VersionRange GRADLE_6 = VersionParser.DEFAULT.parseRange("2.2.2.RELEASE");
 
 	private static final VersionRange Spring_NATIVE_011 = VersionParser.DEFAULT.parseRange("2.6.0-M3");
@@ -66,6 +70,12 @@ public class JavaVersionProjectDescriptionCustomizer implements ProjectDescripti
 			return;
 		}
 		Version platformVersion = description.getPlatformVersion();
+		// Spring Boot 3 requires Java 17
+		if (javaGeneration < 17 && SPRING_BOOT_3_0_0_OR_LATER.match(platformVersion)) {
+			updateTo(description, "17");
+			return;
+		}
+
 		// 13 support only as of Gradle 6
 		if (javaGeneration == 13 && description.getBuildSystem() instanceof GradleBuildSystem
 				&& !GRADLE_6.match(platformVersion)) {
@@ -102,8 +112,9 @@ public class JavaVersionProjectDescriptionCustomizer implements ProjectDescripti
 			if (!SPRING_BOOT_2_5_5_OR_LATER.match(platformVersion)) {
 				updateTo(description, "11");
 			}
-			// Kotlin is not supported yet
-			if (description.getLanguage() instanceof KotlinLanguage) {
+			// Kotlin 1.6 only
+			if (description.getLanguage() instanceof KotlinLanguage
+					&& !SPRING_BOOT_2_6_0_OR_LATER.match(platformVersion)) {
 				updateTo(description, "11");
 			}
 		}
@@ -116,6 +127,9 @@ public class JavaVersionProjectDescriptionCustomizer implements ProjectDescripti
 
 	private Integer determineJavaGeneration(String javaVersion) {
 		try {
+			if ("1.8".equals(javaVersion)) {
+				return 8;
+			}
 			int generation = Integer.parseInt(javaVersion);
 			return ((generation > 8 && generation <= 17) ? generation : null);
 		}

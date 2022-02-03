@@ -35,13 +35,17 @@ import org.springframework.core.Ordered;
  */
 class SpringNativeMavenBuildCustomizer implements BuildCustomizer<MavenBuild>, Ordered {
 
-	private static final VersionRange NATIVE_0_11 = VersionParser.DEFAULT.parseRange("0.11.0-M1");
+	private static final VersionRange NATIVE_NO_TEST_SUPPORT = VersionParser.DEFAULT
+			.parseRange("[0.11.0-M1,0.11.0-M2]");
+
+	private static final VersionRange NATIVE_011 = VersionParser.DEFAULT.parseRange("0.11.0-RC1");
 
 	@Override
 	public void customize(MavenBuild build) {
 		Dependency dependency = build.dependencies().get("native");
 		String springNativeVersion = dependency.getVersion().getValue();
-		boolean hasTestSupport = !NATIVE_0_11.match(VersionParser.DEFAULT.parse(springNativeVersion));
+		boolean hasTestSupport = !NATIVE_NO_TEST_SUPPORT.match(VersionParser.DEFAULT.parse(springNativeVersion));
+		boolean latestNativeBuildTools = NATIVE_011.match(VersionParser.DEFAULT.parse(springNativeVersion));
 
 		// Native build tools
 		String nativeBuildToolsVersion = SpringNativeBuildtoolsVersionResolver.resolve(springNativeVersion);
@@ -82,7 +86,7 @@ class SpringNativeMavenBuildCustomizer implements BuildCustomizer<MavenBuild>, O
 		}
 
 		if (nativeBuildToolsVersion != null) {
-			configureNativeProfile(build, hasTestSupport, nativeBuildToolsVersion);
+			configureNativeProfile(build, hasTestSupport, latestNativeBuildTools, nativeBuildToolsVersion);
 		}
 	}
 
@@ -101,21 +105,36 @@ class SpringNativeMavenBuildCustomizer implements BuildCustomizer<MavenBuild>, O
 										.add("enableExtendedEnhancement", "false"))));
 	}
 
-	private void configureNativeProfile(MavenBuild build, boolean hasTestSupport, String nativeBuildToolsVersion) {
+	private void configureNativeProfile(MavenBuild build, boolean hasTestSupport, boolean latestNativeBuildTools,
+			String nativeBuildToolsVersion) {
 		MavenProfile profile = build.profiles().id("native");
 		profile.properties().version("native-buildtools.version", nativeBuildToolsVersion);
 		profile.properties().property("repackage.classifier", "exec");
-		profile.dependencies().add("junit-platform-native",
-				Dependency.withCoordinates("org.graalvm.buildtools", "junit-platform-native")
-						.version(VersionReference.ofProperty("native-buildtools.version"))
-						.scope(DependencyScope.TEST_RUNTIME));
+		if (hasTestSupport) {
+			profile.dependencies().add("junit-platform-native", nativeTestDependency(latestNativeBuildTools));
+		}
 		profile.plugins().add("org.graalvm.buildtools", "native-maven-plugin", (plugin) -> {
 			plugin.version("${native-buildtools.version}");
+			if (latestNativeBuildTools) {
+				plugin.extensions(true);
+			}
 			if (hasTestSupport) {
 				plugin.execution("test-native", (execution) -> execution.goal("test").phase("test"));
 			}
 			plugin.execution("build-native", (execution) -> execution.goal("build").phase("package"));
 		});
+	}
+
+	private Dependency nativeTestDependency(boolean latestNativeBuildTools) {
+		if (latestNativeBuildTools) {
+			return Dependency.withCoordinates("org.junit.platform", "junit-platform-launcher")
+					.scope(DependencyScope.TEST_RUNTIME).build();
+		}
+		else {
+			return Dependency.withCoordinates("org.graalvm.buildtools", "junit-platform-native")
+					.version(VersionReference.ofProperty("native-buildtools.version"))
+					.scope(DependencyScope.TEST_RUNTIME).build();
+		}
 	}
 
 }
