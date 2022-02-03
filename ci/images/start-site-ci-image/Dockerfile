@@ -1,4 +1,4 @@
-FROM ubuntu:focal-20210217
+FROM ubuntu:focal-20220113
 
 ADD setup.sh /setup.sh
 RUN ./setup.sh

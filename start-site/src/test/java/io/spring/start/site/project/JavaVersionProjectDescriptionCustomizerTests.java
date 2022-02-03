@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2021 the original author or authors.
+ * Copyright 2012-2022 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -76,6 +76,18 @@ class JavaVersionProjectDescriptionCustomizerTests extends AbstractExtensionTest
 		assertThat(mavenPom(request)).hasProperty("java.version", "1.8");
 	}
 
+	@Test
+	void java8IsNotCompatibleWithSpringBoot3() {
+		ProjectRequest request = javaProject("1.8", "3.0.0-M1");
+		assertThat(mavenPom(request)).hasProperty("java.version", "17");
+	}
+
+	@Test
+	void java11IsNotCompatibleWithSpringBoot3() {
+		ProjectRequest request = javaProject("11", "3.0.0-M1");
+		assertThat(mavenPom(request)).hasProperty("java.version", "17");
+	}
+
 	@ParameterizedTest(name = "{0} - Java {1} - Spring Boot {2}")
 	@MethodSource("supportedMavenParameters")
 	void mavenBuildWithSupportedOptionsDoesNotDowngradeJavaVersion(String language, String javaVersion,
@@ -109,7 +121,7 @@ class JavaVersionProjectDescriptionCustomizerTests extends AbstractExtensionTest
 	private static Stream<Arguments> supportedKotlinParameters() {
 		return Stream.of(kotlin("9", "2.3.0.RELEASE"), kotlin("10", "2.3.0.RELEASE"), kotlin("11", "2.3.0.RELEASE"),
 				kotlin("12", "2.3.0.RELEASE"), kotlin("13", "2.3.0.RELEASE"), kotlin("14", "2.3.0.RELEASE"),
-				kotlin("15", "2.3.4.RELEASE"), kotlin("16", "2.5.0-RC1"));
+				kotlin("15", "2.3.4.RELEASE"), kotlin("16", "2.5.0-RC1"), kotlin("17", "2.6.0"));
 	}
 
 	private static Stream<Arguments> supportedGroovyParameters() {

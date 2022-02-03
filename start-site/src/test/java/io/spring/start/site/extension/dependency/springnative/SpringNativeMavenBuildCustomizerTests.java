@@ -101,7 +101,7 @@ class SpringNativeMavenBuildCustomizerTests {
 	}
 
 	@Test
-	void native11HasAotPluginConfigurationWithBuilTaskOnly() {
+	void native11HasAotPluginConfigurationWithBuildTaskOnly() {
 		MavenBuild build = new MavenBuild();
 		build.dependencies().add("native",
 				Dependency.withCoordinates("com.example", "native").version(VersionReference.ofValue("0.11.0-M1")));
@@ -138,7 +138,7 @@ class SpringNativeMavenBuildCustomizerTests {
 	}
 
 	@Test
-	void nativeProfileHasDependencyToJunitPlatformNative() {
+	void native10ProfileHasDependencyToJunitPlatformNative() {
 		MavenBuild build = new MavenBuild();
 		build.dependencies().add("native",
 				Dependency.withCoordinates("com.example", "native").version(VersionReference.ofValue("0.10.3")));
@@ -153,6 +153,20 @@ class SpringNativeMavenBuildCustomizerTests {
 	}
 
 	@Test
+	void native11ProfileHasDependencyToJunitPlatformLauncher() {
+		MavenBuild build = new MavenBuild();
+		build.dependencies().add("native",
+				Dependency.withCoordinates("com.example", "native").version(VersionReference.ofValue("0.11.0-RC1")));
+		assertThat(build).satisfies(hasNativeProfile((profile) -> {
+			Dependency dependency = profile.dependencies().get("junit-platform-native");
+			assertThat(dependency).isNotNull();
+			assertThat(dependency.getGroupId()).isEqualTo("org.junit.platform");
+			assertThat(dependency.getArtifactId()).isEqualTo("junit-platform-launcher");
+			assertThat(dependency.getScope()).isEqualTo(DependencyScope.TEST_RUNTIME);
+		}));
+	}
+
+	@Test
 	void native10ProfileHasPluginConfigurationForNativeMavenPluginWithBuildAndTestTasks() {
 		MavenBuild build = new MavenBuild();
 		build.dependencies().add("native",
@@ -162,6 +176,7 @@ class SpringNativeMavenBuildCustomizerTests {
 				assertThat(plugin.getGroupId()).isEqualTo("org.graalvm.buildtools");
 				assertThat(plugin.getArtifactId()).isEqualTo("native-maven-plugin");
 				assertThat(plugin.getVersion()).isEqualTo("${native-buildtools.version}");
+				assertThat(plugin.isExtensions()).isFalse();
 				assertThat(plugin.getExecutions()).hasSize(2);
 				Execution firstExecution = plugin.getExecutions().get(0);
 				assertThat(firstExecution.getId()).isEqualTo("test-native");
@@ -176,20 +191,45 @@ class SpringNativeMavenBuildCustomizerTests {
 	}
 
 	@Test
-	void native11ProfileHasPluginConfigurationForNativeMavenPluginWithBuildTaskOnly() {
+	void native11M2ProfileHasPluginConfigurationForNativeMavenPluginWithBuildTaskOnly() {
 		MavenBuild build = new MavenBuild();
 		build.dependencies().add("native",
-				Dependency.withCoordinates("com.example", "native").version(VersionReference.ofValue("0.11.0-M1")));
+				Dependency.withCoordinates("com.example", "native").version(VersionReference.ofValue("0.11.0-M2")));
 		assertThat(build).satisfies(hasNativeProfile((profile) -> {
 			assertThat(profile.plugins().values()).singleElement().satisfies((plugin) -> {
 				assertThat(plugin.getGroupId()).isEqualTo("org.graalvm.buildtools");
 				assertThat(plugin.getArtifactId()).isEqualTo("native-maven-plugin");
 				assertThat(plugin.getVersion()).isEqualTo("${native-buildtools.version}");
+				assertThat(plugin.isExtensions()).isFalse();
 				assertThat(plugin.getExecutions()).hasSize(1);
 				Execution execution = plugin.getExecutions().get(0);
 				assertThat(execution.getId()).isEqualTo("build-native");
 				assertThat(execution.getPhase()).isEqualTo("package");
 				assertThat(execution.getGoals()).containsOnly("build");
+			});
+		}));
+	}
+
+	@Test
+	void native11RC1ProfileHasPluginConfigurationForNativeMavenPluginWithBuildTaskOnly() {
+		MavenBuild build = new MavenBuild();
+		build.dependencies().add("native",
+				Dependency.withCoordinates("com.example", "native").version(VersionReference.ofValue("0.11.0-RC1")));
+		assertThat(build).satisfies(hasNativeProfile((profile) -> {
+			assertThat(profile.plugins().values()).singleElement().satisfies((plugin) -> {
+				assertThat(plugin.getGroupId()).isEqualTo("org.graalvm.buildtools");
+				assertThat(plugin.getArtifactId()).isEqualTo("native-maven-plugin");
+				assertThat(plugin.getVersion()).isEqualTo("${native-buildtools.version}");
+				assertThat(plugin.isExtensions()).isTrue();
+				assertThat(plugin.getExecutions()).hasSize(2);
+				Execution firstExecution = plugin.getExecutions().get(0);
+				assertThat(firstExecution.getId()).isEqualTo("test-native");
+				assertThat(firstExecution.getPhase()).isEqualTo("test");
+				assertThat(firstExecution.getGoals()).containsOnly("test");
+				Execution secondExecution = plugin.getExecutions().get(1);
+				assertThat(secondExecution.getId()).isEqualTo("build-native");
+				assertThat(secondExecution.getPhase()).isEqualTo("package");
+				assertThat(secondExecution.getGoals()).containsOnly("build");
 			});
 		}));
 	}

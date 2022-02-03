@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2021 the original author or authors.
+ * Copyright 2012-2022 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -78,8 +78,9 @@ class SpringNativeProjectGenerationConfigurationTests extends AbstractExtensionT
 		ProjectRequest request = createProjectRequest("native");
 		request.setType("gradle-project");
 		assertThat(generateProject(request)).containsFiles("settings.gradle").textFile("settings.gradle")
-				.containsSubsequence("pluginManagement {", "repositories {", "mavenCentral()", "gradlePluginPortal()",
-						"}", "}");
+				.containsSubsequence("pluginManagement {", "repositories {",
+						"maven { url 'https://repo.spring.io/release' }", "mavenCentral", "gradlePluginPortal()", "}",
+						"}");
 	}
 
 	@Test
@@ -121,17 +122,9 @@ class SpringNativeProjectGenerationConfigurationTests extends AbstractExtensionT
 
 	@Test
 	void gradleBuildConfigureSpringBootPlugin() {
-		assertThat(gradleBuild(createProjectRequest("native"))).lines().containsSequence("bootBuildImage {",
-				"	builder = 'paketobuildpacks/builder:tiny'", "	environment = ['BP_NATIVE_IMAGE': 'true']", "}");
-	}
-
-	@Test
-	void gradleBuildConfigureNativePlugin() {
-		assertThat(gradleBuild(createProjectRequest("native"))).lines()
-				.containsSequence("nativeBuild {", "	classpath processAotResources.outputs, compileAotJava.outputs",
-						"}")
-				.containsSequence("nativeTest {",
-						"	classpath processAotTestResources.outputs, compileAotTestJava.outputs", "}");
+		assertThat(gradleBuild(createProjectRequest("native"))).lines().containsSequence(
+				"tasks.named('bootBuildImage') {", "	builder = 'paketobuildpacks/builder:tiny'",
+				"	environment = ['BP_NATIVE_IMAGE': 'true']", "}");
 	}
 
 	@Test
@@ -143,7 +136,7 @@ class SpringNativeProjectGenerationConfigurationTests extends AbstractExtensionT
 	void gradleBuildWithJpaConfigureHibernateEnhancePlugin() {
 		assertThat(gradleBuild(createProjectRequest("native", "data-jpa"))).hasPlugin("org.hibernate.orm").lines()
 				.containsSequence(// @formatter:off
-				"hibernate {",
+				"tasks.named('hibernate') {",
 				"	enhance {",
 				"		enableLazyInitialization = true",
 				"		enableDirtyTracking = true",
