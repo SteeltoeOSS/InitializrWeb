@@ -51,7 +51,7 @@ metadata:
     kubernetes.io/tls-acme: "true"
 spec:
   tls:
-    - secretName: initializr-tls
+    - secretName: #@ data.values.tls_secret
       hosts:
         - #@ data.values.hostname
   rules:
