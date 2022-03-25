@@ -2,6 +2,7 @@
 #@schema/type any=True
 ---
 name: initializr-web
+namespace: initializr
 image_name: steeltoe.azurecr.io/initializr-web
 image_tag: latest
 container_port: 80
