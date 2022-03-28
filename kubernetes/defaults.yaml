@@ -11,3 +11,5 @@ replica_count: 1
 args: ""
 hostname: ""
 tls_secret: initializr-tls
+backend_name: initializr-service
+backend_port: 80
