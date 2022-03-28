@@ -39,29 +39,19 @@ spec:
 
 #@ if/end data.values.hostname:
 ---
-apiVersion: networking.k8s.io/v1
-kind: Ingress
+apiVersion: projectcontour.io/v1
+kind: HTTPProxy
 metadata:
   name: #@ data.values.name
   namespace: #@ data.values.namespace
-  annotations:
-    cert-manager.io/cluster-issuer: letsencrypt-prod
-    ingress.kubernetes.io/force-ssl-redirect: "true"
-    kubernetes.io/ingress.class: contour
-    kubernetes.io/tls-acme: "true"
 spec:
-  tls:
-    - secretName: #@ data.values.tls_secret
-      hosts:
-        - #@ data.values.hostname
-  rules:
-  - host: #@ data.values.hostname
-    http:
-      paths:
-      - pathType: Prefix
-        path: /
-        backend:
-          service:
-            name: #@ data.values.name
-            port:
-              number: #@ int(data.values.service_port)
+  virtualhost:
+    fqdn: #@ data.values.hostname
+    tls:
+      secretName: #@ data.values.tls_secret
+  routes:
+    - conditions:
+      - prefix: /
+      services:
+        - name: #@ data.values.name
+          port: #@ int(data.values.service_port)
