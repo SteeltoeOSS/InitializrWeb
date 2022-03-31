@@ -60,3 +60,25 @@ spec:
       services:
         - name: #@ data.values.backend_name
           port: #@ int(data.values.backend_port)
+    - conditions:
+      - prefix: /
+        header:
+          name: user-agent
+          contains: curl
+      pathRewritePolicy:
+        replacePrefix:
+          - replacement: /api
+      services:
+        - name: #@ data.values.backend_name
+          port: #@ int(data.values.backend_port)
+    - conditions:
+      - prefix: /
+        header:
+          name: user-agent
+          contains: HTTPie
+      pathRewritePolicy:
+        replacePrefix:
+        - replacement: /api
+      services:
+        - name: #@ data.values.backend_name
+          port: #@ int(data.values.backend_port)
