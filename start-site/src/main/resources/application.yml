@@ -38,17 +38,6 @@ spring:
 initializr:
   env:
     boms:
-      azure:
-        groupId: com.azure.spring
-        artifactId: azure-spring-boot-bom
-        versionProperty: azure.version
-        mappings:
-          - compatibilityRange: "[2.3.0.M1,2.4.0-M1)"
-            version: 3.2.0
-          - compatibilityRange: "[2.4.0.M1,2.5.0-M1)"
-            version: 3.5.0
-          - compatibilityRange: "[2.5.0.M1,2.7.0-M1)"
-            version: 3.14.0
       codecentric-spring-boot-admin:
         groupId: de.codecentric
         artifactId: spring-boot-admin-dependencies
@@ -57,9 +46,9 @@ initializr:
           - compatibilityRange: "[2.3.0.M1,2.5.0-M1)"
             version: 2.4.3
           - compatibilityRange: "[2.5.0.M1,2.6.0-M1)"
-            version: 2.5.5
+            version: 2.5.6
           - compatibilityRange: "[2.6.0.M1,2.7.0-M1)"
-            version: 2.6.2
+            version: 2.6.5
       solace-spring-boot:
         groupId: com.solace.spring.boot
         artifactId: solace-spring-boot-bom
@@ -67,6 +56,8 @@ initializr:
         mappings:
           - compatibilityRange: "[2.3.0.M1,2.6.0-M1)"
             version: 1.1.0
+          - compatibilityRange: "[2.6.0.M1,2.7.0-M1)"
+            version: 1.2.1
       solace-spring-cloud:
         groupId: com.solace.spring.cloud
         artifactId: solace-spring-cloud-bom
@@ -76,6 +67,8 @@ initializr:
             version: 1.1.1
           - compatibilityRange: "[2.4.0.M1,2.6.0-M1)"
             version: 2.1.0
+          - compatibilityRange: "[2.6.0.M1,2.7.0-M1)"
+            version: 2.3.0
       spring-cloud:
         groupId: org.springframework.cloud
         artifactId: spring-cloud-dependencies
@@ -100,9 +93,19 @@ initializr:
           - compatibilityRange: "[2.6.x-SNAPSHOT,3.0.0-M1)"
             version: 2021.0.2-SNAPSHOT
             repositories: spring-snapshots,spring-milestones
-          - compatibilityRange: "[3.0.0-M1,3.1.0-M1)"
+          - compatibilityRange: "[3.0.0-M1,3.0.0-M2)"
             version: 2022.0.0-M1
             repositories: spring-milestones
+          - compatibilityRange: "[3.0.0-M2,3.1.0-M1)"
+            version: 2022.0.0-M2
+            repositories: spring-milestones
+      spring-cloud-azure:
+        groupId: com.azure.spring
+        artifactId: spring-cloud-azure-dependencies
+        versionProperty: spring-cloud-azure.version
+        mappings:
+          - compatibilityRange: "[2.5.0.M1,2.7.0-M1)"
+            version: 4.0.0
       spring-cloud-gcp:
         groupId: com.google.cloud
         artifactId: spring-cloud-gcp-dependencies
@@ -110,9 +113,9 @@ initializr:
         additionalBoms: [ spring-cloud ]
         mappings:
           - compatibilityRange: "[2.4.0-M1,2.6.0-M1)"
-            version: 2.0.8
+            version: 2.0.10
           - compatibilityRange: "[2.6.0-M1,2.7.0-M1)"
-            version: 3.1.0
+            version: 3.2.1
       spring-cloud-services:
         groupId: io.pivotal.spring.cloud
         artifactId: spring-cloud-services-dependencies
@@ -137,14 +140,14 @@ initializr:
           - compatibilityRange: "[2.4.0-M1,2.5.0-M1)"
             version: 1.4.13
           - compatibilityRange: "[2.5.0-M1,2.6.0-M1)"
-            version: 1.5.10
+            version: 1.5.12
           - compatibilityRange: "[2.6.0-M1,2.7.0-M1)"
-            version: 1.6.4
+            version: 1.6.6
           - compatibilityRange: "[2.7.0-M1,3.0.0-M1)"
-            version: 1.7.0-M2
+            version: 1.7.0-M3
             repository: spring-milestones
           - compatibilityRange: "[3.0.0-M1,3.1.0-M1)"
-            version: 2.0.0-M1
+            version: 2.0.0-M2
             repository: spring-milestones
       testcontainers:
         groupId: org.testcontainers
@@ -157,9 +160,9 @@ initializr:
         versionProperty: vaadin.version
         mappings:
           - compatibilityRange: "[2.1.0.RELEASE,2.6.0-M1)"
-            version: 14.8.6
+            version: 14.8.8
           - compatibilityRange: "[2.6.0-M1,2.8.0-M1)"
-            version: 23.0.2
+            version: 23.0.6
       wavefront:
         groupId: com.wavefront
         artifactId: wavefront-spring-boot-bom
@@ -252,12 +255,12 @@ initializr:
             - compatibilityRange: "[2.6.3,2.6.4)"
               version: 0.11.2
               repository: spring-releases
-            - compatibilityRange: "[2.6.4,2.6.x-SNAPSHOT)"
+            - compatibilityRange: "[2.6.4,2.6.6)"
               version: 0.11.3
               repository: spring-releases
-            - compatibilityRange: "[2.6.x-SNAPSHOT,2.7.0-M1)"
-              version: 0.11.4-SNAPSHOT
-              repository: spring-snapshots
+            - compatibilityRange: "[2.6.6,2.7.0-M1)"
+              version: 0.11.4
+              repository: spring-releases
           links:
             - rel: reference
               href: https://docs.spring.io/spring-native/docs/current/reference/htmlsingle/
@@ -902,7 +905,7 @@ initializr:
             - compatibilityRange: "[2.5.0.M1,2.6.0-M1)"
               version: 3.13.0
             - compatibilityRange: "[2.6.0.M1,2.7.0-M1)"
-              version: 3.15.0
+              version: 3.16.0
           description: Apache Camel is an open source integration framework that empowers you to quickly and easily integrate various systems consuming or producing data.
           groupId: org.apache.camel.springboot
           artifactId: camel-spring-boot-starter
@@ -913,7 +916,7 @@ initializr:
         - name: Solace PubSub+
           bom: solace-spring-boot
           id: solace
-          compatibilityRange: "[2.2.0.RELEASE,2.6.0-M1)"
+          compatibilityRange: "[2.2.0.RELEASE,2.7.0-M1)"
           description: Connect to a Solace PubSub+ Advanced Event Broker to publish, subscribe, request/reply and store/replay messages
           groupId: com.solace.spring.boot
           artifactId: solace-spring-boot-starter
@@ -1067,7 +1070,7 @@ initializr:
               href: https://docs.spring.io/spring-boot/docs/{bootVersion}/reference/htmlsingle/#production-ready-metrics-export-prometheus
         - name: Sleuth
           id: cloud-starter-sleuth
-          compatibilityRange: "[2.3.0.M1,2.7.0-M1)"
+          compatibilityRange: "[2.3.0.M1,3.0.0-M1)"
           description: Distributed tracing via logs with Spring Cloud Sleuth.
           groupId: org.springframework.cloud
           artifactId: spring-cloud-starter-sleuth
@@ -1095,7 +1098,7 @@ initializr:
               description: Wavefront for Spring Boot repository
         - name: Zipkin Client
           id: cloud-starter-zipkin
-          compatibilityRange: "[2.3.0.M1,2.7.0-M1)"
+          compatibilityRange: "[2.3.0.M1,3.0.0-M1)"
           description: Distributed tracing with an existing Zipkin installation and Spring Cloud Sleuth Zipkin.
           groupId: org.springframework.cloud
           artifactId: spring-cloud-sleuth-zipkin
@@ -1130,7 +1133,7 @@ initializr:
               href: https://www.testcontainers.org/
         - name: Contract Verifier
           bom: spring-cloud
-          compatibilityRange: "[2.3.0.M1,2.7.0-M1)"
+          compatibilityRange: "[2.3.0.M1,3.0.0-M1)"
           id: cloud-contract-verifier
           description: Moves TDD to the level of software architecture by enabling Consumer Driven Contract (CDC) development.
           groupId: org.springframework.cloud
@@ -1141,7 +1144,7 @@ initializr:
               href: https://cloud.spring.io/spring-cloud-contract/reference/htmlsingle/
         - name: Contract Stub Runner
           bom: spring-cloud
-          compatibilityRange: "[2.3.0.M1,2.7.0-M1)"
+          compatibilityRange: "[2.3.0.M1,3.0.0-M1)"
           id: cloud-contract-stub-runner
           description: Stub Runner for HTTP/Messaging based communication. Allows creating WireMock stubs from RestDocs tests.
           groupId: org.springframework.cloud
@@ -1287,7 +1290,7 @@ initializr:
       content:
         - name: Eureka Discovery Client
           id: cloud-eureka
-          compatibilityRange: "[2.3.0.M1,2.7.0-M1)"
+          compatibilityRange: "[2.3.0.M1,3.0.0-M1)"
           description: A REST based service for locating services for the purpose of load balancing and failover of middle-tier servers.
           groupId: org.springframework.cloud
           artifactId: spring-cloud-starter-netflix-eureka-client
@@ -1299,7 +1302,7 @@ initializr:
               href: https://docs.spring.io/spring-cloud-netflix/docs/current/reference/html/#service-discovery-eureka-clients
         - name: Eureka Server
           id: cloud-eureka-server
-          compatibilityRange: "[2.3.0.M1,2.7.0-M1)"
+          compatibilityRange: "[2.3.0.M1,3.0.0-M1)"
           description: spring-cloud-netflix Eureka Server.
           groupId: org.springframework.cloud
           artifactId: spring-cloud-starter-netflix-eureka-server
@@ -1319,7 +1322,7 @@ initializr:
               href: https://docs.spring.io/spring-cloud-zookeeper/docs/current/reference/html/#spring-cloud-zookeeper-discovery
         - name: Cloud Foundry Discovery
           id: cloud-cloudfoundry-discovery
-          compatibilityRange: "[2.3.0.M1,2.7.0-M1)"
+          compatibilityRange: "[2.3.0.M1,3.0.0-M1)"
           description: Service discovery with Cloud Foundry.
           groupId: org.springframework.cloud
           artifactId: spring-cloud-cloudfoundry-discovery
@@ -1427,62 +1430,67 @@ initializr:
             - rel: reference
               href: https://docs.vmware.com/en/Spring-Cloud-Services-for-VMware-Tanzu/index.html
     - name: Microsoft Azure
-      bom: azure
-      compatibilityRange: "[2.2.11.RELEASE,2.7.0-M1)"
+      bom: spring-cloud-azure
+      compatibilityRange: "[2.5.0-M1,2.7.0-M1)"
       content:
         - name: Azure Support
           id: azure-support
           groupId: com.azure.spring
-          artifactId: azure-spring-boot-starter
+          artifactId: spring-cloud-azure-starter
           description: Auto-configuration for Azure Services (Service Bus, Storage, Active Directory, Key Vault, and more).
           links:
             - rel: guide
               href: https://spring.io/guides/gs/spring-boot-for-azure/
               description: Deploying a Spring Boot app to Azure
             - rel: reference
-              href: https://github.com/Azure/azure-sdk-for-java/tree/main/sdk/spring
-          mappings:
-            - compatibilityRange: "[2.0.0.RELEASE,2.3.0.M1)"
-              groupId: com.microsoft.azure
+              href: https://microsoft.github.io/spring-cloud-azure/current/reference/html/index.html
+            - rel: sample
+              href: https://aka.ms/spring/samples
+              description: Azure Samples
         - name: Azure Active Directory
           id: azure-active-directory
           groupId: com.azure.spring
-          artifactId: azure-spring-boot-starter-active-directory
+          artifactId: spring-cloud-azure-starter-active-directory
           description: Spring Security integration with Azure Active Directory for authentication.
           links:
             - rel: reference
-              href: https://github.com/Azure/azure-sdk-for-java/tree/main/sdk/spring/azure-spring-boot-starter-active-directory
-          mappings:
-            - compatibilityRange: "[2.0.0.RELEASE,2.3.0.M1)"
-              groupId: com.microsoft.azure
-              artifactId: azure-active-directory-spring-boot-starter
+              href: https://microsoft.github.io/spring-cloud-azure/current/reference/html/index.html#authentication
+            - rel: sample
+              href: https://aka.ms/spring/samples/latest/aad
+              description: Azure Active Directory Sample
         - name: Azure Cosmos DB
           id: azure-cosmos-db
           groupId: com.azure.spring
-          artifactId: azure-spring-boot-starter-cosmos
+          artifactId: spring-cloud-azure-starter-data-cosmos
           description: Fully managed NoSQL database service for modern app development, including Spring Data support.
           links:
-            - rel: guide
-              href: https://github.com/Azure-Samples/azure-spring-boot-samples/tree/main/cosmos/azure-spring-boot-starter-cosmos/cosmos
-              description: Using Azure Cosmos DB with Spring Data
             - rel: reference
-              href: https://docs.microsoft.com/en-us/azure/developer/java/spring-framework/configure-spring-boot-starter-java-app-with-cosmos-db
+              href: https://microsoft.github.io/spring-cloud-azure/current/reference/html/index.html#spring-data-support
+            - rel: sample
+              href: https://aka.ms/spring/samples/latest/cosmos
+              description: Azure Cosmos DB Sample
         - name: Azure Key Vault
           id: azure-keyvault-secrets
           groupId: com.azure.spring
-          artifactId: azure-spring-boot-starter-keyvault-secrets
+          artifactId: spring-cloud-azure-starter-keyvault-secrets
           description: Manage application secrets.
           links:
             - rel: reference
-              href: https://github.com/Azure/azure-sdk-for-java/tree/main/sdk/spring/azure-spring-boot-starter-keyvault-secrets
+              href: https://microsoft.github.io/spring-cloud-azure/current/reference/html/index.html#secret-management
+            - rel: sample
+              href: https://aka.ms/spring/samples/latest/keyvault
+              description: Azure Key Vault Sample
         - name: Azure Storage
           id: azure-storage
           groupId: com.azure.spring
-          artifactId: azure-spring-boot-starter-storage
+          artifactId: spring-cloud-azure-starter-storage-blob
           description: Azure Storage service integration.
           links:
             - rel: reference
-              href: https://github.com/Azure/azure-sdk-for-java/tree/main/sdk/spring/azure-spring-boot-starter-storage
+              href: https://microsoft.github.io/spring-cloud-azure/current/reference/html/index.html#resource-handling
+            - rel: sample
+              href: https://aka.ms/spring/samples/latest/storage
+              description: Azure Storage Sample
     - name: Google Cloud Platform
       bom: spring-cloud-gcp
       compatibilityRange: "[2.4.0-M1,2.7.0-M1)"
@@ -1560,6 +1568,8 @@ initializr:
       id: war
       default: false
   javaVersions:
+    - id: 18
+      default: false
     - id: 17
       default: false
     - id: 11
