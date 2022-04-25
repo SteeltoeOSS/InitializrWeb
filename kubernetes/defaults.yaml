@@ -10,6 +10,6 @@ service_port: 80
 replica_count: 1
 args: ""
 hostname: ""
-tls_secret: initializr-tls
+tls_secret: initializr-web-tls
 backend_name: initializr-service
 backend_port: 80
