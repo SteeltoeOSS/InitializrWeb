@@ -209,9 +209,9 @@ function SideLeft() {
                       <a
                         target='_blank'
                         rel='noopener noreferrer'
-                        href='https://github.com/SteeltoeOSS/InitializrApi'
+                        href='https://github.com/SteeltoeOSS/InitializrService'
                       >
-                        InitializrAPI
+                        InitializrService
                       </a>{' '}
                       <text id='apiVersion' />
                     </span>
