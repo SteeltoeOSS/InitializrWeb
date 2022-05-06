@@ -89,9 +89,9 @@ initializr:
             version: 2021.0.0-RC1
             repositories: spring-milestones
           - compatibilityRange: "[2.6.1,2.6.x-SNAPSHOT)"
-            version: 2021.0.1
+            version: 2021.0.2
           - compatibilityRange: "[2.6.x-SNAPSHOT,3.0.0-M1)"
-            version: 2021.0.2-SNAPSHOT
+            version: 2021.0.3-SNAPSHOT
             repositories: spring-snapshots,spring-milestones
           - compatibilityRange: "[3.0.0-M1,3.0.0-M2)"
             version: 2022.0.0-M1
@@ -140,11 +140,11 @@ initializr:
           - compatibilityRange: "[2.4.0-M1,2.5.0-M1)"
             version: 1.4.13
           - compatibilityRange: "[2.5.0-M1,2.6.0-M1)"
-            version: 1.5.12
+            version: 1.5.13
           - compatibilityRange: "[2.6.0-M1,2.7.0-M1)"
-            version: 1.6.6
+            version: 1.6.7
           - compatibilityRange: "[2.7.0-M1,3.0.0-M1)"
-            version: 1.7.0-M3
+            version: 1.7.0-RC1
             repository: spring-milestones
           - compatibilityRange: "[3.0.0-M1,3.1.0-M1)"
             version: 2.0.0-M2
@@ -160,9 +160,9 @@ initializr:
         versionProperty: vaadin.version
         mappings:
           - compatibilityRange: "[2.1.0.RELEASE,2.6.0-M1)"
-            version: 14.8.8
+            version: 14.8.9
           - compatibilityRange: "[2.6.0-M1,2.8.0-M1)"
-            version: 23.0.6
+            version: 23.0.8
       wavefront:
         groupId: com.wavefront
         artifactId: wavefront-spring-boot-bom
