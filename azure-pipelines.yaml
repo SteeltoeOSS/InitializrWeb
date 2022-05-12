@@ -19,7 +19,7 @@ stages:
     not(eq(variables['build.reason'], 'PullRequest'))
   jobs:
   - job: deploy
-    displayName:Deploy Docker Image
+    displayName: Deploy Docker Image
     pool:
       vmImage: ubuntu-latest
     steps:
