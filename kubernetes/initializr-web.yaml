@@ -16,7 +16,7 @@ spec:
         app: #@ data.values.name
     spec:
       nodeSelector:
-        "beta.kubernetes.io/os": linux
+        "kubernetes.io/os": linux
       containers:
       - name: #@ data.values.name
         image: #@ "{}:{}".format(data.values.image_name, data.values.image_tag)
