@@ -14,7 +14,7 @@ COPY start-client/BuildVersion.json ./
 RUN yarn install
 RUN yarn build
 
-FROM phusion/passenger-nodejs:1.0.15
+FROM phusion/passenger-nodejs:2.3.0
 COPY --from=build /usr/src /usr/share/initializr/www
 RUN chown -R app:app /usr/share/initializr/www
 RUN rm /etc/nginx/sites-enabled/default
