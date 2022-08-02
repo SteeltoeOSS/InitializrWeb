@@ -1,4 +1,4 @@
-FROM node:12 AS build
+FROM node:16.16.0 AS build
 WORKDIR /usr/src
 COPY start-client/package.json ./
 COPY start-client/yarn.lock ./
