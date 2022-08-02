@@ -14,20 +14,22 @@ import {Button, Radio} from '../form'
 import {Dependency} from '../dependency'
 import {InitializrContext} from '../../reducer/Initializr'
 
-const Fields = ({
-                  onSubmit,
-                  onExplore,
-                  onShare,
-                  refExplore,
-                  refSubmit,
-                  refDependency,
-                  generating,
-                }) => {
+function Fields({
+  onSubmit,
+  onExplore,
+  onShare,
+  refExplore,
+  refSubmit,
+  refDependency,
+  generating,
+}) {
   const windowsUtils = useWindowsUtils()
   const {config, dispatch, dependencies} = useContext(AppContext)
-  const {values, dispatch: dispatchInitializr, errors} = useContext(
-    InitializrContext
-  )
+  const {
+    values,
+    dispatch: dispatchInitializr,
+    errors,
+  } = useContext(InitializrContext)
   const update = args => {
     dispatchInitializr({type: 'UPDATE', payload: args})
   }

@@ -16,29 +16,29 @@ beforeEach(() => {
   }
 })
 
-describe('COMPLETE action', () => {
-  beforeEach(() => {
-    state = {
-      values: {
-        project: '',
-        language: '',
-        boot: '',
-        meta: {
-          name: '',
-          group: '',
-          artifact: '',
-          description: '',
-          packaging: '',
-          packageName: '',
-          java: '',
-        },
-        dependencies: [],
-      },
-      share: '',
-      errors: {},
-      warnings: {},
-    }
-  })
+// describe('COMPLETE action', () => {
+//   beforeEach(() => {
+//     state = {
+//       values: {
+//         project: '',
+//         language: '',
+//         boot: '',
+//         meta: {
+//           name: '',
+//           group: '',
+//           artifact: '',
+//           description: '',
+//           packaging: '',
+//           packageName: '',
+//           java: '',
+//         },
+//         dependencies: [],
+//       },
+//       share: '',
+//       errors: {},
+//       warnings: {},
+//     }
+//   })
   // it('should reduce the state', () => {
   //   const result = reducer(state, {
   //     type: 'COMPLETE',
@@ -65,7 +65,7 @@ describe('COMPLETE action', () => {
   //   expect(Object.keys(get(result, 'errors')).length).toBe(0)
   //   expect(Object.keys(get(result, 'warnings')).length).toBe(0)
   // })
-})
+// })
 
 describe('UPDATE action', () => {
   it('should reduce the state (type)', () => {

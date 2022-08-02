@@ -62,7 +62,6 @@ function Warnings() {
       </div>
     )
   }
-  return <></>
 }
 
 export default Warnings

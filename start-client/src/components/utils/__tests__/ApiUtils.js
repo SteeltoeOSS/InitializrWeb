@@ -333,11 +333,11 @@ describe('getShareUrl', () => {
 /**
  * Get Project
  */
-describe('getProject', () => {
-  beforeEach(() => {
-    fetch.resetMocks()
-    fetch.mockResponseOnce(JSON.stringify({}))
-  })
+// describe('getProject', () => {
+//   beforeEach(() => {
+//     fetch.resetMocks()
+//     fetch.mockResponseOnce(JSON.stringify({}))
+//   })
   // it('should call the right service with the right parameters', () => {
   //   const values = {
   //     project: 'foo1',
@@ -408,4 +408,4 @@ describe('getProject', () => {
   //     'http://demo/starter.zip?type=foo1&language=foo2&bootVersion=foo3&baseDir=foo7&groupId=foo6&artifactId=foo7&name=foo8&description=foo9&packageName=foo10&packaging=foo4&javaVersion=foo5'
   //   )
   // })
-})
+// })
