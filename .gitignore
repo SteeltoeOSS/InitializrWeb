@@ -39,3 +39,4 @@ target
 .DS_Store
 
 /tools/
+.vscode/settings.json
