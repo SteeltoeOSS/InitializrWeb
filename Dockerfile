@@ -1,4 +1,4 @@
-FROM node:16.16.0 AS build
+FROM node:21 AS build
 WORKDIR /usr/src
 COPY start-client/package.json ./
 COPY start-client/yarn.lock ./
@@ -14,7 +14,7 @@ COPY start-client/BuildVersion.json ./
 RUN yarn install
 RUN yarn build
 
-FROM phusion/passenger-nodejs:2.3.0
+FROM phusion/passenger-nodejs:3.0.1
 COPY --from=build /usr/src /usr/share/initializr/www
 RUN chown -R app:app /usr/share/initializr/www
 RUN rm /etc/nginx/sites-enabled/default

@@ -44,6 +44,9 @@ const config = {
         test: /.(js|jsx)$/,
         exclude: [path.resolve(__dirname, 'node_modules')],
         loader: 'babel-loader',
+        options: {
+          plugins: ['lodash'],
+        },
       },
       {
         test: /\.s[ac]ss$/i,
@@ -96,7 +99,7 @@ const config = {
     new WebpackPwaManifest({
       name: 'steeltoe-initializr',
       short_name: 'Start',
-      description: 'Steeltoe Initializr generates Steeltoe DotNet projects with just what you need to start quickly!',
+      description: 'Steeltoe Initializr generates Steeltoe .NET projects with just what you need to start quickly!',
       background_color: '#0066cc',
       inject: true,
       fingerprints: true,

@@ -1,6 +1,6 @@
 import BodyClassName from 'react-body-classname'
 import FileSaver from 'file-saver'
-import get from 'lodash.get'
+import get from 'lodash/get'
 import React, {
   Suspense,
   lazy,
@@ -26,7 +26,6 @@ const Share = lazy(() => import('./common/share/Share'))
 const HotKeys = lazy(() => import('./common/builder/HotKeys'))
 
 export default function Application() {
-
   const {
     complete,
     dispatch,
@@ -52,8 +51,7 @@ export default function Application() {
   const windowsUtils = useWindowsUtils()
   useHash()
 
-
-    useEffect(() => {
+  useEffect(() => {
     if (windowsUtils.origin) {
       const url = '/api/uiconfig'
       getInfo(url).then(jsonConfig => {

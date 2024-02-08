@@ -1,4 +1,3 @@
-<script type="module" src="./styles/app.scss"></script>
 import './styles/app.scss'
 
 import React from 'react'

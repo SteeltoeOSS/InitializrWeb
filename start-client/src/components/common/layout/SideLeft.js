@@ -1,12 +1,11 @@
-import get from 'lodash.get'
+import get from 'lodash/get'
 import React, { useContext, useEffect, useRef, useState } from 'react'
 import { CSSTransition, TransitionGroup } from 'react-transition-group'
 import { clearAllBodyScrollLocks, disableBodyScroll } from 'body-scroll-lock'
 
-
 import Header from './Header'
 import { AppContext } from '../../reducer/App'
-import { IconGithub, IconTwitter } from '../icons'
+import { IconGithub } from '../icons'
 import BuildVersion from '../../../../BuildVersion.json'
 
 function SideLeft() {
@@ -94,15 +93,6 @@ function SideLeft() {
                 <IconGithub />
               </span>
             </a>
-            <a
-              rel='noreferrer noopener'
-              target='_blank'
-              href='https://twitter.com/SteeltoeOSS'
-            >
-              <span className='a-content' tabIndex='-1'>
-                <IconTwitter />
-              </span>
-            </a>
           </div>
         </div>
       </div>
@@ -177,22 +167,14 @@ function SideLeft() {
                           </span>
                         </a>
                       </li>
-                      <li>
-                        <a
-                          rel='noreferrer noopener'
-                          target='_blank'
-                          href='https://twitter.com/SteeltoeOSS'
-                        >
-                          <span className='a-content' tabIndex='-1'>
-                            Twitter
-                          </span>
-                        </a>
-                      </li>
                     </ul>
                   </div>
                   <div className='copyright'>
-                    start.steeltoe.io, © 2016-{new Date().getFullYear()} VMware, Inc.
+                    © 2005-{new Date().getFullYear()} Broadcom. All Rights
+                    Reserved.
                     <br />
+                    The term &quot;Broadcom&quot; refers to Broadcom Inc. and/or
+                    its subsidiaries
                     Powered by{' '}
                     <span>
                       <a
