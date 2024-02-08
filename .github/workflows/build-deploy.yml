@@ -51,7 +51,7 @@ jobs:
 
     - name: If PR, create a new staging slot
       if: ${{ github.event_name == 'pull_request' }}
-      run: az webapp deployment slot create --resource-group ${{ vars.AZURE_RESOURCE_GROUP }} --name ${{ vars.AZURE_WEBAPP_NAME}} --slot ${{ env.SLOT_NAME }}
+      run: az webapp deployment slot create --resource-group ${{ vars.AZURE_RESOURCE_GROUP }} --name ${{ vars.AZURE_WEBAPP_NAME}} --slot ${{ env.SLOT_NAME }} --configuration-source staging
 
     - name: Deploy to staging slot
       uses: azure/webapps-deploy@v3
