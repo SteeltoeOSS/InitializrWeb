@@ -3,23 +3,16 @@ import React from 'react'
 import { IconGithub, IconTwitter } from '../icons'
 
 function Social() {
- return (
-   <div className='social'>
-    <a
-      rel='noreferrer noopener'
-      target='_blank'
-      href='https://github.com/SteeltoeOSS/InitializrWeb'
-    >
-      <IconGithub />
-    </a>
-    <a
-      rel='noreferrer noopener'
-      target='_blank'
-      href='https://twitter.com/SteeltoeOSS'
-    >
-      <IconTwitter />
-    </a>
-  </div>
+  return (
+    <div className='social'>
+      <a
+        rel='noreferrer noopener'
+        target='_blank'
+        href='https://github.com/SteeltoeOSS/InitializrWeb'
+      >
+        <IconGithub />
+      </a>
+    </div>
   )
 }
 

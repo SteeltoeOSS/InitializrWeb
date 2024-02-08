@@ -5,18 +5,18 @@ import Logo from './Logo'
 
 function Header() {
   return (
-   <header id='header'>
-    <div className='not-mobile'>
-      <h1 className='logo'>
-        <a href='/'>
-          <span className='logo-content' tabIndex='-1'>
-            <img src="images/steeltoe-initializr-logo.svg" />
-          </span>
-        </a>
-      </h1>
-    </div>
-    <HeaderMobile />
-  </header>
+    <header id='header'>
+      <div className='not-mobile'>
+        <h1 className='logo'>
+          <a href='/'>
+            <span className='logo-content' tabIndex='-1'>
+              <img src="images/steeltoe-initializr-logo.svg" />
+            </span>
+          </a>
+        </h1>
+      </div>
+      <HeaderMobile />
+    </header>
   )
 }
 

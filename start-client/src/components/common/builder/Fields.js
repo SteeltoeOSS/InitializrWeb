@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
-import get from 'lodash.get'
-import React, {useContext} from 'react'
+import get from 'lodash/get'
+import React, { useContext } from 'react'
 
 import Actions from './Actions'
 import Control from './Control'
@@ -9,10 +9,10 @@ import FieldInput from './FieldInput'
 import FieldRadio from './FieldRadio'
 import Warnings from './Warnings'
 import useWindowsUtils from '../../utils/WindowsUtils'
-import {AppContext} from '../../reducer/App'
-import {Button, Radio} from '../form'
-import {Dependency} from '../dependency'
-import {InitializrContext} from '../../reducer/Initializr'
+import { AppContext } from '../../reducer/App'
+import { Button, Radio } from '../form'
+import { Dependency } from '../dependency'
+import { InitializrContext } from '../../reducer/Initializr'
 
 function Fields({
   onSubmit,
@@ -31,14 +31,14 @@ function Fields({
     errors,
   } = useContext(InitializrContext)
   const update = args => {
-    dispatchInitializr({type: 'UPDATE', payload: args})
+    dispatchInitializr({ type: 'UPDATE', payload: args })
   }
 
   return (
     <>
       <div className='colset colset-main'>
         <div className='left'>
-          <Warnings/>
+          <Warnings />
           <div className='col-sticky'>
             <Control text='Project'>
               <FieldInput
@@ -46,7 +46,7 @@ function Fields({
                 value={get(values, 'meta.name')}
                 text='Name'
                 onChange={event => {
-                  update({meta: {name: event.target.value}})
+                  update({ meta: { name: event.target.value } })
                 }}
               />
               <FieldInput
@@ -54,7 +54,7 @@ function Fields({
                 value={get(values, 'meta.namespace')}
                 text='Namespace'
                 onChange={event => {
-                  update({meta: {namespace: event.target.value}})
+                  update({ meta: { namespace: event.target.value } })
                 }}
               />
               <FieldInput
@@ -62,7 +62,7 @@ function Fields({
                 value={get(values, 'meta.description')}
                 text='Description'
                 onChange={event => {
-                  update({meta: {description: event.target.value}})
+                  update({ meta: { description: event.target.value } })
                 }}
               />
             </Control>
@@ -122,14 +122,14 @@ function Fields({
                 selected={get(values, 'language')}
                 options={get(config, 'lists.language')}
                 onChange={value => {
-                  update({language: value})
+                  update({ language: value })
                 }}
               />
             </Control>
           </div>
         </div>
         <div className='right'>
-          <Dependency refButton={refDependency}/>
+          <Dependency refButton={refDependency} />
         </div>
       </div>
       <Actions>
@@ -172,15 +172,15 @@ Fields.propTypes = {
   onShare: PropTypes.func.isRequired,
   refExplore: PropTypes.oneOfType([
     PropTypes.func,
-    PropTypes.shape({current: PropTypes.instanceOf(Element)}),
+    PropTypes.shape({ current: PropTypes.instanceOf(Element) }),
   ]).isRequired,
   refSubmit: PropTypes.oneOfType([
     PropTypes.func,
-    PropTypes.shape({current: PropTypes.instanceOf(Element)}),
+    PropTypes.shape({ current: PropTypes.instanceOf(Element) }),
   ]).isRequired,
   refDependency: PropTypes.oneOfType([
     PropTypes.func,
-    PropTypes.shape({current: PropTypes.instanceOf(Element)}),
+    PropTypes.shape({ current: PropTypes.instanceOf(Element) }),
   ]).isRequired,
 }
 
