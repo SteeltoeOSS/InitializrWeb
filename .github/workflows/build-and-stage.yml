@@ -1,4 +1,4 @@
-name: Build and deploy
+name: Build and stage
 
 on:
   pull_request:
@@ -17,6 +17,7 @@ permissions:
   pull-requests: 'write'
 
 env:
+  IMAGE_NAME: initializr-web
   IMAGE_TAG: ${{ github.event_name == 'pull_request' && format('pr-{0}', github.event.number) || github.run_id }}
 
 jobs:
@@ -44,21 +45,21 @@ jobs:
         password: "${{ secrets.DOCKER_PASSWORD }}"
 
     - name: Build image
-      run: docker build . --file "Dockerfile" -t ${{ vars.DOCKER_REGISTRY }}/initializr-web:${{ env.IMAGE_TAG }}
+      run: docker build . --file "Dockerfile" -t ${{ vars.DOCKER_REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}
 
     - name: Push image
-      run: docker push ${{ vars.DOCKER_REGISTRY }}/initializr-web:${{ env.IMAGE_TAG }}
+      run: docker push ${{ vars.DOCKER_REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}
 
     - name: If PR, create a new staging slot
       if: ${{ github.event_name == 'pull_request' }}
-      run: az webapp deployment slot create --resource-group ${{ vars.AZURE_RESOURCE_GROUP }} --name ${{ vars.AZURE_WEBAPP_NAME}} --slot ${{ env.SLOT_NAME }} --configuration-source staging
+      run: az webapp deployment slot create --resource-group ${{ vars.AZURE_RESOURCE_GROUP }} --name ${{ vars.AZURE_WEBAPP_NAME}} --slot ${{ env.SLOT_NAME }} --configuration-source ${{ vars.STAGING_SLOT_NAME }}
 
     - name: Deploy to staging slot
       uses: azure/webapps-deploy@v3
       id: deploy-to-webapp
       with: 
         app-name: ${{ vars.AZURE_WEBAPP_NAME }}
-        images: ${{ vars.DOCKER_REGISTRY }}/initializr-web:${{ env.IMAGE_TAG }}
+        images: ${{ vars.DOCKER_REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}
         slot-name:  ${{ env.SLOT_NAME }}
     
     - name: If PR, comment with the preview link
