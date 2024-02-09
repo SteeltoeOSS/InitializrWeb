@@ -25,8 +25,10 @@ RUN echo "env INITIALIZR_SERVICE_HOST;" >> /etc/nginx/main.d/default.conf
 RUN echo "env INITIALIZR_SERVICE_URI;" >> /etc/nginx/main.d/default.conf
 COPY deploy/docker/initializr-web.conf.template /etc/nginx/templates/
 COPY deploy/docker/docker-entrypoint.sh ./
-RUN chmod +x docker-entrypoint.sh
+RUN chmod +x ./docker-entrypoint.sh
 ENTRYPOINT [ "./docker-entrypoint.sh" ]
 CMD ["nginx", "-g", "daemon off;"]
 
 # cat /etc/nginx/sites-enabled/initializr.conf
+# tail -f /var/log/nginx/access.log
+# tail -f /var/log/nginx/error.log
