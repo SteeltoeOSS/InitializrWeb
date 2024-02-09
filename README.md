@@ -2,8 +2,6 @@
 
 Steeltoe Initializr UI reference implementation
 
-[![Build Status](https://dev.azure.com/SteeltoeOSS/Steeltoe/_apis/build/status/Initializr/SteeltoeOSS.InitializrWeb?branchName=main)](https://dev.azure.com/SteeltoeOSS/Steeltoe/_build/latest?definitionId=32&branchName=main)
-
 ## About
 
 This implementation largely steals from the [Spring Initializr Client](https://github.com/spring-io/start.spring.io).
@@ -14,9 +12,10 @@ Domain metadata include metadata differences such as "Java version" vs ".NET Fra
 ## Deploying
 
 There are 2 endpoints that the Web UI uses to 1) populate its UI, and 2) generate projects:
+
 * `/api/config/projectMetadata`
 * `/api/project`
- 
+
 For local development, these endpoints are implemented in the development webpack configuration in [start-client/webpack.dev.js](start-client/webpack.dev.js).
 
 In a remote deployment, those endpoints are implemented by the [Initializr API](https://github.com/SteeltoeOSS/InitializrApi).
