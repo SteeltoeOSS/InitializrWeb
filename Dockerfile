@@ -17,6 +17,16 @@ RUN yarn build
 FROM phusion/passenger-nodejs:3.0.1
 COPY --from=build /usr/src /usr/share/initializr/www
 RUN chown -R app:app /usr/share/initializr/www
+RUN apt-get update && apt-get install -y gettext-base
 RUN rm /etc/nginx/sites-enabled/default
 RUN rm -f /etc/service/nginx/down
-COPY deploy/docker/initializr-web.conf /etc/nginx/sites-enabled/
+RUN sed -i "s|daemon off;|#daemon off; |g" /etc/nginx/nginx.conf
+RUN echo "env INITIALIZR_SERVICE_HOST;" >> /etc/nginx/main.d/default.conf
+RUN echo "env INITIALIZR_SERVICE_URI;" >> /etc/nginx/main.d/default.conf
+COPY deploy/docker/initializr-web.conf.template /etc/nginx/templates/
+COPY deploy/docker/docker-entrypoint.sh ./
+RUN chmod +x docker-entrypoint.sh
+ENTRYPOINT [ "./docker-entrypoint.sh" ]
+CMD ["nginx", "-g", "daemon off;"]
+
+# cat /etc/nginx/sites-enabled/initializr.conf

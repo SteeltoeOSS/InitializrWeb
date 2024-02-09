@@ -1,0 +1,23 @@
+server {
+    listen 80;
+    root /usr/share/initializr/www/public;
+    passenger_enabled on;
+    passenger_user app;
+    passenger_app_type node;
+    passenger_startup_file src/App.js;
+
+    location /api {
+        proxy_ssl_protocols TLSv1.2;    
+        proxy_pass $INITIALIZR_SERVICE_URI;
+        proxy_cache_bypass $http_upgrade;
+        proxy_set_header   Upgrade $http_upgrade;
+        proxy_set_header   Connection keep-alive;
+        proxy_set_header   Host $INITIALIZR_SERVICE_HOST;
+        proxy_set_header   X-Real-IP $remote_addr;
+        proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header   X-Forwarded-Proto $scheme;
+        proxy_set_header   X-Forwarded-Host $server_name;
+    }
+}
+
+# vim: ft=nginx
