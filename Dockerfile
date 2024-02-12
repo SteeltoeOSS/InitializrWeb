@@ -12,6 +12,7 @@ COPY start-client/webpack.prod.js ./
 COPY start-client/webpack.dev.js ./
 COPY start-client/BuildVersion.json ./
 RUN yarn install
+ENV GOOGLE_TAGMANAGER_ID="G-2778ZJCYZ4"
 RUN yarn build
 
 FROM phusion/passenger-nodejs:3.0.1
