@@ -25,8 +25,7 @@ jobs:
 
     steps:
       - name: Delete Deployment Environment
-        uses: strumwolf/delete-deployment-environment@v2
+        uses: strumwolf/delete-deployment-environment@v3
         with:
           environment: "pr-${{ github.event.number }}"
           token: ${{ secrets.GITHUB_TOKEN }}
-          onlyRemoveDeployments: true
