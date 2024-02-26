@@ -19,7 +19,7 @@ permissions:
 env:
   IMAGE_NAME: initializr-web
   IMAGE_TAG: ${{ github.event_name == 'pull_request' && format('pr-{0}', github.event.number) || github.run_id }}
-  AZURE_CREDENTIALS: secrets.AZURE_CREDENTIALS
+  HAS_AZURE_CREDENTIALS: secrets.AZURE_CREDENTIALS != ''
 
 jobs:
   build-push-deploy:
@@ -34,13 +34,13 @@ jobs:
     - uses: actions/checkout@v4
 
     - name: Login to Azure
-      if: ${{ env.AZURE_CREDENTIALS != '' }}
+      if: ${{ env.HAS_AZURE_CREDENTIALS }}
       uses: azure/login@v1
       with:
         creds: ${{ secrets.AZURE_CREDENTIALS }}
 
     - name: Login to container registry
-      if: ${{ env.AZURE_CREDENTIALS != '' }}
+      if: ${{ env.HAS_AZURE_CREDENTIALS }}
       uses: azure/docker-login@v1
       with:
         login-server: "${{ vars.DOCKER_REGISTRY }}"
@@ -51,15 +51,15 @@ jobs:
       run: docker build . --file "Dockerfile" -t ${{ vars.DOCKER_REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}
 
     - name: Push image
-      if: ${{ env.AZURE_CREDENTIALS != '' }}
+      if: ${{ env.HAS_AZURE_CREDENTIALS }}
       run: docker push ${{ vars.DOCKER_REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}
 
     - name: If PR, create a new staging slot
-      if: ${{ github.event_name == 'pull_request' && env.AZURE_CREDENTIALS != '' }}
+      if: ${{ github.event_name == 'pull_request' && env.HAS_AZURE_CREDENTIALS }}
       run: az webapp deployment slot create --resource-group ${{ vars.AZURE_RESOURCE_GROUP }} --name ${{ vars.AZURE_WEBAPP_NAME}} --slot ${{ env.SLOT_NAME }} --configuration-source ${{ vars.STAGING_SLOT_NAME }}
 
     - name: Deploy to staging slot
-      if: ${{ env.AZURE_CREDENTIALS != '' }}
+      if: ${{ env.HAS_AZURE_CREDENTIALS }}
       uses: azure/webapps-deploy@v3
       id: deploy-to-webapp
       with: 
@@ -68,7 +68,7 @@ jobs:
         slot-name:  ${{ env.SLOT_NAME }}
     
     - name: If PR, comment with the preview link
-      if: ${{ github.event_name == 'pull_request' && env.AZURE_CREDENTIALS != '' }}
+      if: ${{ github.event_name == 'pull_request' && env.HAS_AZURE_CREDENTIALS }}
       uses: mshick/add-pr-comment@v2
       with:
         message: |
