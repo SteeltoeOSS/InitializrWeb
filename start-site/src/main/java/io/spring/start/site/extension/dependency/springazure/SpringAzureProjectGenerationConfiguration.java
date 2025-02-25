@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2022 the original author or authors.
+ * Copyright 2012-2024 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,10 +17,11 @@
 package io.spring.start.site.extension.dependency.springazure;
 
 import io.spring.initializr.generator.buildsystem.Build;
+import io.spring.initializr.generator.buildsystem.maven.MavenBuildSystem;
+import io.spring.initializr.generator.condition.ConditionalOnBuildSystem;
+import io.spring.initializr.generator.condition.ConditionalOnRequestedDependency;
 import io.spring.initializr.generator.project.ProjectDescription;
 import io.spring.initializr.generator.project.ProjectGenerationConfiguration;
-import io.spring.initializr.generator.version.VersionParser;
-import io.spring.initializr.generator.version.VersionRange;
 import io.spring.start.site.support.implicit.ImplicitDependency;
 import io.spring.start.site.support.implicit.ImplicitDependencyBuildCustomizer;
 import io.spring.start.site.support.implicit.ImplicitDependencyHelpDocumentCustomizer;
@@ -37,14 +38,10 @@ import org.springframework.context.annotation.Bean;
 @ProjectGenerationConfiguration
 class SpringAzureProjectGenerationConfiguration {
 
-	private static final VersionRange SPRING_BOOT_2 = VersionParser.DEFAULT.parseRange("[2.0.0,3.0.0-M1)");
-
 	private final Iterable<ImplicitDependency> azureDependencies;
 
-	SpringAzureProjectGenerationConfiguration(ProjectDescription description) {
-		this.azureDependencies = SPRING_BOOT_2.match(description.getPlatformVersion())
-				? SpringAzureModuleRegistry.createSpringBoot2Registry()
-				: SpringAzureModuleRegistry.createSpringBootRegistry();
+	SpringAzureProjectGenerationConfiguration() {
+		this.azureDependencies = SpringAzureModuleRegistry.createSpringBootRegistry();
 	}
 
 	@Bean
@@ -55,6 +52,13 @@ class SpringAzureProjectGenerationConfiguration {
 	@Bean
 	ImplicitDependencyHelpDocumentCustomizer azureDependencyHelpDocumentCustomizer(Build build) {
 		return new ImplicitDependencyHelpDocumentCustomizer(this.azureDependencies, build);
+	}
+
+	@Bean
+	@ConditionalOnRequestedDependency("azure-support")
+	@ConditionalOnBuildSystem(MavenBuildSystem.ID)
+	SpringAzureMavenBuildCustomizer azureDependencyMavenBuildCustomizer(ProjectDescription projectDescription) {
+		return new SpringAzureMavenBuildCustomizer(projectDescription);
 	}
 
 }

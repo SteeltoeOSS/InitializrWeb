@@ -8,6 +8,7 @@ This implementation largely steals from the [Spring Initializr Client](https://g
 The primary differences between the 2 implementations are branding and domain metadata.
 Branding differences include reference URLs, color schemes, and logos.
 Domain metadata include metadata differences such as "Java version" vs ".NET Framework" and "Spring Boot" vs "Steeltoe."
+A list of files that are known to diverge from Spring, is available [here](./Upstream.md)
 
 ## Deploying
 

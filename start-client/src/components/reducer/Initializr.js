@@ -7,14 +7,15 @@ import { getShareUrl, parseParams } from '../utils/ApiUtils'
 
 export const defaultInitializrContext = {
   values: {
+    language: '',
+    steeltoeVersion: '',
     meta: {
       name: '',
       namespace: '',
-      description: '',
+      description: ''
     },
-    steeltoeVersion: '',
     dotNetFramework: '',
-    language: '',
+    packaging: '',
     dependencies: [],
   },
   share: '',
@@ -22,17 +23,58 @@ export const defaultInitializrContext = {
   warnings: {},
 }
 
+const localStorage =
+  typeof window !== 'undefined'
+    ? window.localStorage
+    : {
+        getItem: () => {},
+        setItem: () => {},
+      }
+
+const getPersistedOrDefault = json => {
+  const values = {
+    dotNetFramework:
+      localStorage.getItem('dotNetFramework') || get(json, 'defaultValues').dotNetFramework,
+    steeltoeVersion: get(json, 'defaultValues').steeltoeVersion,
+    language:
+      localStorage.getItem('language') || get(json, 'defaultValues').language,
+    meta: {
+      name: get(json, 'defaultValues.meta').name,
+      namespace: get(json, 'defaultValues.meta').namespace,
+      description: get(json, 'defaultValues.meta').description,
+    },
+    packaging: get(json, 'defaultValues').packaging,
+    dependencies: [],
+  }
+  const checks = ['dotNetFramework', 'language']
+  checks.forEach(key => {
+    const item = get(json, `lists.${key}`)?.find(
+      it => it.key === get(values, key)
+    )
+    if (!item) {
+      set(values, key, get(json, `defaultValues.${key}`))
+    }
+  })
+  return values
+}
+
+const persist = changes => {
+  if (get(changes, 'dotNetFramework')) {
+    localStorage.setItem('dotNetFramework', get(changes, 'dotNetFramework'))
+  }
+  if (get(changes, 'language')) {
+    localStorage.setItem('language', get(changes, 'language'))
+  }
+}
+
 export function reducer(state, action) {
   switch (action.type) {
     case 'COMPLETE': {
       const json = get(action, 'payload')
-      const defaultValues = {
-        ...get(json, 'defaultValues'),
-        meta: get(json, 'defaultValues.meta'),
-      }
+      const values = getPersistedOrDefault(json)
       return {
-        values: defaultValues,
-        share: getShareUrl(defaultValues),
+        values,
+        share: getShareUrl(values),
         errors: {},
         warnings: {},
       }
@@ -60,6 +102,7 @@ export function reducer(state, action) {
         set(meta, 'namespace', `${get(meta, 'name')}`)
         set(meta, 'description', `${get(meta, 'name')} project`)
       }
+      persist(changes)
       const values = {
         ...get(state, 'values'),
         ...changes,

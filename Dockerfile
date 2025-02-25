@@ -1,4 +1,4 @@
-FROM node:21 AS build
+FROM node:20 AS build
 WORKDIR /usr/src
 COPY start-client/package.json ./
 COPY start-client/yarn.lock ./
@@ -15,7 +15,7 @@ RUN yarn install
 ENV GOOGLE_TAGMANAGER_ID="G-2778ZJCYZ4"
 RUN yarn build
 
-FROM phusion/passenger-nodejs:3.0.1
+FROM phusion/passenger-nodejs:3.1.2
 COPY --from=build /usr/src /usr/share/initializr/www
 RUN chown -R app:app /usr/share/initializr/www
 RUN apt-get update && apt-get install -y gettext-base

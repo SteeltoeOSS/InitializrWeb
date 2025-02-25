@@ -34,8 +34,8 @@ class SpringCloudContractMavenBuildCustomizerTests extends AbstractExtensionTest
 
 	@Test
 	void springCloudContractVerifierPluginAddedWhenSCCDependencyPresent() {
-		ProjectRequest projectRequest = createProjectRequest("cloud-contract-verifier");
-		assertThat(mavenPom(projectRequest)).hasDependency(getDependency("cloud-contract-verifier"))
+		ProjectRequest request = createProjectRequest("cloud-contract-verifier");
+		assertThat(mavenPom(request)).hasDependency(getDependency("cloud-contract-verifier"))
 			.hasText("/project/build/plugins/plugin[1]/groupId", "org.springframework.cloud")
 			.hasText("/project/build/plugins/plugin[1]/artifactId", "spring-cloud-contract-maven-plugin")
 			.hasText("/project/build/plugins/plugin[1]/extensions", Boolean.toString(true));
@@ -49,28 +49,27 @@ class SpringCloudContractMavenBuildCustomizerTests extends AbstractExtensionTest
 
 	@Test
 	void springCloudContractVerifierPluginForSpringBootWithJUnit5ByDefault() {
-		ProjectRequest projectRequest = createProjectRequest("cloud-contract-verifier");
-		projectRequest.setBootVersion("2.4.0");
-		assertThat(mavenPom(projectRequest))
+		ProjectRequest request = createProjectRequest("cloud-contract-verifier");
+		assertThat(mavenPom(request))
 			.hasText("/project/build/plugins/plugin[1]/artifactId", "spring-cloud-contract-maven-plugin")
 			.hasText("/project/build/plugins/plugin[1]/configuration/testFramework", "JUNIT5");
 	}
 
 	@Test
 	void springCloudContractVerifierPluginWithTestModeSetWhenWebFluxIsPresent() {
-		ProjectRequest projectRequest = createProjectRequest("cloud-contract-verifier", "webflux");
-		assertThat(mavenPom(projectRequest))
+		ProjectRequest request = createProjectRequest("cloud-contract-verifier", "webflux");
+		assertThat(mavenPom(request))
 			.hasText("/project/build/plugins/plugin[1]/artifactId", "spring-cloud-contract-maven-plugin")
 			.hasText("/project/build/plugins/plugin[1]/configuration/testMode", "WEBTESTCLIENT");
 	}
 
 	@Test
 	void springWebTestClientDependencyAddedWhenWebFluxIsPresent() {
-		ProjectRequest projectRequest = createProjectRequest("cloud-contract-verifier", "webflux");
+		ProjectRequest request = createProjectRequest("cloud-contract-verifier", "webflux");
 		Dependency springWebTestClientDep = Dependency.withId("rest-assured-spring-web-test-client", "io.rest-assured",
 				"spring-web-test-client");
 		springWebTestClientDep.setScope(Dependency.SCOPE_TEST);
-		assertThat(mavenPom(projectRequest)).hasDependency(springWebTestClientDep);
+		assertThat(mavenPom(request)).hasDependency(springWebTestClientDep);
 	}
 
 }

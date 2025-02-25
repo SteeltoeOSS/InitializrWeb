@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2022 the original author or authors.
+ * Copyright 2012-2023 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -27,11 +27,10 @@ import io.spring.initializr.generator.condition.ConditionalOnBuildSystem;
 import io.spring.initializr.generator.condition.ConditionalOnRequestedDependency;
 import io.spring.initializr.generator.io.template.MustacheTemplateRenderer;
 import io.spring.initializr.generator.project.ProjectDescription;
-import io.spring.initializr.generator.project.ProjectDescriptionDiff;
 import io.spring.initializr.generator.project.ProjectGenerationConfiguration;
 import io.spring.initializr.generator.project.contributor.ProjectContributor;
 import io.spring.initializr.metadata.InitializrMetadata;
-import io.spring.initializr.versionresolver.DependencyManagementVersionResolver;
+import io.spring.initializr.versionresolver.MavenVersionResolver;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -43,50 +42,42 @@ import org.springframework.context.annotation.Configuration;
  * @author Stephane Nicoll
  */
 @ProjectGenerationConfiguration
-public class SpringCloudProjectGenerationConfiguration {
+class SpringCloudProjectGenerationConfiguration {
 
 	private final InitializrMetadata metadata;
 
 	private final ProjectDescription description;
 
-	public SpringCloudProjectGenerationConfiguration(InitializrMetadata metadata, ProjectDescription description) {
+	SpringCloudProjectGenerationConfiguration(InitializrMetadata metadata, ProjectDescription description) {
 		this.metadata = metadata;
 		this.description = description;
 	}
 
 	@Bean
-	public SpringCloudFunctionBuildCustomizer springCloudFunctionBuildCustomizer() {
+	SpringCloudFunctionBuildCustomizer springCloudFunctionBuildCustomizer() {
 		return new SpringCloudFunctionBuildCustomizer(this.metadata, this.description);
 	}
 
 	@Bean
-	public SpringCloudStreamBuildCustomizer springCloudStreamBuildCustomizer() {
-		return new SpringCloudStreamBuildCustomizer(this.description);
+	SpringCloudStreamBuildCustomizer springCloudStreamBuildCustomizer() {
+		return new SpringCloudStreamBuildCustomizer();
 	}
 
 	@Bean
-	SpringCloudProjectVersionResolver springCloudProjectVersionResolver(
-			DependencyManagementVersionResolver versionResolver) {
+	SpringCloudProjectVersionResolver springCloudProjectVersionResolver(MavenVersionResolver versionResolver) {
 		return new SpringCloudProjectVersionResolver(this.metadata, versionResolver);
 	}
 
 	@Bean
-	public SpringCloudFunctionHelpDocumentCustomizer springCloudFunctionHelpDocumentCustomizer(Build build,
+	SpringCloudFunctionHelpDocumentCustomizer springCloudFunctionHelpDocumentCustomizer(Build build,
 			MustacheTemplateRenderer templateRenderer, SpringCloudProjectVersionResolver versionResolver) {
 		return new SpringCloudFunctionHelpDocumentCustomizer(build, this.description, templateRenderer,
 				versionResolver);
 	}
 
 	@Bean
-	public SpringCloudCircuitBreakerBuildCustomizer springCloudCircuitBreakerBuildCustomizer() {
+	SpringCloudCircuitBreakerBuildCustomizer springCloudCircuitBreakerBuildCustomizer() {
 		return new SpringCloudCircuitBreakerBuildCustomizer(this.metadata, this.description);
-	}
-
-	@Bean
-	@ConditionalOnRequestedDependency("cloud-gateway")
-	public SpringCloudGatewayHelpDocumentCustomizer springCloudGatewayHelpDocumentCustomizer(
-			ProjectDescriptionDiff diff) {
-		return new SpringCloudGatewayHelpDocumentCustomizer(diff);
 	}
 
 	@Configuration(proxyBeanMethods = false)

@@ -25,6 +25,7 @@ import io.spring.initializr.generator.spring.build.gradle.DevelopmentOnlyDepende
 import io.spring.initializr.generator.spring.build.maven.OptionalDependencyMavenBuildCustomizer;
 
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
 /**
  * {@link ProjectGenerationConfiguration} for customizations relevant for Spring Boot.
@@ -33,38 +34,42 @@ import org.springframework.context.annotation.Bean;
  * @author Moritz Halbritter
  */
 @ProjectGenerationConfiguration
-public class SpringBootProjectGenerationConfiguration {
+class SpringBootProjectGenerationConfiguration {
 
-	private static final String DEVTOOLS_ID = "devtools";
-
-	private static final String DOCKER_COMPOSE_ID = "docker-compose";
-
-	@Bean
-	@ConditionalOnRequestedDependency(DEVTOOLS_ID)
+	@Configuration(proxyBeanMethods = false)
 	@ConditionalOnBuildSystem(MavenBuildSystem.ID)
-	public OptionalDependencyMavenBuildCustomizer devToolsMavenBuildCustomizer() {
-		return new OptionalDependencyMavenBuildCustomizer(DEVTOOLS_ID);
+	static class MavenConfiguration {
+
+		@Bean
+		@ConditionalOnRequestedDependency("devtools")
+		OptionalDependencyMavenBuildCustomizer devToolsMavenBuildCustomizer() {
+			return new OptionalDependencyMavenBuildCustomizer("devtools");
+		}
+
+		@Bean
+		@ConditionalOnRequestedDependency("docker-compose")
+		OptionalDependencyMavenBuildCustomizer dockerComposeMavenBuildCustomizer() {
+			return new OptionalDependencyMavenBuildCustomizer("docker-compose");
+		}
+
 	}
 
-	@Bean
-	@ConditionalOnRequestedDependency(DEVTOOLS_ID)
+	@Configuration(proxyBeanMethods = false)
 	@ConditionalOnBuildSystem(GradleBuildSystem.ID)
-	public DevelopmentOnlyDependencyGradleBuildCustomizer devToolsGradleBuildCustomizer() {
-		return new DevelopmentOnlyDependencyGradleBuildCustomizer(DEVTOOLS_ID);
-	}
+	static class GradleConfiguration {
 
-	@Bean
-	@ConditionalOnRequestedDependency(DOCKER_COMPOSE_ID)
-	@ConditionalOnBuildSystem(MavenBuildSystem.ID)
-	public OptionalDependencyMavenBuildCustomizer dockerComposeMavenBuildCustomizer() {
-		return new OptionalDependencyMavenBuildCustomizer(DOCKER_COMPOSE_ID);
-	}
+		@Bean
+		@ConditionalOnRequestedDependency("devtools")
+		DevelopmentOnlyDependencyGradleBuildCustomizer devToolsGradleBuildCustomizer() {
+			return new DevelopmentOnlyDependencyGradleBuildCustomizer("devtools");
+		}
 
-	@Bean
-	@ConditionalOnRequestedDependency(DOCKER_COMPOSE_ID)
-	@ConditionalOnBuildSystem(GradleBuildSystem.ID)
-	public DevelopmentOnlyDependencyGradleBuildCustomizer dockerComposeGradleBuildCustomizer() {
-		return new DevelopmentOnlyDependencyGradleBuildCustomizer(DOCKER_COMPOSE_ID);
+		@Bean
+		@ConditionalOnRequestedDependency("docker-compose")
+		DevelopmentOnlyDependencyGradleBuildCustomizer dockerComposeGradleBuildCustomizer() {
+			return new DevelopmentOnlyDependencyGradleBuildCustomizer("docker-compose");
+		}
+
 	}
 
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2023 the original author or authors.
+ * Copyright 2012-2024 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,8 +22,6 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Set;
-import java.util.concurrent.CopyOnWriteArraySet;
 import java.util.stream.Stream;
 
 import io.spring.initializr.generator.buildsystem.BuildSystem;
@@ -44,10 +42,11 @@ import io.spring.initializr.web.project.DefaultProjectRequestToDescriptionConver
 import io.spring.initializr.web.project.ProjectGenerationInvoker;
 import io.spring.initializr.web.project.ProjectRequest;
 import io.spring.initializr.web.project.WebProjectRequest;
-import org.junit.jupiter.api.AfterAll;
+import io.spring.start.testsupport.Homes;
+import io.spring.start.testsupport.TemporaryFiles;
+import org.apache.commons.lang3.SystemUtils;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.TestInstance.Lifecycle;
-import org.junit.jupiter.api.io.TempDir;
 import org.junit.jupiter.api.parallel.Execution;
 import org.junit.jupiter.api.parallel.ExecutionMode;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -57,7 +56,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.ApplicationContext;
-import org.springframework.util.FileSystemUtils;
+import org.springframework.test.context.ActiveProfiles;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -66,37 +65,13 @@ import static org.assertj.core.api.Assertions.assertThat;
  *
  * @author Andy Wilkinson
  * @author Stephane Nicoll
+ * @author Moritz Halbritter
  */
 @SpringBootTest
+@ActiveProfiles("test")
 @TestInstance(Lifecycle.PER_CLASS)
 @Execution(ExecutionMode.CONCURRENT)
 class ProjectGenerationIntegrationTests {
-
-	private static final Set<Path> mavenHomes = new CopyOnWriteArraySet<>();
-
-	private static final Set<Path> gradleHomes = new CopyOnWriteArraySet<>();
-
-	private final ThreadLocal<Path> mavenHome = ThreadLocal.withInitial(() -> {
-		try {
-			Path mavenHome = Files.createTempDirectory("maven-home");
-			ProjectGenerationIntegrationTests.mavenHomes.add(mavenHome);
-			return mavenHome;
-		}
-		catch (IOException ex) {
-			throw new RuntimeException(ex);
-		}
-	});
-
-	private final ThreadLocal<Path> gradleHome = ThreadLocal.withInitial(() -> {
-		try {
-			Path gradleHome = Files.createTempDirectory("gradle-home");
-			ProjectGenerationIntegrationTests.gradleHomes.add(gradleHome);
-			return gradleHome;
-		}
-		catch (IOException ex) {
-			throw new RuntimeException(ex);
-		}
-	});
 
 	private final ProjectGenerationInvoker<ProjectRequest> invoker;
 
@@ -107,26 +82,6 @@ class ProjectGenerationIntegrationTests {
 		this.invoker = new ProjectGenerationInvoker<>(applicationContext,
 				new DefaultProjectRequestToDescriptionConverter());
 		this.metadata = metadataProvider.get();
-	}
-
-	@AfterAll
-	static void deleteMavenAndGradleHomes() {
-		for (Path mavenHome : mavenHomes) {
-			try {
-				FileSystemUtils.deleteRecursively(mavenHome);
-			}
-			catch (IOException ex) {
-				// Continue
-			}
-		}
-		for (Path gradleHome : gradleHomes) {
-			try {
-				FileSystemUtils.deleteRecursively(gradleHome);
-			}
-			catch (IOException ex) {
-				// Continue
-			}
-		}
 	}
 
 	Stream<Arguments> parameters() {
@@ -163,8 +118,8 @@ class ProjectGenerationIntegrationTests {
 
 	@ParameterizedTest(name = "{0} - {1} - {2} - {3}")
 	@MethodSource("parameters")
-	void projectBuilds(Version bootVersion, Packaging packaging, Language language, BuildSystem buildSystem,
-			@TempDir Path directory) throws IOException, InterruptedException {
+	void projectBuilds(Version bootVersion, Packaging packaging, Language language, BuildSystem buildSystem)
+			throws IOException, InterruptedException {
 		WebProjectRequest request = new WebProjectRequest();
 		request.setBootVersion(bootVersion.toString());
 		request.setLanguage(language.id());
@@ -175,30 +130,46 @@ class ProjectGenerationIntegrationTests {
 		request.setApplicationName("DemoApplication");
 		request.setDependencies(Arrays.asList("devtools", "configuration-processor"));
 		Path project = this.invoker.invokeProjectStructureGeneration(request).getRootDirectory();
-		ProcessBuilder processBuilder = createProcessBuilder(buildSystem);
-		processBuilder.directory(project.toFile());
-		Path output = Files.createTempFile(directory, "output-", ".log");
+		Path home = getHome(buildSystem);
+		ProcessBuilder processBuilder = createProcessBuilder(project, buildSystem, home);
+		Path output = TemporaryFiles.newTemporaryDirectory("ProjectGenerationIntegrationTests-projectBuilds")
+			.resolve("output.log");
 		processBuilder.redirectError(output.toFile());
 		processBuilder.redirectOutput(output.toFile());
 		assertThat(processBuilder.start().waitFor()).describedAs(String.join("\n", Files.readAllLines(output)))
 			.isEqualTo(0);
 	}
 
-	private ProcessBuilder createProcessBuilder(BuildSystem buildSystem) {
-		if (buildSystem.id().equals(new MavenBuildSystem().id())) {
-			Path mavenHome = this.mavenHome.get();
-			ProcessBuilder processBuilder = new ProcessBuilder("./mvnw",
-					"-Dmaven.repo.local=" + mavenHome.resolve("repository").toFile(), "package");
-			processBuilder.environment().put("MAVEN_USER_HOME", mavenHome.toFile().getAbsolutePath());
+	private Path getHome(BuildSystem buildSystem) {
+		return switch (buildSystem.id()) {
+			case MavenBuildSystem.ID -> Homes.MAVEN.get();
+			case GradleBuildSystem.ID -> Homes.GRADLE.get();
+			default -> throw new IllegalStateException("Unknown build system '%s'".formatted(buildSystem.id()));
+		};
+	}
+
+	private ProcessBuilder createProcessBuilder(Path directory, BuildSystem buildSystem, Path home) {
+		if (buildSystem.id().equals(MavenBuildSystem.ID)) {
+			String command = (isWindows()) ? "mvnw.cmd" : "mvnw";
+			ProcessBuilder processBuilder = new ProcessBuilder(directory.resolve(command).toAbsolutePath().toString(),
+					"-Dmaven.repo.local=" + home.resolve("repository").toAbsolutePath(), "package");
+			processBuilder.environment().put("MAVEN_USER_HOME", home.toAbsolutePath().toString());
+			processBuilder.directory(directory.toFile());
 			return processBuilder;
 		}
-		if (buildSystem.id().equals(new GradleBuildSystem().id())) {
-			Path gradleHome = this.gradleHome.get();
-			ProcessBuilder processBuilder = new ProcessBuilder("./gradlew", "--no-daemon", "build");
-			processBuilder.environment().put("GRADLE_USER_HOME", gradleHome.toFile().getAbsolutePath());
+		if (buildSystem.id().equals(GradleBuildSystem.ID)) {
+			String command = (isWindows()) ? "gradlew.bat" : "gradlew";
+			ProcessBuilder processBuilder = new ProcessBuilder(directory.resolve(command).toAbsolutePath().toString(),
+					"--no-daemon", "build");
+			processBuilder.environment().put("GRADLE_USER_HOME", home.toAbsolutePath().toString());
+			processBuilder.directory(directory.toFile());
 			return processBuilder;
 		}
-		throw new IllegalStateException();
+		throw new IllegalStateException("Unknown build system '%s'".formatted(buildSystem.id()));
+	}
+
+	private boolean isWindows() {
+		return SystemUtils.IS_OS_WINDOWS;
 	}
 
 }

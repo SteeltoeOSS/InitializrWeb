@@ -70,6 +70,12 @@ class R2dbcHelpDocumentCustomizerTests {
 	}
 
 	@Test
+	void r2dbcWithMysql() {
+		HelpDocument helpDocument = createHelpDocument("mysql");
+		assertThat(helpDocument.getSections()).isEmpty();
+	}
+
+	@Test
 	void r2dbcWithSeveralDrivers() {
 		HelpDocument helpDocument = createHelpDocument("mysql", "h2");
 		assertThat(helpDocument.getSections()).isEmpty();

@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2023 the original author or authors.
+ * Copyright 2012-2024 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,77 +26,97 @@ import static org.assertj.core.api.Assertions.assertThat;
  * Tests for {@link FlywayBuildCustomizer}.
  *
  * @author Eddú Meléndez
+ * @author Moritz Halbritter
  */
 class FlywayBuildCustomizerTests extends AbstractExtensionTests {
 
 	@Test
 	void mariadbOnly() {
-		ProjectRequest projectRequest = createProject("2.7.0", "mariadb");
+		ProjectRequest projectRequest = createProject("mariadb");
 		assertThat(mavenPom(projectRequest)).hasDependency(getDependency("mariadb"))
 			.doesNotHaveDependency("org.flywaydb", "flyway-mysql");
 	}
 
 	@Test
 	void mysqlOnly() {
-		ProjectRequest projectRequest = createProject("2.7.0", "mysql");
+		ProjectRequest projectRequest = createProject("mysql");
 		assertThat(mavenPom(projectRequest)).hasDependency(getDependency("mysql"))
 			.doesNotHaveDependency("org.flywaydb", "flyway-mysql");
 	}
 
 	@Test
 	void sqlserverOnly() {
-		ProjectRequest projectRequest = createProject("2.7.0", "sqlserver");
+		ProjectRequest projectRequest = createProject("sqlserver");
 		assertThat(mavenPom(projectRequest)).hasDependency(getDependency("sqlserver"))
 			.doesNotHaveDependency("org.flywaydb", "flyway-sqlserver");
 	}
 
 	@Test
-	void mariadbAndFlywayPreviousTo270() {
-		ProjectRequest projectRequest = createProject("2.6.0", "mariadb", "flyway");
-		assertThat(mavenPom(projectRequest)).hasDependency(getDependency("mariadb"))
-			.doesNotHaveDependency("org.flywaydb", "flyway-mysql");
-	}
-
-	@Test
-	void mysqlAndFlywayPreviousTo270() {
-		ProjectRequest projectRequest = createProject("2.6.0", "mysql", "flyway");
-		assertThat(mavenPom(projectRequest)).hasDependency(getDependency("mysql"))
-			.doesNotHaveDependency("org.flywaydb", "flyway-mysql");
-	}
-
-	@Test
-	void sqlserverAndFlywayPreviousTo270() {
-		ProjectRequest projectRequest = createProject("2.6.0", "sqlserver", "flyway");
-		assertThat(mavenPom(projectRequest)).hasDependency(getDependency("sqlserver"))
-			.doesNotHaveDependency("org.flywaydb", "flyway-sqlserver");
+	void oracleOnly() {
+		ProjectRequest projectRequest = createProject("oracle");
+		assertThat(mavenPom(projectRequest)).hasDependency(getDependency("oracle"))
+			.doesNotHaveDependency("org.flywaydb", "flyway-database-oracle");
 	}
 
 	@Test
 	void mariadbAndFlyway() {
-		ProjectRequest projectRequest = createProject("2.7.0", "mariadb", "flyway");
+		ProjectRequest projectRequest = createProject("mariadb", "flyway");
 		assertThat(mavenPom(projectRequest)).hasDependency(getDependency("mariadb"))
 			.hasDependency("org.flywaydb", "flyway-mysql");
 	}
 
 	@Test
 	void mysqlAndFlyway() {
-		ProjectRequest projectRequest = createProject("2.7.0", "mysql", "flyway");
+		ProjectRequest projectRequest = createProject("mysql", "flyway");
 		assertThat(mavenPom(projectRequest)).hasDependency(getDependency("mysql"))
 			.hasDependency("org.flywaydb", "flyway-mysql");
 	}
 
 	@Test
 	void sqlserverAndFlyway() {
-		ProjectRequest projectRequest = createProject("2.7.0", "sqlserver", "flyway");
+		ProjectRequest projectRequest = createProject("sqlserver", "flyway");
 		assertThat(mavenPom(projectRequest)).hasDependency(getDependency("sqlserver"))
 			.hasDependency("org.flywaydb", "flyway-sqlserver");
 	}
 
-	private ProjectRequest createProject(String springBootVersion, String... styles) {
+	@Test
+	void oracleAndFlyway() {
+		ProjectRequest projectRequest = createProject("oracle", "flyway");
+		assertThat(mavenPom(projectRequest)).hasDependency(getDependency("oracle"))
+			.hasDependency("org.flywaydb", "flyway-database-oracle");
+	}
+
+	@Test
+	void db2AndFlyway() {
+		ProjectRequest projectRequest = createProject("db2", "flyway");
+		assertThat(mavenPom(projectRequest)).hasDependency(getDependency("db2"))
+			.hasDependency("org.flywaydb", "flyway-database-db2");
+	}
+
+	@Test
+	void derbyAndFlyway() {
+		ProjectRequest projectRequest = createProject("derby", "flyway");
+		assertThat(mavenPom(projectRequest)).hasDependency(getDependency("derby"))
+			.hasDependency("org.flywaydb", "flyway-database-derby");
+	}
+
+	@Test
+	void hsqlAndFlyway() {
+		ProjectRequest projectRequest = createProject("hsql", "flyway");
+		assertThat(mavenPom(projectRequest)).hasDependency(getDependency("hsql"))
+			.hasDependency("org.flywaydb", "flyway-database-hsqldb");
+	}
+
+	@Test
+	void hsqlAndPostgres() {
+		ProjectRequest projectRequest = createProject("postgresql", "flyway");
+		assertThat(mavenPom(projectRequest)).hasDependency(getDependency("postgresql"))
+			.hasDependency("org.flywaydb", "flyway-database-postgresql");
+	}
+
+	private ProjectRequest createProject(String... styles) {
 		ProjectRequest projectRequest = createProjectRequest(styles);
 		projectRequest.setLanguage("java");
-		projectRequest.setJavaVersion("11");
-		projectRequest.setBootVersion(springBootVersion);
 		return projectRequest;
 	}
 

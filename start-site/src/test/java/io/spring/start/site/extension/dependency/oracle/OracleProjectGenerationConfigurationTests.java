@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2023 the original author or authors.
+ * Copyright 2012-2024 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -29,20 +29,36 @@ import static org.assertj.core.api.Assertions.assertThat;
  * Tests for {@link OracleProjectGenerationConfiguration}.
  *
  * @author Moritz Halbritter
+ * @author Eddú Meléndez
  */
 class OracleProjectGenerationConfigurationTests extends AbstractExtensionTests {
 
 	@Test
-	void doesNothingWithoutDockerCompose() {
+	void doesNotGenerateComposeYamlWithoutDockerCompose() {
 		ProjectRequest request = createProjectRequest("web", "oracle");
 		ProjectStructure structure = generateProject(request);
 		assertThat(structure.getProjectDirectory().resolve("compose.yaml")).doesNotExist();
 	}
 
 	@Test
-	void createsOracleService() {
+	void createsOracleFreeService() {
 		ProjectRequest request = createProjectRequest("docker-compose", "oracle");
-		assertThat(composeFile(request)).hasSameContentAs(new ClassPathResource("compose/oracle.yaml"));
+		assertThat(composeFile(request)).hasSameContentAs(new ClassPathResource("compose/oracle-free.yaml"));
+	}
+
+	@Test
+	void createsOracleFreeServiceSpringAi() {
+		ProjectRequest request = createProjectRequest("docker-compose", "spring-ai-vectordb-oracle");
+		assertThat(composeFile(request)).hasSameContentAs(new ClassPathResource("compose/oracle-free.yaml"));
+	}
+
+	@Test
+	void declaresOracleFreeContainerBean() {
+		ProjectRequest request = createProjectRequest("testcontainers", "oracle");
+		request.setLanguage("java");
+		assertThat(generateProject(request)).textFile("src/test/java/com/example/demo/TestcontainersConfiguration.java")
+			.contains("import org.testcontainers.oracle.OracleContainer;")
+			.contains("		return new OracleContainer(DockerImageName.parse(\"gvenzl/oracle-free:latest\"));");
 	}
 
 }
