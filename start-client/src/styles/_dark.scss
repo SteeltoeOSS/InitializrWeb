@@ -16,6 +16,18 @@ body.dark {
     border-color: rgba(255, 255, 255, 0.2);
   }
 
+  #side-left .navigation-item {
+    color: white;
+    transition: all 0.15s;
+    &:hover {
+      color: $light-primary;
+      opacity: 1;
+    }
+  }
+  #side-left .navigation-divider {
+    border-color: $dark-border;
+  }
+
   #side-right .side-container {
     border-color: $dark-border;
     background: $dark-background;
@@ -53,13 +65,31 @@ body.dark {
   #side-left a {
     color: $dark-color;
     &:hover {
-      color: $dark-primary;
+      color: $light-primary;
+      opacity: 1;
+    }
+  }
+  #side-left.is-open {
+    a {
+      &:hover {
+        color: white;
+        opacity: 0.7;
+      }
     }
   }
   .hamburger-inner,
   .hamburger-inner::before,
   .hamburger-inner::after {
     background: white;
+  }
+  #side-left.is-closing {
+    .hamburger {
+      .hamburger-inner,
+      .hamburger-inner::before,
+      .hamburger-inner::after {
+        background: white;
+      }
+    }
   }
   a.button,
   button.button {
@@ -96,10 +126,6 @@ body.dark {
     .colset-explorer .head {
       border-color: $dark-border;
     }
-  }
-  #side-left a:hover {
-    color: $dark-color;
-    opacity: 0.8;
   }
   .explorer-actions {
     background: $dark-background-secondary;
@@ -321,7 +347,8 @@ body.dark {
   #side-left a,
   .explorer-ul .file,
   .explorer-ul .folder,
-  ul.dependencies-list li a {
+  ul.dependencies-list li a,
+  #side-left .navigation-item {
     &:focus {
       outline: 1px dotted $dark-border;
     }
@@ -362,11 +389,29 @@ body.dark {
   #header .switch-mobile button {
     color: $dark-color;
   }
+  .dialog-dependencies ul li a.dependency.added {
+    background: #145374;
+    color: $dark-color;
+  }
+  .dialog-dependencies ul li a.dependency.added:hover {
+    background: darken(#145374, 5%);
+    color: $dark-color;
+  }
+  .dialog-dependencies ul li a.dependency.added:hover strong {
+    color: $dark-color;
+  }
+  .dialog-dependencies ul li a.dependency.added .icon-enter {
+    fill: $dark-color;
+  }
   .dialog-dependencies ul li.group-title span,
   .dialog-dependencies ul li a.dependency.selected,
   ul.dependencies-list li div span.group,
   .dialog-dependencies ul li a.dependency span.group {
     background: $dark-primary;
+  }
+  .dialog-dependencies ul li a.dependency.added.selected {
+    background: darken(#145374, 5%);
+    color: $dark-color;
   }
   .dialog-dependencies ul li a.dependency.selected span.group {
     background: white;
@@ -390,5 +435,45 @@ body.dark {
   .actions .placeholder-button-special {
     box-shadow: inset 0 0 0 2px $dark-color;
     background: $dark-background;
+  }
+
+  .modal-share,
+  .modal-add-favorite,
+  .modal-favorite {
+    .modal-header {
+      background: $dark-background;
+      border-bottom: 1px solid $dark-border;
+    }
+  }
+  .modal-history-container,
+  .modal-favorite-container,
+  .modal-add-favorite-container {
+    border: 1px solid $dark-border;
+  }
+  .modal-content {
+    background: $dark-background;
+  }
+  .modal-add-favorite .favorite-desc {
+    background: $dark-background-secondary;
+    color: $dark-color;
+  }
+  .modal-favorite button.edit,
+  .modal-favorite button.remove,
+  .modal-share .modal-content button.favorite {
+    color: white;
+  }
+  .actions .button.clicked {
+    color: #000;
+  }
+  .modal-content .list a.item {
+    background: $dark-background-secondary;
+    color: $dark-color;
+    &:hover {
+      background: lighten($dark-background-secondary, 2);
+    }
+  }
+  .modal-action {
+    background: $dark-background;
+    border-top: 1px solid $dark-border;
   }
 }

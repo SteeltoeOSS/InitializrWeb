@@ -27,25 +27,24 @@ import static org.assertj.core.api.Assertions.assertThat;
  * Tests for {@link ThymeleafBuildCustomizer}.
  *
  * @author Stephane Nicoll
+ * @author Moritz Halbritter
  */
 class ThymeleafBuildCustomizerTests extends AbstractExtensionTests {
 
 	@Test
-	void thymeleafWithSpringSecurityAndSpringBoot2AddsExtrasDependency() {
+	void thymeleafWithSpringSecurityAndSpringBootAddsExtrasDependency() {
 		ProjectRequest projectRequest = createProjectRequest("thymeleaf", "security");
-		projectRequest.setBootVersion("2.7.1");
 		assertThat(mavenPom(projectRequest)).hasDependency(Dependency.createSpringBootStarter("thymeleaf"))
 			.hasDependency(Dependency.createSpringBootStarter("security"))
 			.hasDependency(Dependency.withId("thymeleaf-extras-spring-security", "org.thymeleaf.extras",
-					"thymeleaf-extras-springsecurity5"));
+					"thymeleaf-extras-springsecurity6"));
 	}
 
 	@Test
-	void thymeleafWithSpringSecurityAndSpringBoot3AddsExtrasDependency() {
-		ProjectRequest projectRequest = createProjectRequest("thymeleaf", "security");
-		projectRequest.setBootVersion("3.0.0-M1");
+	void thymeleafWithOAuth2ClientAndSpringBootAddsExtrasDependency() {
+		ProjectRequest projectRequest = createProjectRequest("thymeleaf", "oauth2-client");
 		assertThat(mavenPom(projectRequest)).hasDependency(Dependency.createSpringBootStarter("thymeleaf"))
-			.hasDependency(Dependency.createSpringBootStarter("security"))
+			.hasDependency(Dependency.createSpringBootStarter("oauth2-client"))
 			.hasDependency(Dependency.withId("thymeleaf-extras-spring-security", "org.thymeleaf.extras",
 					"thymeleaf-extras-springsecurity6"));
 	}
@@ -54,7 +53,7 @@ class ThymeleafBuildCustomizerTests extends AbstractExtensionTests {
 	void thymeleafWithoutSpringSecurityDoesNotAddExtrasDependency() {
 		assertThat(mavenPom(createProjectRequest("thymeleaf", "web")))
 			.hasDependency(Dependency.createSpringBootStarter("thymeleaf"))
-			.doesNotHaveDependency("org.thymeleaf.extras", "thymeleaf-extras-springsecurity5");
+			.doesNotHaveDependency("org.thymeleaf.extras", "thymeleaf-extras-springsecurity6");
 	}
 
 }

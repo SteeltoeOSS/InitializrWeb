@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2023 the original author or authors.
+ * Copyright 2012-2025 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -27,35 +27,36 @@ import static org.assertj.core.api.Assertions.assertThat;
  * Tests for {@link KotlinCoroutinesCustomizer}.
  *
  * @author Stephane Nicoll
+ * @author Moritz Halbritter
  */
 class KotlinCoroutinesCustomizerTests extends AbstractExtensionTests {
 
 	@Test
 	void kotlinCoroutinesIsAdded() {
 		ProjectRequest request = createProjectRequest("webflux");
-		request.setBootVersion("2.5.0");
 		request.setLanguage("kotlin");
 		ProjectStructure project = generateProject(request);
-		assertThat(project).mavenBuild().hasDependency("org.jetbrains.kotlinx", "kotlinx-coroutines-reactor");
-		assertThat(project).textFile("HELP.md")
-			.contains(
-					"* [Coroutines section of the Spring Framework Documentation](https://docs.spring.io/spring/docs/5.3.7/spring-framework-reference/languages.html#coroutines)");
+		assertThat(project).mavenBuild()
+			.hasDependency("org.jetbrains.kotlinx", "kotlinx-coroutines-reactor")
+			.hasDependency("org.jetbrains.kotlinx", "kotlinx-coroutines-test", null, "test");
+		assertThat(helpDocument(request)).contains(
+				"* [Coroutines section of the Spring Framework Documentation](https://docs.spring.io/spring-framework/reference/6.2.0/languages/kotlin/coroutines.html)");
 	}
 
 	@Test
 	void kotlinCoroutinesIsNotAddedWithNonKotlinApp() {
 		ProjectRequest request = createProjectRequest("webflux");
-		request.setBootVersion("2.5.0");
 		request.setLanguage("java");
-		assertThat(mavenPom(request)).doesNotHaveDependency("org.jetbrains.kotlinx", "kotlinx-coroutines-reactor");
+		assertThat(mavenPom(request)).doesNotHaveDependency("org.jetbrains.kotlinx", "kotlinx-coroutines-reactor")
+			.doesNotHaveDependency("org.jetbrains.kotlinx", "kotlinx-coroutines-test");
 	}
 
 	@Test
 	void kotlinCoroutinesIsNotAddedWithoutReactiveFacet() {
 		ProjectRequest request = createProjectRequest("web");
-		request.setBootVersion("2.5.0");
 		request.setLanguage("kotlin");
-		assertThat(mavenPom(request)).doesNotHaveDependency("org.jetbrains.kotlinx", "kotlinx-coroutines-reactor");
+		assertThat(mavenPom(request)).doesNotHaveDependency("org.jetbrains.kotlinx", "kotlinx-coroutines-reactor")
+			.doesNotHaveDependency("org.jetbrains.kotlinx", "kotlinx-coroutines-test");
 	}
 
 }

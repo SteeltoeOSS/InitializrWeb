@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2023 the original author or authors.
+ * Copyright 2012-2025 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,14 +16,12 @@
 
 package io.spring.start.site;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import io.spring.initializr.generator.version.Version;
@@ -35,8 +33,8 @@ import io.spring.initializr.metadata.DependencyGroup;
 import io.spring.initializr.metadata.InitializrMetadata;
 import io.spring.initializr.metadata.InitializrMetadataProvider;
 import io.spring.initializr.metadata.Repository;
+import io.spring.start.testsupport.Homes;
 import org.eclipse.aether.repository.RemoteRepository;
-import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.TestInstance.Lifecycle;
 import org.junit.jupiter.api.parallel.Execution;
@@ -47,6 +45,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -58,17 +57,13 @@ import static org.assertj.core.api.Assertions.assertThat;
 @SpringBootTest
 @TestInstance(Lifecycle.PER_CLASS)
 @Execution(ExecutionMode.CONCURRENT)
+@ActiveProfiles("test")
 class MetadataVerificationTests {
 
 	private final InitializrMetadata metadata;
 
-	MetadataVerificationTests(@Autowired InitializrMetadataProvider metadataProvider) throws IOException {
+	MetadataVerificationTests(@Autowired InitializrMetadataProvider metadataProvider) {
 		this.metadata = metadataProvider.get();
-	}
-
-	@AfterAll
-	static void cleanUp() {
-		DependencyResolver.cleanUp();
 	}
 
 	@ParameterizedTest(name = "{3}")
@@ -88,24 +83,8 @@ class MetadataVerificationTests {
 
 	private List<String> collectDependencies(Dependency dependency, List<BillOfMaterials> boms,
 			List<RemoteRepository> repositories) {
-		try {
-			return DependencyResolver.resolveDependencies(dependency.getGroupId(), dependency.getArtifactId(),
-					dependency.getVersion(), boms, repositories);
-		}
-		catch (RuntimeException ex) {
-			// ActiveMQ starter does not exist with Spring Boot 3.0
-			if (ex.getMessage().contains("rg.springframework.boot:spring-boot-starter-activemq:pom:")) {
-				return null;
-			}
-			// Known issue with Spring Cloud Contract to be fixed in the next release
-			// See
-			// https://github.com/spring-cloud/spring-cloud-contract/commit/13c7d477fbbc856b319600874a11aabcef283df7
-			if (ex.getMessage()
-				.contains("org.springframework.cloud:spring-cloud-starter-contract-verifier:pom:2.2.3.RELEASE")) {
-				return null;
-			}
-			throw ex;
-		}
+		return DependencyResolver.resolveDependencies(Homes.MAVEN, dependency.getGroupId(), dependency.getArtifactId(),
+				dependency.getVersion(), boms, repositories);
 	}
 
 	Stream<Arguments> parameters() {
@@ -159,11 +138,12 @@ class MetadataVerificationTests {
 		}
 		if (bootVersion.getQualifier() != null) {
 			String qualifier = bootVersion.getQualifier().getId();
-			if (!qualifier.equals("RELEASE")) {
+			if (qualifier.contains("SNAPSHOT")) {
+				repositories.computeIfAbsent("spring-snapshots", this::repositoryForId);
 				repositories.computeIfAbsent("spring-milestones", this::repositoryForId);
-				if (qualifier.contains("SNAPSHOT")) {
-					repositories.computeIfAbsent("spring-snapshots", this::repositoryForId);
-				}
+			}
+			else if (qualifier.equals("M")) {
+				repositories.computeIfAbsent("spring-milestones", this::repositoryForId);
 			}
 		}
 		return new ArrayList<>(repositories.values());
@@ -181,7 +161,7 @@ class MetadataVerificationTests {
 			.stream()
 			.map(DefaultMetadataElement::getId)
 			.map(VersionParser.DEFAULT::parse)
-			.collect(Collectors.toList());
+			.toList();
 	}
 
 	private Collection<DependencyGroup> groups() {
@@ -189,10 +169,7 @@ class MetadataVerificationTests {
 	}
 
 	private Collection<Dependency> dependenciesForBootVersion(DependencyGroup group, Version bootVersion) {
-		return group.getContent()
-			.stream()
-			.filter((dependency) -> dependency.match(bootVersion))
-			.collect(Collectors.toList());
+		return group.getContent().stream().filter((dependency) -> dependency.match(bootVersion)).toList();
 	}
 
 }

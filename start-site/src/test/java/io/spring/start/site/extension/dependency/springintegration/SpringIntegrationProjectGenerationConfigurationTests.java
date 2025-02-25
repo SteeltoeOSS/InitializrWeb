@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2023 the original author or authors.
+ * Copyright 2012-2024 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -36,6 +36,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  * @author Stephane Nicoll
  * @author Artem Bilan
  * @author Brian Clozel
+ * @author Moritz Halbritter
  */
 class SpringIntegrationProjectGenerationConfigurationTests extends AbstractExtensionTests {
 
@@ -60,13 +61,13 @@ class SpringIntegrationProjectGenerationConfigurationTests extends AbstractExten
 
 	static Stream<Arguments> supportedEntries() {
 		return Stream.of(Arguments.arguments("artemis", "jms"), Arguments.arguments("amqp", "amqp"),
-				Arguments.arguments("data-jdbc", "jdbc"), Arguments.arguments("jdbc", "jdbc"),
-				Arguments.arguments("data-jpa", "jpa"), Arguments.arguments("data-mongodb", "mongodb"),
-				Arguments.arguments("data-mongodb-reactive", "mongodb"), Arguments.arguments("data-r2dbc", "r2dbc"),
-				Arguments.arguments("data-redis", "redis"), Arguments.arguments("data-redis-reactive", "redis"),
-				Arguments.arguments("kafka", "kafka"), Arguments.arguments("kafka-streams", "kafka"),
-				Arguments.arguments("mail", "mail"), Arguments.arguments("rsocket", "rsocket"),
-				Arguments.arguments("security", "security"), Arguments.arguments("web", "http"),
+				Arguments.arguments("amqp-streams", "amqp"), Arguments.arguments("data-jdbc", "jdbc"),
+				Arguments.arguments("jdbc", "jdbc"), Arguments.arguments("data-jpa", "jpa"),
+				Arguments.arguments("data-mongodb", "mongodb"), Arguments.arguments("data-mongodb-reactive", "mongodb"),
+				Arguments.arguments("data-r2dbc", "r2dbc"), Arguments.arguments("data-redis", "redis"),
+				Arguments.arguments("data-redis-reactive", "redis"), Arguments.arguments("kafka", "kafka"),
+				Arguments.arguments("kafka-streams", "kafka"), Arguments.arguments("mail", "mail"),
+				Arguments.arguments("rsocket", "rsocket"), Arguments.arguments("web", "http"),
 				Arguments.arguments("webflux", "webflux"), Arguments.arguments("websocket", "websocket"),
 				Arguments.arguments("websocket", "stomp"), Arguments.arguments("web-services", "ws"));
 	}
@@ -75,33 +76,42 @@ class SpringIntegrationProjectGenerationConfigurationTests extends AbstractExten
 	@MethodSource("referenceLinks")
 	void linkToSupportedEntriesWhenSpringIntegrationIsPresentIsAdded(String dependencyId, String pageName) {
 		assertHelpDocument("integration", dependencyId)
-			.contains("https://docs.spring.io/spring-integration/reference/html/" + pageName + ".html");
+			.contains("https://docs.spring.io/spring-integration/reference/%s.html".formatted(pageName));
 	}
 
 	@ParameterizedTest
 	@MethodSource("referenceLinks")
 	void linkToSupportedEntriesWhenSpringIntegrationIsNotPresentIsNotAdded(String dependencyId, String pageName) {
 		assertHelpDocument(dependencyId)
-			.doesNotContain("https://docs.spring.io/spring-integration/reference/html/" + pageName + ".html");
+			.doesNotContain("https://docs.spring.io/spring-integration/reference/%s.html".formatted(pageName));
 	}
 
 	static Stream<Arguments> referenceLinks() {
 		return Stream.of(Arguments.arguments("artemis", "jms"), Arguments.arguments("amqp", "amqp"),
-				Arguments.arguments("data-jdbc", "jdbc"), Arguments.arguments("jdbc", "jdbc"),
-				Arguments.arguments("data-jpa", "jpa"), Arguments.arguments("data-mongodb", "mongodb"),
-				Arguments.arguments("data-mongodb-reactive", "mongodb"), Arguments.arguments("data-r2dbc", "r2dbc"),
-				Arguments.arguments("data-redis", "redis"), Arguments.arguments("data-redis-reactive", "redis"),
-				Arguments.arguments("kafka", "kafka"), Arguments.arguments("kafka-streams", "kafka"),
-				Arguments.arguments("mail", "mail"), Arguments.arguments("rsocket", "rsocket"),
-				Arguments.arguments("security", "security"), Arguments.arguments("web", "http"),
-				Arguments.arguments("webflux", "webflux"), Arguments.arguments("websocket", "web-sockets"),
-				Arguments.arguments("websocket", "stomp"), Arguments.arguments("web-services", "ws"));
+				Arguments.arguments("amqp-streams", "amqp"), Arguments.arguments("data-jdbc", "jdbc"),
+				Arguments.arguments("jdbc", "jdbc"), Arguments.arguments("data-jpa", "jpa"),
+				Arguments.arguments("data-mongodb", "mongodb"), Arguments.arguments("data-mongodb-reactive", "mongodb"),
+				Arguments.arguments("data-r2dbc", "r2dbc"), Arguments.arguments("data-redis", "redis"),
+				Arguments.arguments("data-redis-reactive", "redis"), Arguments.arguments("kafka", "kafka"),
+				Arguments.arguments("kafka-streams", "kafka"), Arguments.arguments("mail", "mail"),
+				Arguments.arguments("rsocket", "rsocket"), Arguments.arguments("security", "security"),
+				Arguments.arguments("web", "http"), Arguments.arguments("webflux", "webflux"),
+				Arguments.arguments("websocket", "web-sockets"), Arguments.arguments("websocket", "stomp"),
+				Arguments.arguments("web-services", "ws"));
 	}
 
 	@Test
 	void linkToSupportedEntriesWhenTwoMatchesArePresentOnlyAddLinkOnce() {
 		assertHelpDocument("testcontainers", "data-mongodb", "data-mongodb-reactive")
-			.containsOnlyOnce("https://www.testcontainers.org/modules/databases/mongodb/");
+			.containsOnlyOnce("https://java.testcontainers.org/modules/databases/mongodb/");
+	}
+
+	@Test
+	void securityAddsSpringSecurityMessaging() {
+		assertThat(generateProject("integration", "security")).mavenBuild()
+			.hasDependency("org.springframework.security", "spring-security-messaging")
+			.doesNotHaveDependency("org.springframework.integration", "spring-integration-security");
+
 	}
 
 	private static Dependency integrationDependency(String id) {
@@ -118,8 +128,7 @@ class SpringIntegrationProjectGenerationConfigurationTests extends AbstractExten
 
 	private TextAssert assertHelpDocument(String... dependencyIds) {
 		ProjectRequest request = createProjectRequest(dependencyIds);
-		ProjectStructure project = generateProject(request);
-		return new TextAssert(project.getProjectDirectory().resolve("HELP.md"));
+		return assertThat(helpDocument(request));
 	}
 
 }

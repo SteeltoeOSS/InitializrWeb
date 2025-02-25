@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2021 the original author or authors.
+ * Copyright 2012-2023 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,10 +17,12 @@
 package io.spring.start.site.extension.dependency.okta;
 
 import io.spring.initializr.generator.test.io.TextAssert;
-import io.spring.initializr.generator.test.project.ProjectStructure;
 import io.spring.initializr.web.project.ProjectRequest;
+import io.spring.start.site.SupportedBootVersion;
 import io.spring.start.site.extension.AbstractExtensionTests;
 import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * Tests for {@link OktaHelpDocumentCustomizer}.
@@ -28,6 +30,8 @@ import org.junit.jupiter.api.Test;
  * @author Stephane Nicoll
  */
 class OktaHelpDocumentCustomizerTests extends AbstractExtensionTests {
+
+	private static final SupportedBootVersion BOOT_VERSION = SupportedBootVersion.V3_3;
 
 	@Test
 	void oktaSectionWithOktaDependencyIsPresent() {
@@ -40,10 +44,8 @@ class OktaHelpDocumentCustomizerTests extends AbstractExtensionTests {
 	}
 
 	private TextAssert assertHelpDocument(String... dependencies) {
-		ProjectRequest request = createProjectRequest(dependencies);
-		request.setBootVersion("2.4.6");
-		ProjectStructure project = generateProject(request);
-		return new TextAssert(project.getProjectDirectory().resolve("HELP.md"));
+		ProjectRequest request = createProjectRequest(BOOT_VERSION, dependencies);
+		return assertThat(helpDocument(request));
 	}
 
 }

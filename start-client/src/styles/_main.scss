@@ -85,6 +85,39 @@ body {
     left: 0;
     width: 5rem;
   }
+  .navigation-divider {
+    margin: 20px;
+    border-top: 1px solid $light-border;
+  }
+  .navigation-item {
+    $size: 30px;
+    display: block;
+    margin: 0.2rem auto;
+    color: $light-color;
+    padding: 0;
+    cursor: pointer;
+    width: $size + 12px;
+    height: $size + 12px;
+    border: 0 none;
+    background: none;
+    @include transition(color $spring-transition-duration);
+    .icon-history {
+      width: 30px;
+      margin-top: 6px;
+    }
+    &:hover {
+      color: $light-primary;
+    }
+    &:focus {
+      outline: 1px dotted #aecaca;
+    }
+  }
+  &.is-open .navigation-item {
+    color: white;
+    &:hover {
+      opacity: 0.7;
+    }
+  }
 }
 
 #side-right {
@@ -108,7 +141,6 @@ body {
 // Header
 
 #header {
-  padding-top: 40px;
   h1,
   h2 {
     margin: 0;
@@ -116,11 +148,12 @@ body {
   h1.logo {
     max-width: 320px;
     padding: 2rem 0;
+    display: block;
     a {
-      @include outline;
       display: block;
       margin-left: -6px;
       color: $light-color;
+      @include outline;
       .logo-content {
         display: block;
         outline: none;
@@ -164,6 +197,7 @@ body {
       border: 0;
       padding: 4px;
       outline: none;
+      cursor: pointer;
     }
     svg {
       display: block;
@@ -219,8 +253,6 @@ hr.divider {
     .left {
       padding-right: 1rem;
     }
-  }
-  .right {
   }
 }
 
@@ -395,10 +427,10 @@ button.button {
   margin-right: 1rem;
   cursor: pointer;
   background: transparent;
-  @include transition(all calc($spring-transition-duration / 2));
   z-index: 1;
   background: $light-background;
   font-family: $spring-font-family;
+  @include transition(all calc($spring-transition-duration / 2));
   &:focus {
     outline: none;
     box-shadow: 0 0 0 4px $light-border;
@@ -430,8 +462,8 @@ button.button {
     bottom: 0;
     width: 100%;
     opacity: 0;
-    @include transition(all calc($spring-transition-duration / 2));
     z-index: -1;
+    @include transition(all calc($spring-transition-duration / 2));
   }
   &:hover,
   &:disabled {
@@ -550,11 +582,30 @@ button.button {
     span {
       padding: 0.9rem 1.5rem 0.8rem;
     }
+    &.clicked {
+      color: white;
+      &:before {
+        opacity: 1;
+      }
+    }
     &:focus {
       box-shadow: 0 0 0 4px darken($light-border, 6);
     }
-    &:last-child {
+    &.last-child {
       margin-right: 0;
+    }
+  }
+  .dropdown {
+    position: relative;
+    .dropdown-items {
+      position: absolute;
+      bottom: 35px;
+      left: -50px;
+      text-align: center;
+      .button {
+        margin: 4px 0;
+        width: 160px;
+      }
     }
   }
 }
@@ -643,8 +694,7 @@ button.button {
 // Navigation
 
 .navigation {
-  //background: $light-primary;
-  background: #585870;
+  background: $light-primary;
   position: fixed;
   z-index: 199;
   left: 0;
@@ -729,6 +779,26 @@ button.button {
 .navigation-exit-active {
   transform: translateY(-100%);
   @include transition(transform 500ms);
+}
+
+.navgiation-actions {
+  transition: opacity 0.15s;
+}
+.navgiation-actions-enter {
+  opacity: 0;
+  transition-delay: .3s;
+}
+
+.navgiation-actions-enter-active {
+  opacity: 1;
+}
+
+.navgiation-actions-exit {
+  opacity: 1;
+}
+
+.navgiation-actions-exit-active {
+  opacity: 0;
 }
 
 #side-left {
@@ -863,10 +933,11 @@ button.button {
           background: $light-primary;
           color: #fff;
           font-size: $spring-font-size - 2;
-          padding: 4px 0.6rem 1px;
+          padding: 2px 0.4rem 1px;
           line-height: 18px;
           margin-left: 0.6rem;
           text-transform: uppercase;
+          border-radius: 4px;
         }
         strong {
           font-size: $spring-font-size + 2;
@@ -881,6 +952,30 @@ button.button {
           margin-top: -(calc($height / 2));
           height: $height;
           right: 15px;
+        }
+        &.added {
+          color: $light-color;
+          background: #e8f5f9;
+          margin-bottom: -1px;
+          margin-top: -1px;
+          padding: 13px 1rem;
+          padding-right: 45px;
+          box-shadow: inset 0 1px 0 rgba(black, 0.1);
+          &:hover {
+            color: $light-color;
+            background: darken(#e8f5f9, 5%);
+            strong {
+              color: $light-color;
+            }
+            .icon-enter {
+              display: block;
+              fill: $light-color;
+            }
+          }
+          span.group {
+            background: white;
+            color: $light-color;
+          }
         }
         &.selected {
           color: white;
@@ -901,6 +996,20 @@ button.button {
           }
           .icon-enter {
             display: block;
+          }
+          &.added {
+            color: $light-color;
+            background: darken(#e8f5f9, 5%);
+            .icon-enter {
+              fill: $light-color;
+            }
+            &:hover {
+              color: $light-color;
+              background: darken(#e8f5f9, 5%);
+              strong {
+                color: $light-color;
+              }
+            }
           }
         }
         &.disabled,
@@ -946,7 +1055,8 @@ button.button {
         background: $light-primary;
         color: #fff;
         font-size: $spring-font-size - 2;
-        padding: 4px 0.6rem 1px;
+        padding: 2px 0.4rem 1px;
+        border-radius: 4px;
         line-height: 18px;
         margin-left: 0.6rem;
         text-transform: uppercase;
@@ -1039,11 +1149,12 @@ ul.dependencies-list {
         display: inline-block;
         background: $light-primary;
         font-size: $spring-font-size - 2;
-        padding: 4px 0.6rem 1px;
+        padding: 2px 0.4rem 1px;
         line-height: 18px;
         margin-left: 0.6rem;
         text-transform: uppercase;
         color: #fff;
+        border-radius: 4px;
       }
       span.invalid {
         color: #d60000;
@@ -1289,7 +1400,7 @@ ul.dependencies-list {
     width: 249.42px;
   }
   &-share {
-    width: 119px;
+    width: 62.3px;
   }
   &-dep {
     width: 241.8px;
@@ -1318,24 +1429,4 @@ ul.dependencies-list {
   display: inline-block;
   height: 14px;
   background: $light-placeholder;
-}
-
-.banner {
-  position: absolute;
-  top: 0;
-  right: 5rem;
-  left: 5rem;
-  a {
-    display: block;;
-    background-color: #6db33f;
-    color:  #FFF;
-    font-weight: normal;
-    display: block;
-    font-size: 0.9rem;
-    height: 40px;
-    line-height: 40px;
-    text-align: center;
-    text-decoration: none;
-    cursor: pointer;
-  }
 }

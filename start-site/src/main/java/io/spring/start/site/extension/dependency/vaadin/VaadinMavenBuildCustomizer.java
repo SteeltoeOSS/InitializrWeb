@@ -16,44 +16,32 @@
 
 package io.spring.start.site.extension.dependency.vaadin;
 
+import io.spring.initializr.generator.buildsystem.Dependency;
 import io.spring.initializr.generator.buildsystem.maven.MavenBuild;
+import io.spring.initializr.generator.buildsystem.maven.MavenProfile;
 import io.spring.initializr.generator.spring.build.BuildCustomizer;
-import io.spring.initializr.generator.version.Version;
-import io.spring.initializr.generator.version.VersionParser;
-import io.spring.initializr.generator.version.VersionRange;
 
 /**
  * A {@link BuildCustomizer} that adds a production profile to enable Vaadin's production
  * mode.
  *
  * @author Stephane Nicoll
+ * @author Moritz Halbritter
  */
 class VaadinMavenBuildCustomizer implements BuildCustomizer<MavenBuild> {
 
-	private static final VersionRange SPRING_BOOT_3_OR_LATER = VersionParser.DEFAULT.parseRange("3.0.0-M1");
-
-	private final boolean isVaadin24OrLater;
-
-	VaadinMavenBuildCustomizer(Version platformVersion) {
-		this.isVaadin24OrLater = SPRING_BOOT_3_OR_LATER.match(platformVersion);
-	}
-
 	@Override
 	public void customize(MavenBuild build) {
-		build.profiles()
-			.id("production")
-			.plugins()
-			.add("com.vaadin", "vaadin-maven-plugin",
-					(plugin) -> plugin.version("${vaadin.version}")
-						.execution("frontend",
-								(execution) -> execution.goal("prepare-frontend")
-									.goal("build-frontend")
-									.phase("compile")
-									.configuration((configuration) -> {
-										if (!this.isVaadin24OrLater) {
-											configuration.add("productionMode", "true");
-										}
-									})));
+		MavenProfile profile = build.profiles().id("production");
+		profile.dependencies()
+			.add("vaadin-core",
+					Dependency.withCoordinates("com.vaadin", "vaadin-core")
+						.exclusions(new Dependency.Exclusion("com.vaadin", "vaadin-dev"))
+						.build());
+		profile.plugins()
+			.add("com.vaadin", "vaadin-maven-plugin", (plugin) -> plugin.version("${vaadin.version}")
+				.execution("frontend",
+						(execution) -> execution.goal("prepare-frontend").goal("build-frontend").phase("compile")));
 	}
 
 }

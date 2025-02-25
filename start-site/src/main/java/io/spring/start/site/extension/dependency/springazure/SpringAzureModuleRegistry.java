@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2023 the original author or authors.
+ * Copyright 2012-2024 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,7 +18,6 @@ package io.spring.start.site.extension.dependency.springazure;
 
 import java.util.Arrays;
 import java.util.function.Consumer;
-import java.util.stream.Collectors;
 
 import io.spring.initializr.generator.buildsystem.Build;
 import io.spring.initializr.generator.buildsystem.Dependency;
@@ -33,33 +32,14 @@ import io.spring.start.site.support.implicit.ImplicitDependency.Builder;
  * @author Andy Wilkinson
  * @author Yonghui Ye
  * @author Stephane Nicoll
+ * @author Eddú Meléndez
  */
 abstract class SpringAzureModuleRegistry {
 
 	static Iterable<ImplicitDependency> createSpringBootRegistry() {
-		return create(
+		return create(onDependencies("azure-support").customizeHelpDocument(addDeploySection()),
 				onDependencies("actuator").customizeBuild(addDependency("spring-cloud-azure-starter-actuator"))
 					.customizeHelpDocument(addReferenceLink("actuator", "Azure Actuator")),
-				onDependencies("integration", "azure-storage")
-					.customizeBuild(addDependency("spring-cloud-azure-starter-integration-storage-queue"))
-					.customizeHelpDocument(
-							addReferenceLink("spring-integration/storage-queue", "Azure Integration Storage Queue")),
-				onDependencies("mysql", "azure-support")
-					.customizeBuild(addDependency("spring-cloud-azure-starter-jdbc-mysql"))
-					.customizeHelpDocument((helpDocument) -> helpDocument.gettingStarted()
-						.addReferenceDocLink("https://aka.ms/spring/msdocs/mysql", "Azure MySQL support")),
-				onDependencies("postgresql", "azure-support")
-					.customizeBuild(addDependency("spring-cloud-azure-starter-jdbc-postgresql"))
-					.customizeHelpDocument((helpDocument) -> helpDocument.gettingStarted()
-						.addReferenceDocLink("https://aka.ms/spring/msdocs/postgresql", "Azure PostgreSQL support")));
-	}
-
-	static Iterable<ImplicitDependency> createSpringBoot2Registry() {
-		return create(
-				onDependencies("actuator").customizeBuild(addDependency("spring-cloud-azure-starter-actuator"))
-					.customizeHelpDocument(addReferenceLink("actuator", "Azure Actuator")),
-				onDependencies("distributed-tracing").customizeBuild(addDependency("spring-cloud-azure-trace-sleuth"))
-					.customizeHelpDocument(addReferenceLink("sleuth", "Azure Sleuth")),
 				onDependencies("integration", "azure-storage")
 					.customizeBuild(addDependency("spring-cloud-azure-starter-integration-storage-queue"))
 					.customizeHelpDocument(
@@ -75,7 +55,7 @@ abstract class SpringAzureModuleRegistry {
 	}
 
 	private static Iterable<ImplicitDependency> create(ImplicitDependency.Builder... dependencies) {
-		return Arrays.stream(dependencies).map(Builder::build).collect(Collectors.toList());
+		return Arrays.stream(dependencies).map(Builder::build).toList();
 	}
 
 	private static ImplicitDependency.Builder onDependencies(String... dependencyIds) {
@@ -98,6 +78,33 @@ abstract class SpringAzureModuleRegistry {
 		return (helpDocument) -> {
 			String href = String.format("https://aka.ms/spring/docs/%s", id);
 			helpDocument.gettingStarted().addReferenceDocLink(href, description);
+		};
+	}
+
+	private static Consumer<HelpDocument> addDeploySection() {
+		return (helpDocument) -> {
+			helpDocument.addSection((writer) -> {
+				writer.println("### Deploy to Azure");
+				writer.println();
+				writer.println("This project can be deployed to Azure with Maven.");
+				writer.println();
+				writer.println(
+						"To get started, replace the following placeholder in your `pom.xml` with your specific Azure details:");
+				writer.println();
+				writer.println("- `subscriptionId`");
+				writer.println("- `resourceGroup`");
+				writer.println("- `appEnvironmentName`");
+				writer.println("- `region`");
+				writer.println();
+				writer.println("Now you can deploy your application:");
+				writer.println("""
+						```bash
+						./mvnw azure-container-apps:deploy
+						```
+						""");
+				writer.println(
+						"Learn more about [Java on Azure Container Apps](https://learn.microsoft.com/azure/container-apps/java-overview).");
+			});
 		};
 	}
 

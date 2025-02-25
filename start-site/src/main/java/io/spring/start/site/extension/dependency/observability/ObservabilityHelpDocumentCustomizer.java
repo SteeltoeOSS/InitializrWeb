@@ -42,12 +42,11 @@ public class ObservabilityHelpDocumentCustomizer implements HelpDocumentCustomiz
 	public void customize(HelpDocument document) {
 		if (this.build.dependencies().has("distributed-tracing")) {
 			document.gettingStarted()
-				.addReferenceDocLink("https://micrometer.io/docs/tracing", "Distributed Tracing Reference Guide");
+				.addReferenceDocLink("https://docs.micrometer.io/tracing/reference/index.html",
+						"Distributed Tracing Reference Guide");
 			document.gettingStarted()
-				.addReferenceDocLink(String.format(
-						"https://docs.spring.io/spring-boot/docs/%s/reference/html/actuator.html#actuator.micrometer-tracing.getting-started",
-						this.platformVersion), "Getting Started with Distributed Tracing");
-
+				.addReferenceDocLink("https://docs.spring.io/spring-boot/%s/reference/actuator/tracing.html"
+					.formatted(this.platformVersion), "Getting Started with Distributed Tracing");
 		}
 	}
 

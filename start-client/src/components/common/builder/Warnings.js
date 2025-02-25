@@ -23,6 +23,14 @@ function Warnings() {
         </a>
         The following attributes could not be handled:
         <ul>
+          {get(warnings, 'project') && (
+            <li>
+              <strong className='warn'>{get(warnings, 'project.value')}</strong>{' '}
+              is not a valid project type,{' '}
+              <strong>{get(warnings, 'project.select')}</strong> has been
+              selected.
+            </li>
+          )}
           {get(warnings, 'language') && (
             <li>
               <strong className='warn'>

@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2023 the original author or authors.
+ * Copyright 2012-2024 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,7 +20,6 @@ import io.spring.initializr.generator.buildsystem.Build;
 import io.spring.initializr.generator.buildsystem.Dependency;
 import io.spring.initializr.generator.buildsystem.DependencyScope;
 import io.spring.initializr.generator.condition.ConditionalOnLanguage;
-import io.spring.initializr.generator.condition.ConditionalOnPlatformVersion;
 import io.spring.initializr.generator.condition.ConditionalOnRequestedDependency;
 import io.spring.initializr.generator.io.IndentingWriterFactory;
 import io.spring.initializr.generator.language.groovy.GroovyLanguage;
@@ -29,7 +28,6 @@ import io.spring.initializr.generator.language.kotlin.KotlinLanguage;
 import io.spring.initializr.generator.project.ProjectDescription;
 import io.spring.initializr.generator.project.ProjectGenerationConfiguration;
 import io.spring.initializr.generator.spring.build.BuildCustomizer;
-import io.spring.initializr.generator.spring.documentation.HelpDocumentCustomizer;
 import io.spring.start.site.container.ServiceConnections;
 import io.spring.start.site.container.ServiceConnectionsCustomizer;
 import io.spring.start.site.support.implicit.ImplicitDependency;
@@ -45,6 +43,7 @@ import org.springframework.context.annotation.Configuration;
  *
  * @author Maciej Walkowiak
  * @author Stephane Nicoll
+ * @author Moritz Halbritter
  */
 @ProjectGenerationConfiguration
 @ConditionalOnRequestedDependency("testcontainers")
@@ -52,8 +51,8 @@ public class TestcontainersProjectGenerationConfiguration {
 
 	private final Iterable<ImplicitDependency> dependencies;
 
-	public TestcontainersProjectGenerationConfiguration() {
-		this.dependencies = TestcontainersModuleRegistry.create();
+	public TestcontainersProjectGenerationConfiguration(ProjectDescription projectDescription) {
+		this.dependencies = TestcontainersModuleRegistry.create(projectDescription.getPlatformVersion());
 	}
 
 	@Bean
@@ -66,8 +65,14 @@ public class TestcontainersProjectGenerationConfiguration {
 		return new ImplicitDependencyHelpDocumentCustomizer(this.dependencies, build);
 	}
 
+	@Bean
+	ServiceConnections serviceConnections(ObjectProvider<ServiceConnectionsCustomizer> customizers) {
+		ServiceConnections serviceConnections = new ServiceConnections();
+		customizers.orderedStream().forEach((customizer) -> customizer.customize(serviceConnections));
+		return serviceConnections;
+	}
+
 	@Configuration(proxyBeanMethods = false)
-	@ConditionalOnPlatformVersion("3.1.0-RC1")
 	static class SpringBootSupportConfiguration {
 
 		@Bean
@@ -76,24 +81,17 @@ public class TestcontainersProjectGenerationConfiguration {
 				.add("spring-boot-testcontainers",
 						Dependency.withCoordinates("org.springframework.boot", "spring-boot-testcontainers")
 							.scope(DependencyScope.TEST_COMPILE));
-
 		}
 
 		@Bean
-		HelpDocumentCustomizer springBootTestcontainersHelpDocumentCustomizer(ProjectDescription description) {
-			return (helpDocument) -> {
-				String referenceDocUrl = String.format(
-						"https://docs.spring.io/spring-boot/docs/%s/reference/html/features.html#features.testing.testcontainers",
-						description.getPlatformVersion());
-				helpDocument.gettingStarted()
-					.addReferenceDocLink(referenceDocUrl, "Spring Boot Testcontainers support");
-			};
+		TestContainersHelpDocumentCustomizer springBootTestcontainersHelpDocumentCustomizer(
+				ProjectDescription description, ServiceConnections serviceConnections) {
+			return new TestContainersHelpDocumentCustomizer(description, serviceConnections);
 		}
 
 	}
 
 	@Configuration(proxyBeanMethods = false)
-	@ConditionalOnPlatformVersion("3.1.0-RC1")
 	static class TestApplicationConfiguration {
 
 		private final ProjectDescription description;
@@ -106,13 +104,6 @@ public class TestcontainersProjectGenerationConfiguration {
 		}
 
 		@Bean
-		ServiceConnections serviceConnections(ObjectProvider<ServiceConnectionsCustomizer> customizers) {
-			ServiceConnections serviceConnections = new ServiceConnections();
-			customizers.orderedStream().forEach((customizer) -> customizer.customize(serviceConnections));
-			return serviceConnections;
-		}
-
-		@Bean
 		@ConditionalOnLanguage(GroovyLanguage.ID)
 		GroovyTestContainersApplicationCodeProjectContributor groovyTestContainersApplicationCodeProjectContributor(
 				ServiceConnections serviceConnections) {
@@ -122,7 +113,6 @@ public class TestcontainersProjectGenerationConfiguration {
 
 		@Bean
 		@ConditionalOnLanguage(KotlinLanguage.ID)
-		@ConditionalOnPlatformVersion("3.1.1-SNAPSHOT") // https://github.com/spring-projects/spring-boot/issues/35756
 		KotlinTestContainersApplicationCodeProjectContributor kotlinTestContainersApplicationCodeProjectContributor(
 				ServiceConnections serviceConnections) {
 			return new KotlinTestContainersApplicationCodeProjectContributor(this.indentingWriterFactory,
@@ -135,6 +125,11 @@ public class TestcontainersProjectGenerationConfiguration {
 				ServiceConnections serviceConnections) {
 			return new JavaTestContainersApplicationCodeProjectContributor(this.indentingWriterFactory,
 					this.description, serviceConnections);
+		}
+
+		@Bean
+		ImportTestcontainersConfigurationTestApplicationTypeCustomizer importTestcontainersConfigurationTestApplicationTypeCustomizer() {
+			return new ImportTestcontainersConfigurationTestApplicationTypeCustomizer();
 		}
 
 	}

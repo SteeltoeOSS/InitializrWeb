@@ -16,7 +16,6 @@
 
 package io.spring.start.site.extension.dependency.springdata;
 
-import java.util.Arrays;
 import java.util.List;
 
 import io.spring.initializr.generator.buildsystem.Build;
@@ -31,7 +30,7 @@ import io.spring.initializr.generator.spring.documentation.HelpDocumentCustomize
  */
 public class R2dbcHelpDocumentCustomizer implements HelpDocumentCustomizer {
 
-	private static final List<String> DRIVERS = Arrays.asList("h2", "mariadb", "postgresql", "sqlserver", "oracle");
+	private static final List<String> DRIVERS = List.of("h2", "mariadb", "mysql", "postgresql", "sqlserver", "oracle");
 
 	private final Build build;
 

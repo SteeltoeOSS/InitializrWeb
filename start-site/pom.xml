@@ -71,6 +71,12 @@
 		</dependency>
 
 		<dependency>
+			<groupId>com.azure.spring</groupId>
+			<artifactId>spring-cloud-azure-starter-keyvault-secrets</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+
+		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-devtools</artifactId>
 			<optional>true</optional>
@@ -84,6 +90,11 @@
 		<dependency>
 			<groupId>io.spring.initializr</groupId>
 			<artifactId>initializr-generator-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>io.spring.start</groupId>
+			<artifactId>test-support</artifactId>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>

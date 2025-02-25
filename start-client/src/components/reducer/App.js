@@ -2,15 +2,19 @@ import PropTypes from 'prop-types'
 import get from 'lodash/get'
 import set from 'lodash/set'
 import React, { useReducer } from 'react'
-
 import useTheme from '../utils/Theme'
 import { isValidSteeltoeVersionDependency, isValidDotNetFrameworkDependency } from '../utils/ApiUtils'
 import { rangeToText } from '../utils/Version'
+
+const MAX_HISTORY = 100
 
 export const defaultAppContext = {
   complete: false,
   explore: false,
   share: false,
+  history: false,
+  favorite: false,
+  favoriteAdd: false,
   nav: false,
   list: false,
   theme: 'light',
@@ -20,7 +24,23 @@ export const defaultAppContext = {
     list: [],
     groups: [],
   },
+  favoriteOptions: {
+    title: '',
+    button: '',
+    favorite: null,
+    back: '',
+  },
+  histories: [],
+  favorites: [],
 }
+
+const localStorage =
+  typeof window !== 'undefined'
+    ? window.localStorage
+    : {
+        getItem: () => {},
+        setItem: () => {},
+      }
 
 export function reduceDependencies(steeltoeVersion, dotNetFramework, items) {
   const groups = []
@@ -84,6 +104,14 @@ export function reducer(state, action) {
         if (key === 'theme') {
           localStorage.setItem('springtheme', value)
         }
+        if (key === 'favoriteAdd' && !value) {
+          newState.favoriteOptions = {
+            title: '',
+            button: '',
+            favorite: null,
+            back: '',
+          }
+        }
         return key
       })
       return newState
@@ -113,7 +141,80 @@ export function reducer(state, action) {
         get(json, 'defaultValues.dotNetFramework'),
         get(json, 'lists.dependencies')
       )
-      return { ...state, complete: true, config: json, dependencies }
+      const histories = localStorage.getItem('histories')
+        ? JSON.parse(localStorage.getItem('histories'))
+        : []
+
+      const favorites = localStorage.getItem('favorites')
+        ? JSON.parse(localStorage.getItem('favorites'))
+        : []
+      return {
+        ...state,
+        complete: true,
+        config: json,
+        dependencies,
+        histories,
+        favorites,
+      }
+    }
+    case 'ADD_HISTORY': {
+      const newHistory = get(action, 'payload')
+      const histories = [
+        {
+          date: new Date().toISOString(),
+          value: newHistory,
+        },
+        ...state.histories.slice(0, MAX_HISTORY - 1),
+      ]
+      localStorage.setItem('histories', JSON.stringify(histories))
+      return { ...state, histories }
+    }
+    case 'CLEAR_HISTORY': {
+      localStorage.setItem('histories', JSON.stringify([]))
+      return { ...state, histories: [] }
+    }
+    case 'ADD_FAVORITE': {
+      const favorites = [
+        {
+          date: new Date().toISOString(),
+          name: get(action, 'payload.name'),
+          value: get(action, 'payload.values'),
+        },
+        ...state.favorites,
+      ]
+      localStorage.setItem('favorites', JSON.stringify(favorites))
+      return { ...state, favorites }
+    }
+    case 'UPDATE_FAVORITE': {
+      const favoriteToUpdate = get(action, 'payload.favorite')
+      const favorites = state.favorites.map(item => {
+        if (
+          item.name === favoriteToUpdate.name &&
+          item.date === favoriteToUpdate.date &&
+          item.value === favoriteToUpdate.value
+        ) {
+          return {
+            ...item,
+            name: get(action, 'payload.name'),
+          }
+        }
+        return item
+      })
+      localStorage.setItem('favorites', JSON.stringify(favorites))
+      return { ...state, favorites }
+    }
+    case 'REMOVE_FAVORITE': {
+      const favoriteToRemove = get(action, 'payload')
+      const favorites = state.favorites.filter(
+        item =>
+          !(
+            item.name === favoriteToRemove.name &&
+            item.date === favoriteToRemove.date &&
+            item.value === favoriteToRemove.value
+          )
+      )
+      localStorage.setItem('favorites', JSON.stringify(favorites))
+      return { ...state, favorites }
     }
     default:
       return state

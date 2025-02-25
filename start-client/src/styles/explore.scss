@@ -70,7 +70,7 @@
       a.button {
         span.button-content span {
           cursor: pointer;
-          padding: 0.55rem 1.2rem 0.4rem;
+          padding: 0.51rem 1.2rem 0.44rem;
           font-size: 13px;
         }
       }
@@ -225,6 +225,7 @@
     color: $light-color;
     word-wrap: normal;
     white-space: nowrap;
+    outline: 1px dotted transparent;
     .item-content {
       box-shadow: none;
       outline: none;
@@ -256,7 +257,6 @@
       width: 16px;
     }
 
-    outline: 1px dotted transparent;
     &:focus {
       outline: 1px dotted darken($light-background-seconday, 10);
     }

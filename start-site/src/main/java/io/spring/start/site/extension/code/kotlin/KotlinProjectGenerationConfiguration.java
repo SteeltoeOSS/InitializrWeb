@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2023 the original author or authors.
+ * Copyright 2012-2024 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,7 +26,7 @@ import io.spring.initializr.generator.spring.code.kotlin.InitializrMetadataKotli
 import io.spring.initializr.generator.spring.code.kotlin.KotlinVersionResolver;
 import io.spring.initializr.generator.spring.documentation.HelpDocumentCustomizer;
 import io.spring.initializr.metadata.InitializrMetadata;
-import io.spring.initializr.versionresolver.DependencyManagementVersionResolver;
+import io.spring.initializr.versionresolver.MavenVersionResolver;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -43,16 +43,16 @@ import org.springframework.context.annotation.Configuration;
 class KotlinProjectGenerationConfiguration {
 
 	@Bean
-	KotlinVersionResolver kotlinVersionResolver(DependencyManagementVersionResolver versionResolver,
-			InitializrMetadata metadata) {
+	KotlinVersionResolver kotlinVersionResolver(MavenVersionResolver versionResolver, InitializrMetadata metadata) {
 		return new ManagedDependenciesKotlinVersionResolver(versionResolver,
 				(description) -> new InitializrMetadataKotlinVersionResolver(metadata)
 					.resolveKotlinVersion(description));
 	}
 
 	@Bean
-	ReactorKotlinExtensionsCustomizer reactorKotlinExtensionsCustomizer(InitializrMetadata metadata) {
-		return new ReactorKotlinExtensionsCustomizer(metadata);
+	ReactorKotlinExtensionsCustomizer reactorKotlinExtensionsCustomizer(InitializrMetadata metadata,
+			ProjectDescription description) {
+		return new ReactorKotlinExtensionsCustomizer(metadata, description);
 	}
 
 	@Configuration
@@ -61,7 +61,7 @@ class KotlinProjectGenerationConfiguration {
 		private final KotlinCoroutinesCustomizer customizer;
 
 		KotlinCoroutinesCustomizerConfiguration(InitializrMetadata metadata, ProjectDescription description,
-				DependencyManagementVersionResolver versionResolver) {
+				MavenVersionResolver versionResolver) {
 			this.customizer = new KotlinCoroutinesCustomizer(metadata, description, versionResolver);
 		}
 

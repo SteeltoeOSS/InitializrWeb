@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2019 the original author or authors.
+ * Copyright 2012-2024 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,6 +19,7 @@ package io.spring.start.site.extension;
 import java.util.Arrays;
 
 import io.spring.initializr.generator.test.buildsystem.gradle.GroovyDslGradleBuildAssert;
+import io.spring.initializr.generator.test.buildsystem.gradle.KotlinDslGradleBuildAssert;
 import io.spring.initializr.generator.test.buildsystem.maven.MavenBuildAssert;
 import io.spring.initializr.generator.test.io.TextAssert;
 import io.spring.initializr.generator.test.project.ProjectStructure;
@@ -32,11 +33,13 @@ import io.spring.initializr.web.project.ProjectGenerationInvoker;
 import io.spring.initializr.web.project.ProjectGenerationResult;
 import io.spring.initializr.web.project.ProjectRequest;
 import io.spring.initializr.web.project.WebProjectRequest;
+import io.spring.start.site.SupportedBootVersion;
 import org.assertj.core.api.AssertProvider;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.ApplicationContext;
+import org.springframework.test.context.ActiveProfiles;
 
 /**
  * Base test class for extensions.
@@ -44,6 +47,7 @@ import org.springframework.context.ApplicationContext;
  * @author Stephane Nicoll
  */
 @SpringBootTest
+@ActiveProfiles("test")
 public abstract class AbstractExtensionTests {
 
 	@Autowired
@@ -87,9 +91,33 @@ public abstract class AbstractExtensionTests {
 		return () -> new GroovyDslGradleBuildAssert(content);
 	}
 
+	protected AssertProvider<KotlinDslGradleBuildAssert> gradleKotlinDslBuild(ProjectRequest request) {
+		request.setType("gradle-project-kotlin");
+		String content = new String(getInvoker().invokeBuildGeneration(request));
+		return () -> new KotlinDslGradleBuildAssert(content);
+	}
+
 	protected AssertProvider<TextAssert> composeFile(ProjectRequest request) {
 		ProjectStructure project = generateProject(request);
 		return () -> new TextAssert(project.getProjectDirectory().resolve("compose.yaml"));
+	}
+
+	protected AssertProvider<TextAssert> applicationProperties(ProjectRequest request) {
+		ProjectStructure project = generateProject(request);
+		return () -> new TextAssert(project.getProjectDirectory().resolve("src/main/resources/application.properties"));
+	}
+
+	protected AssertProvider<TextAssert> gitIgnore(ProjectRequest request) {
+		ProjectStructure project = generateProject(request);
+		return () -> new TextAssert(project.getProjectDirectory().resolve(".gitignore"));
+	}
+
+	protected AssertProvider<TextAssert> helpDocument(ProjectStructure project) {
+		return () -> new TextAssert(project.getProjectDirectory().resolve("HELP.md"));
+	}
+
+	protected AssertProvider<TextAssert> helpDocument(ProjectRequest request) {
+		return helpDocument(generateProject(request));
 	}
 
 	protected ProjectStructure generateProject(ProjectRequest request) {
@@ -98,13 +126,25 @@ public abstract class AbstractExtensionTests {
 	}
 
 	/**
-	 * Create a Maven-based {@link ProjectRequest} with the specified dependencies.
+	 * Create a Maven-based {@link ProjectRequest} with the specified dependencies. Uses
+	 * the latest supported Spring Boot version.
 	 * @param dependencies the dependency identifiers to add
 	 * @return a project request
 	 */
 	protected ProjectRequest createProjectRequest(String... dependencies) {
+		return createProjectRequest(SupportedBootVersion.latest(), dependencies);
+	}
+
+	/**
+	 * Create a Maven-based {@link ProjectRequest} with the specified dependencies.
+	 * @param springBootVersion the Spring Boot version to use
+	 * @param dependencies the dependency identifiers to add
+	 * @return a project request
+	 */
+	protected ProjectRequest createProjectRequest(SupportedBootVersion springBootVersion, String... dependencies) {
 		WebProjectRequest request = new WebProjectRequest();
 		request.initialize(this.metadataProvider.get());
+		request.setBootVersion(springBootVersion.getVersion());
 		request.setType("maven-project");
 		request.getDependencies().addAll(Arrays.asList(dependencies));
 		return request;
