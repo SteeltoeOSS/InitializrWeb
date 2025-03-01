@@ -1,46 +1,33 @@
 name: Build and stage
 
 on:
+  push:
+    branches:
+    - main
   pull_request:
     branches:
     - main
-  push:
-    branches:
-      - main
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
 permissions:
-  contents: 'read'
-  pull-requests: 'write'
+  contents: read
+  pull-requests: write
 
 env:
   IMAGE_NAME: initializr-web
   IMAGE_TAG: ${{ github.event_name == 'pull_request' && format('pr-{0}', github.event.number) || github.run_id }}
-  HAS_AZURE_CREDENTIALS: secrets.AZURE_CREDENTIALS != ''
 
 jobs:
-  build-push-deploy:
+  build-push:
     name: Build and push image
-    environment:
-      name: ${{ github.event_name == 'pull_request' && format('pr-{0}', github.event.number) || vars.STAGING_SLOT_NAME }}
-      url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
-    env:
-      SLOT_NAME: ${{ github.event_name == 'pull_request' && format('pr-{0}', github.event.number) || vars.STAGING_SLOT_NAME }}
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
 
-    - name: Login to Azure
-      if: ${{ env.HAS_AZURE_CREDENTIALS }}
-      uses: azure/login@v1
-      with:
-        creds: ${{ secrets.AZURE_CREDENTIALS }}
-
     - name: Login to container registry
-      if: ${{ env.HAS_AZURE_CREDENTIALS }}
       uses: azure/docker-login@v1
       with:
         login-server: "${{ vars.DOCKER_REGISTRY }}"
@@ -51,24 +38,38 @@ jobs:
       run: docker build . --file "Dockerfile" -t ${{ vars.DOCKER_REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}
 
     - name: Push image
-      if: ${{ env.HAS_AZURE_CREDENTIALS }}
       run: docker push ${{ vars.DOCKER_REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}
 
+  deploy:
+    if: ${{ github.secret_source == 'Actions' }}
+    name: Deploy
+    environment:
+      name: ${{ github.event_name == 'pull_request' && format('pr-{0}', github.event.number) || vars.STAGING_SLOT_NAME }}
+      url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
+    env:
+      SLOT_NAME: ${{ github.event_name == 'pull_request' && format('pr-{0}', github.event.number) || vars.STAGING_SLOT_NAME }}
+    needs: build-push
+    runs-on: ubuntu-latest
+    steps:
+    - name: Login to Azure
+      uses: azure/login@v2
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
+
     - name: If PR, create a new staging slot
-      if: ${{ github.event_name == 'pull_request' && env.HAS_AZURE_CREDENTIALS }}
+      if: ${{ github.event_name == 'pull_request' }}
       run: az webapp deployment slot create --resource-group ${{ vars.AZURE_RESOURCE_GROUP }} --name ${{ vars.AZURE_WEBAPP_NAME}} --slot ${{ env.SLOT_NAME }} --configuration-source ${{ vars.STAGING_SLOT_NAME }}
 
     - name: Deploy to staging slot
-      if: ${{ env.HAS_AZURE_CREDENTIALS }}
-      uses: azure/webapps-deploy@v3
       id: deploy-to-webapp
+      uses: azure/webapps-deploy@v3
       with: 
         app-name: ${{ vars.AZURE_WEBAPP_NAME }}
         images: ${{ vars.DOCKER_REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}
         slot-name:  ${{ env.SLOT_NAME }}
     
     - name: If PR, comment with the preview link
-      if: ${{ github.event_name == 'pull_request' && env.HAS_AZURE_CREDENTIALS }}
+      if: ${{ github.event_name == 'pull_request' }}
       uses: mshick/add-pr-comment@v2
       with:
         message: |
@@ -76,7 +77,13 @@ jobs:
           
           - Your changes have been deployed to the preview site. The preview site will update as you add more commits to this branch.
           - The preview link is shareable, but will be deleted when the pull request is merged or closed.
+          
+          ### Need to pair with a custom InitializrService address?
+          
+          A team member can use this az CLI command, replacing <this-PR-number> and <other-pr-number> for valid numbers:
+          ```bash
+          az webapp config appsettings set --resource-group steeltoe --name initializr-web --slot pr-<this-PR-number> --settings "INITIALIZR_SERVICE_HOST=initializr-service-pr-<other-pr-number>.azurewebsites.net" "INITIALIZR_SERVICE_URI=https://initializr-service-pr-<other-pr-number>.azurewebsites.net/api/"
+          ```
 
           > *This is an automated message.*
         repo-token: ${{ secrets.GITHUB_TOKEN }}
-  

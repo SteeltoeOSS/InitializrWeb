@@ -8,15 +8,32 @@ jobs:
     name: Promote to production
     runs-on: ubuntu-latest
     environment:
-      name: 'Production'
+      name: Production
       url: 'https://${{ vars.AZURE_WEBAPP_NAME }}.azurewebsites.net/'
 
     steps:
     - name: Log into Azure CLI with service principal
-      uses: azure/login@v1
+      uses: azure/login@v2
       with:
         creds: ${{ secrets.AZURE_CREDENTIALS }}
 
+    - name: Change InitializrService link to prod and restart
+      shell: bash
+      run: |
+        az webapp config appsettings set --resource-group steeltoe --name initializr-web --slot Staging --settings "INITIALIZR_SERVICE_HOST=initializr-service.azurewebsites.net" "INITIALIZR_SERVICE_URI=https://initializr-service.azurewebsites.net/api/"
+        az webapp restart --resource-group steeltoe --name initializr-web --slot Staging
+        echo "Waiting 60 seconds until beginning to curl to see if the site is back up"
+        sleep 60
+        until $(curl --output /dev/null --silent --head --fail https://start-staging.steeltoe.io); do
+          printf '.'
+          sleep 5
+        done
+
     - name: Swap slots
       run: az webapp deployment slot swap -s ${{ vars.STAGING_SLOT_NAME }} -n ${{ vars.AZURE_WEBAPP_NAME }} -g ${{ vars.AZURE_RESOURCE_GROUP }}
+
+    - name: Change InitializrService link to staging and restart
+      run: |
+        az webapp config appsettings set --resource-group steeltoe --name initializr-web --slot Staging --settings "INITIALIZR_SERVICE_HOST=initializr-service-staging.azurewebsites.net" "INITIALIZR_SERVICE_URI=https://initializr-service-staging.azurewebsites.net/api/"
+        az webapp restart --resource-group steeltoe --name initializr-web --slot Staging
     
