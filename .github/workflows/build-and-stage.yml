@@ -80,7 +80,7 @@ jobs:
           
           ### Need to pair with a custom InitializrService address?
           
-          Use this az CLI command, replacing <this-PR-number> and <other-pr-number> for valid numbers:
+          A team member can use this az CLI command, replacing <this-PR-number> and <other-pr-number> for valid numbers:
           ```bash
           az webapp config appsettings set --resource-group steeltoe --name initializr-web --slot pr-<this-PR-number> --settings "INITIALIZR_SERVICE_HOST=initializr-service-pr-<other-pr-number>.azurewebsites.net" "INITIALIZR_SERVICE_URI=https://initializr-service-pr-<other-pr-number>.azurewebsites.net/api/"
           ```
