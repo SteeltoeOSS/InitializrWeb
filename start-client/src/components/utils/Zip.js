@@ -7,6 +7,7 @@ const FILE_EXTENSION = {
   Dockerfile: 'docker',
   fs: 'fsharp',
   fsproj: 'xml',
+  http: 'http',
   json: 'javascript',
   gitignore: 'git',
   js: 'javascript',
