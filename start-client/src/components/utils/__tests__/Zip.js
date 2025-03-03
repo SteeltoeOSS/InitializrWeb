@@ -9,7 +9,7 @@ import { createTree, findRoot, getLanguage } from '../Zip'
  * Function getLanguage
  */
 describe('getLanguage', () => {
-  it('should return the extention', () => {
+  it('should return the extension', () => {
     expect(getLanguage('index.md')).toBe('markdown')
     expect(getLanguage('index.spec.md')).toBe('markdown')
     expect(getLanguage('index.js')).toBe('javascript')
@@ -25,6 +25,7 @@ describe('getLanguage', () => {
     expect(getLanguage('Dockerfile')).toBe('docker')
     expect(getLanguage('index.yml')).toBe('yaml')
     expect(getLanguage('index.yaml')).toBe('yaml')
+    expect(getLanguage('Sample.http')).toBe('http')
   })
   it('should not return the extension', () => {
     expect(getLanguage('index.php')).toBe(null)
