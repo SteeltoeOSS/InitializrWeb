@@ -94,7 +94,7 @@
     "lodash": "^4.17.21",
     "luxon": "^3.4.4",
     "prism-react-renderer": "^1.2.0",
-    "prismjs": "^1.24.0",
+    "prismjs": "^1.30.0",
     "prop-types": "^15.7.2",
     "query-string": "^7.0.0",
     "querystring-es3": "^0.2.1",
