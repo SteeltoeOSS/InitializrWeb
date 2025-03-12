@@ -5,7 +5,10 @@ body.dark {
     h1.logo {
       a {
         color: $dark-color;
-        .st0 {
+        .steeltoe {
+          fill: $dark-link;
+        }
+        .initializr {
           fill: $dark-primary;
         }
       }
