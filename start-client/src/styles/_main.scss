@@ -163,11 +163,16 @@ body {
       svg {
         display: block;
       }
-      .st0 {
-        fill: $light-primary;
+      .st0, .steeltoe {
+        fill: #00376E;
       }
-      .st1 {
-        fill: #ffffff;
+      .st1, .initializr {
+        fill: #0066CC;
+      }
+
+      .st2 {
+        opacity: 0.2;
+        fill: #00376E;
       }
     }
   }

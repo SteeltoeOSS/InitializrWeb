@@ -10,7 +10,7 @@ function Header() {
         <h1 className='logo'>
           <a href='/'>
             <span className='logo-content' tabIndex='-1'>
-              <img src="images/steeltoe-initializr-logo.svg" />
+              <Logo />
             </span>
           </a>
         </h1>
