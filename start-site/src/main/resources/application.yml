@@ -49,21 +49,21 @@ initializr:
           - compatibilityRange: "[3.3.0,3.4.0-M1)"
             version: 3.3.6
           - compatibilityRange: "[3.4.0,3.5.0-M1)"
-            version: 3.4.1
+            version: 3.4.5
       netflix-dgs:
         groupId: com.netflix.graphql.dgs
         artifactId: graphql-dgs-platform-dependencies
         versionProperty: netflix-dgs.version
         mappings:
           - compatibilityRange: "[3.3.0,3.5.0-M1)"
-            version: 10.0.3
+            version: 10.0.4
       sentry:
         groupId: io.sentry
         artifactId: sentry-bom
         versionProperty: sentry.version
         mappings:
           - compatibilityRange: "[3.3.0,3.5.0-M1)"
-            version: 8.1.0
+            version: 8.3.0
       solace-spring-boot:
         groupId: com.solace.spring.boot
         artifactId: solace-spring-boot-bom
@@ -96,7 +96,7 @@ initializr:
           - compatibilityRange: "[3.4.0,3.5.0-M1)"
             version: 2024.0.0
           - compatibilityRange: "[3.5.0-M1,3.6.0-M1)"
-            version: 2025.0.0-M1
+            version: 2025.0.0-M2
             repositories:
               - spring-milestones
       spring-cloud-azure:
@@ -105,7 +105,7 @@ initializr:
         versionProperty: spring-cloud-azure.version
         mappings:
           - compatibilityRange: "[3.3.0,3.5.0-M1)"
-            version: 5.20.0
+            version: 5.20.1
       spring-cloud-gcp:
         groupId: com.google.cloud
         artifactId: spring-cloud-gcp-dependencies
@@ -113,9 +113,9 @@ initializr:
         additionalBoms: [ spring-cloud ]
         mappings:
           - compatibilityRange: "[3.3.0,3.4.0-M1)"
-            version: 5.11.0
+            version: 5.11.1
           - compatibilityRange: "[3.4.0,3.5.0-M1)"
-            version: 6.0.0
+            version: 6.0.1
       spring-cloud-services:
         groupId: io.pivotal.spring.cloud
         artifactId: spring-cloud-services-dependencies
@@ -129,17 +129,21 @@ initializr:
         artifactId: spring-grpc-dependencies
         versionProperty: spring-grpc.version
         mappings:
-          - compatibilityRange: "[3.4.0,3.5.0-M1)"
-            version: 0.3.0
+          - compatibilityRange: "[3.4.0,3.6.0-M1)"
+            version: 0.5.0
       spring-modulith:
         groupId: org.springframework.modulith
         artifactId: spring-modulith-bom
         versionProperty: spring-modulith.version
         mappings:
           - compatibilityRange: "[3.3.0,3.4.0-M1)"
-            version: 1.2.7
+            version: 1.2.9
           - compatibilityRange: "[3.4.0,3.5.0-M1)"
-            version: 1.3.1
+            version: 1.3.3
+          - compatibilityRange: "[3.5.0-M1,3.6.0-M1)"
+            version: 1.4.0-M2
+            repositories:
+              - spring-milestones
       spring-shell:
         groupId: org.springframework.shell
         artifactId: spring-shell-dependencies
@@ -153,16 +157,16 @@ initializr:
         versionProperty: timefold-solver.version
         mappings:
           - compatibilityRange: "[3.3.0,3.5.0-M1)"
-            version: 1.19.0
+            version: 1.20.0
       vaadin:
         groupId: com.vaadin
         artifactId: vaadin-bom
         versionProperty: vaadin.version
         mappings:
           - compatibilityRange: "[3.3.0,3.4.0-M1)"
-            version: 24.5.12
+            version: 24.5.13
           - compatibilityRange: "[3.4.0,3.5.0-M1)"
-            version: 24.6.5
+            version: 24.6.6
     platform:
       compatibilityRange: "3.3.0"
   dependencies:
@@ -221,7 +225,7 @@ initializr:
         - name: Spring Modulith
           id: modulith
           bom: spring-modulith
-          compatibilityRange: "[3.3.0,3.5.0-M1)"
+          compatibilityRange: "[3.3.0,3.6.0-M1)"
           group-id: org.springframework.modulith
           artifact-id: spring-modulith-starter-core
           description: Support for building modular monolithic applications.
@@ -408,8 +412,8 @@ initializr:
           description: Secure and lightweight template engine for Java and Kotlin.
           groupId: gg.jte
           artifactId: jte-spring-boot-starter-3
-          version: 3.1.12
-          starter: false # https://github.com/casid/jte/issues/386
+          version: 3.1.16
+          starter: true
           links:
             - rel: reference
               href: https://jte.gg/
@@ -833,9 +837,9 @@ initializr:
           compatibilityRange: "[3.3.0,3.5.0-M1)"
           mappings:
             - compatibilityRange: "[3.3.0,3.4.0-M1)"
-              version: 4.8.3
+              version: 4.8.5
             - compatibilityRange: "[3.4.0,3.5.0-M1)"
-              version: 4.10.0
+              version: 4.10.2
           description: Apache Camel is an open source integration framework that empowers you to quickly and easily integrate various systems consuming or producing data.
           groupId: org.apache.camel.springboot
           artifactId: camel-spring-boot-starter
@@ -911,7 +915,7 @@ initializr:
           id: spring-grpc
           groupId: org.springframework.grpc
           artifactId: spring-grpc-spring-boot-starter
-          compatibilityRange: "[3.4.0,3.5.0-M1)"
+          compatibilityRange: "[3.4.0,3.6.0-M1)"
           description: Experimental support for gRPC, a high performance, open source universal RPC framework.
           bom: spring-grpc
           links:
