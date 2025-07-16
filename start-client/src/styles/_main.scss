@@ -136,6 +136,15 @@ body {
   min-height: 100vh;
   padding: 0 110px;
   max-width: $spring-max-width;
+  #header {
+    h1.logo{
+      a {
+        .initializr {
+          fill: #0066CC;
+        }
+      }
+    }
+  }
 }
 
 // Header
@@ -146,34 +155,37 @@ body {
     margin: 0;
   }
   h1.logo {
-    max-width: 320px;
-    padding: 2rem 0;
-    display: block;
-    a {
+      max-width: 320px;
+      padding: 2rem 0;
       display: block;
-      margin-left: -6px;
-      color: $light-color;
-      @include outline;
-      .logo-content {
+      a {
         display: block;
-        outline: none;
-        box-shadow: none;
-        padding: 6px;
-      }
-      svg {
-        display: block;
-      }
-      .st0, .steeltoe {
-        fill: #00376E;
-      }
-      .st1, .initializr {
-        fill: #0066CC;
-      }
-
-      .st2 {
-        opacity: 0.2;
-        fill: #00376E;
-      }
+        margin-left: -6px;
+        color: $light-color;
+        @include outline;
+        .logo-content {
+          display: block;
+          outline: none;
+          box-shadow: none;
+          padding: 6px;
+        }
+        svg {
+          display: block;
+        }
+        .st0,
+        .steeltoe {
+          fill: #00376E;
+        }
+        .st1 {
+          fill: #0066CC;
+        }
+        .st2 {
+          opacity: 0.2;
+          fill: #00376E;
+        }
+        .initializr {
+          fill: $dark-primary
+        }       
     }
   }
   h1.logo-mobile {
@@ -717,10 +729,10 @@ button.button {
       margin: 0 110px;
     }
     #header h1.logo a .st0 {
-      fill: white;
+      fill: lightsteelblue;
     }
     #header h1.logo a .st1 {
-      fill: $light-primary;
+      fill: steelblue;
     }
     #header h2 {
       color: #222;
