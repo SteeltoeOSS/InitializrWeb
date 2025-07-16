@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2025 the original author or authors.
+ * Copyright 2012 - present the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -37,7 +37,6 @@ class SpringGrpcProjectGenerationConfigurationTests extends AbstractExtensionTes
 		ProjectRequest request = createProjectRequest("web");
 		assertThat(mavenPom(request)).doesNotHaveDependency("io.grpc", "grpc-services")
 			.doesNotHaveDependency("org.springframework.grpc", "spring-grpc-test")
-			.doesNotContain("os-maven-plugin")
 			.doesNotContain("protobuf-maven-plugin")
 			.doesNotHaveProperty("grpc.version")
 			.doesNotHaveProperty("protobuf-java.version");
@@ -76,7 +75,6 @@ class SpringGrpcProjectGenerationConfigurationTests extends AbstractExtensionTes
 					generateProtoTasks {
 						all()*.plugins {
 							grpc {
-								option 'jakarta_omit'
 								option '@generated=omit'
 							}
 						}
@@ -105,7 +103,6 @@ class SpringGrpcProjectGenerationConfigurationTests extends AbstractExtensionTes
 							all().forEach {
 								it.plugins {
 									id("grpc") {
-										option("jakarta_omit")
 										option("@generated=omit")
 									}
 								}
@@ -116,56 +113,36 @@ class SpringGrpcProjectGenerationConfigurationTests extends AbstractExtensionTes
 	}
 
 	@Test
-	void shouldAddOsPluginForMaven() {
-		ProjectRequest request = createProjectRequest(SPRING_GRPC);
-		assertThat(mavenPom(request)).containsIgnoringWhitespaces("""
-				<plugin>
-					<groupId>kr.motd.maven</groupId>
-					<artifactId>os-maven-plugin</artifactId>
-					<version>1.7.1</version>
-					<executions>
-						<execution>
-							<id>initialize</id>
-							<phase>initialize</phase>
-							<goals>
-								<goal>detect</goal>
-							</goals>
-						</execution>
-					</executions>
-				</plugin>
-				""");
-	}
-
-	@Test
 	void shouldAddProtobufPluginForMaven() {
 		ProjectRequest request = createProjectRequest(SPRING_GRPC);
-		assertThat(mavenPom(request)).hasProperty("grpc.version", "1.70.0")
-			.hasProperty("protobuf-java.version", "3.25.6")
-			.containsIgnoringWhitespaces(
-					"""
-							<plugin>
-								<groupId>org.xolstice.maven.plugins</groupId>
-								<artifactId>protobuf-maven-plugin</artifactId>
-								<version>0.6.1</version>
-								<configuration>
-									<protocArtifact>com.google.protobuf:protoc:${protobuf-java.version}:exe:${os.detected.classifier}</protocArtifact>
-									<pluginId>grpc-java</pluginId>
-									<pluginArtifact>io.grpc:protoc-gen-grpc-java:${grpc.version}:exe:${os.detected.classifier}</pluginArtifact>
-								</configuration>
-								<executions>
-									<execution>
-										<id>compile</id>
-										<goals>
-											<goal>compile</goal>
-											<goal>compile-custom</goal>
-										</goals>
-										<configuration>
-											<pluginParameter>jakarta_omit,@generated=omit</pluginParameter>
-										</configuration>
-									</execution>
-								</executions>
-							</plugin>
-							""");
+		assertThat(mavenPom(request)).hasProperty("grpc.version", "1.72.0")
+			.hasProperty("protobuf-java.version", "4.30.2")
+			.containsIgnoringWhitespaces("""
+					<plugin>
+						<groupId>io.github.ascopes</groupId>
+						<artifactId>protobuf-maven-plugin</artifactId>
+						<version>3.4.2</version>
+						<configuration>
+							<protocVersion>${protobuf-java.version}</protocVersion>
+							<binaryMavenPlugins>
+								<binaryMavenPlugin>
+									<groupId>io.grpc</groupId>
+									<artifactId>protoc-gen-grpc-java</artifactId>
+									<version>${grpc.version}</version>
+									<options>@generated=omit</options>
+								</binaryMavenPlugin>
+							</binaryMavenPlugins>
+						</configuration>
+						<executions>
+							<execution>
+								<id>generate</id>
+								<goals>
+									<goal>generate</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+					""");
 	}
 
 	@Test

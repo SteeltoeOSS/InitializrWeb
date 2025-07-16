@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2024 the original author or authors.
+ * Copyright 2012 - present the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -38,11 +38,10 @@ class GrpcGradleKotlinBuildCustomizer extends AbstractGrpcGradleBuildCustomizer 
 			protobuf.importType("com.google.protobuf.gradle.id");
 			protobuf.nested("plugins", (plugins) -> plugins.nested("id(\"grpc\")",
 					(grpc) -> grpc.attribute("artifact", quote("io.grpc:protoc-gen-grpc-java"))));
-			protobuf.nested("generateProtoTasks", (generateProtoTasks) -> generateProtoTasks.nested("all().forEach",
-					(forEach) -> forEach.nested("it.plugins", (plugins) -> plugins.nested("id(\"grpc\")", (grpc) -> {
-						grpc.invoke("option", quote("jakarta_omit"));
-						grpc.invoke("option", quote("@generated=omit"));
-					}))));
+			protobuf.nested("generateProtoTasks",
+					(generateProtoTasks) -> generateProtoTasks.nested("all().forEach",
+							(forEach) -> forEach.nested("it.plugins", (plugins) -> plugins.nested("id(\"grpc\")",
+									(grpc) -> grpc.invoke("option", quote("@generated=omit"))))));
 		});
 	}
 

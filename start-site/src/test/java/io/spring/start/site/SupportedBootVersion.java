@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2024 the original author or authors.
+ * Copyright 2012 - present the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,13 +24,17 @@ package io.spring.start.site;
 public enum SupportedBootVersion {
 
 	/**
-	 * 3.3.0.
-	 */
-	V3_3("3.3.0"),
-	/**
 	 * 3.4.0.
 	 */
-	V3_4("3.4.0");
+	V3_4("3.4.0"),
+	/**
+	 * 3.5.0.
+	 */
+	V3_5("3.5.0"),
+	/**
+	 * 4.0.0.
+	 */
+	V4_0("4.0.0-SNAPSHOT");
 
 	private final String version;
 
@@ -52,7 +56,7 @@ public enum SupportedBootVersion {
 	 * @return the latest supported Spring Boot version
 	 */
 	public static SupportedBootVersion latest() {
-		return V3_4;
+		return V3_5;
 	}
 
 }

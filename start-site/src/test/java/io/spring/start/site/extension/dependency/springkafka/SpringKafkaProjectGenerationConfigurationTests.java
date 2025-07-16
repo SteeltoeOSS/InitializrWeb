@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2025 the original author or authors.
+ * Copyright 2012 - present the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,6 +18,7 @@ package io.spring.start.site.extension.dependency.springkafka;
 
 import io.spring.initializr.metadata.Dependency;
 import io.spring.initializr.web.project.ProjectRequest;
+import io.spring.start.site.SupportedBootVersion;
 import io.spring.start.site.extension.AbstractExtensionTests;
 import org.junit.jupiter.api.Test;
 
@@ -51,8 +52,8 @@ class SpringKafkaProjectGenerationConfigurationTests extends AbstractExtensionTe
 	}
 
 	@Test
-	void customizesBuildpacksBuilderWhenUsingMavenAndKafkaStreams() {
-		ProjectRequest request = createProjectRequest("kafka-streams");
+	void customizesBuildpacksBuilderWhenUsingMavenAndKafkaStreamsAndBoot34() {
+		ProjectRequest request = createProjectRequest(SupportedBootVersion.V3_4, "kafka-streams");
 		assertThat(mavenPom(request)).containsIgnoringWhitespaces("""
 				<plugin>
 					<groupId>org.springframework.boot</groupId>
@@ -67,11 +68,47 @@ class SpringKafkaProjectGenerationConfigurationTests extends AbstractExtensionTe
 	}
 
 	@Test
+	void customizesBuildpacksBuilderWhenUsingMavenAndKafkaStreams() {
+		ProjectRequest request = createProjectRequest("kafka-streams");
+		assertThat(mavenPom(request)).containsIgnoringWhitespaces("""
+				<plugin>
+					<groupId>org.springframework.boot</groupId>
+					<artifactId>spring-boot-maven-plugin</artifactId>
+					<configuration>
+						<image>
+							<runImage>paketobuildpacks/ubuntu-noble-run-base:latest</runImage>
+						</image>
+					</configuration>
+				</plugin>
+				""");
+	}
+
+	@Test
+	void customizesBuildpacksBuilderWhenUsingGradleGroovyAndKafkaStreamsAndBoot34() {
+		ProjectRequest request = createProjectRequest(SupportedBootVersion.V3_4, "kafka-streams");
+		assertThat(gradleBuild(request)).containsIgnoringWhitespaces("""
+				tasks.named('bootBuildImage') {
+					builder = 'paketobuildpacks/builder-jammy-base:latest'
+				}
+				""");
+	}
+
+	@Test
 	void customizesBuildpacksBuilderWhenUsingGradleGroovyAndKafkaStreams() {
 		ProjectRequest request = createProjectRequest("kafka-streams");
 		assertThat(gradleBuild(request)).containsIgnoringWhitespaces("""
 				tasks.named('bootBuildImage') {
-					builder = 'paketobuildpacks/builder-jammy-base:latest'
+					runImage = 'paketobuildpacks/ubuntu-noble-run-base:latest'
+				}
+				""");
+	}
+
+	@Test
+	void customizesBuildpacksBuilderWhenUsingGradleKotlinAndKafkaStreamsAndBoot34() {
+		ProjectRequest request = createProjectRequest(SupportedBootVersion.V3_4, "kafka-streams");
+		assertThat(gradleKotlinDslBuild(request)).containsIgnoringWhitespaces("""
+				tasks.bootBuildImage {
+				    builder = "paketobuildpacks/builder-jammy-base:latest"
 				}
 				""");
 	}
@@ -81,7 +118,7 @@ class SpringKafkaProjectGenerationConfigurationTests extends AbstractExtensionTe
 		ProjectRequest request = createProjectRequest("kafka-streams");
 		assertThat(gradleKotlinDslBuild(request)).containsIgnoringWhitespaces("""
 				tasks.bootBuildImage {
-				    builder = "paketobuildpacks/builder-jammy-base:latest"
+				    runImage = "paketobuildpacks/ubuntu-noble-run-base:latest"
 				}
 				""");
 	}
