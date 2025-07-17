@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2024 the original author or authors.
+ * Copyright 2012 - present the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,11 +18,13 @@ package io.spring.start.site.extension.dependency;
 
 import io.spring.initializr.generator.buildsystem.gradle.GradleBuildSystem;
 import io.spring.initializr.generator.condition.ConditionalOnBuildSystem;
+import io.spring.initializr.generator.condition.ConditionalOnPlatformVersion;
 import io.spring.initializr.generator.condition.ConditionalOnRequestedDependency;
 import io.spring.initializr.generator.io.template.MustacheTemplateRenderer;
 import io.spring.initializr.generator.project.ProjectDescription;
 import io.spring.initializr.generator.project.ProjectGenerationConfiguration;
 import io.spring.initializr.metadata.InitializrMetadata;
+import io.spring.start.site.extension.dependency.ldap.LdapUnboundIdBuildCustomizer;
 import io.spring.start.site.extension.dependency.liquibase.LiquibaseProjectContributor;
 import io.spring.start.site.extension.dependency.lombok.LombokGradleBuildCustomizer;
 import io.spring.start.site.extension.dependency.mybatis.MyBatisTestBuildCustomizer;
@@ -31,7 +33,6 @@ import io.spring.start.site.extension.dependency.reactor.ReactorTestBuildCustomi
 import io.spring.start.site.extension.dependency.springbatch.SpringBatchTestBuildCustomizer;
 import io.spring.start.site.extension.dependency.springsecurity.SpringSecurityRSocketBuildCustomizer;
 import io.spring.start.site.extension.dependency.springsecurity.SpringSecurityTestBuildCustomizer;
-import io.spring.start.site.extension.dependency.springsession.SpringSessionBuildCustomizer;
 import io.spring.start.site.extension.dependency.springshell.SpringShellTestBuildCustomizer;
 import io.spring.start.site.extension.dependency.thymeleaf.ThymeleafBuildCustomizer;
 
@@ -93,12 +94,6 @@ public class DependencyProjectGenerationConfiguration {
 	}
 
 	@Bean
-	@ConditionalOnRequestedDependency("session")
-	public SpringSessionBuildCustomizer springSessionBuildCustomizer() {
-		return new SpringSessionBuildCustomizer();
-	}
-
-	@Bean
 	@ConditionalOnRequestedDependency("thymeleaf")
 	public ThymeleafBuildCustomizer thymeleafBuildCustomizer() {
 		return new ThymeleafBuildCustomizer();
@@ -126,6 +121,13 @@ public class DependencyProjectGenerationConfiguration {
 	@ConditionalOnRequestedDependency("spring-shell")
 	public SpringShellTestBuildCustomizer springShellTestBuildCustomizer() {
 		return new SpringShellTestBuildCustomizer();
+	}
+
+	@Bean
+	@ConditionalOnRequestedDependency("unboundid-ldap")
+	@ConditionalOnPlatformVersion("4.0.0-M1")
+	LdapUnboundIdBuildCustomizer ldapUnboundIdBuildCustomizer() {
+		return new LdapUnboundIdBuildCustomizer();
 	}
 
 }

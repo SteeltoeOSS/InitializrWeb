@@ -46,129 +46,130 @@ initializr:
         artifactId: spring-boot-admin-dependencies
         versionProperty: spring-boot-admin.version
         mappings:
-          - compatibilityRange: "[3.3.0,3.4.0-M1)"
-            version: 3.3.6
           - compatibilityRange: "[3.4.0,3.5.0-M1)"
-            version: 3.4.5
+            version: 3.4.7
+          - compatibilityRange: "[3.5.0,3.6.0-M1)"
+            version: 3.5.0
       netflix-dgs:
         groupId: com.netflix.graphql.dgs
         artifactId: graphql-dgs-platform-dependencies
         versionProperty: netflix-dgs.version
         mappings:
-          - compatibilityRange: "[3.3.0,3.5.0-M1)"
-            version: 10.0.4
+          - compatibilityRange: "[3.4.0,3.5.0-M1)"
+            version: 10.1.2
+          - compatibilityRange: "[3.5.0,3.6.0-M1)"
+            version: 10.2.1
       sentry:
         groupId: io.sentry
         artifactId: sentry-bom
         versionProperty: sentry.version
         mappings:
-          - compatibilityRange: "[3.3.0,3.5.0-M1)"
-            version: 8.3.0
+          - compatibilityRange: "[3.4.0,3.6.0-M1)"
+            version: 8.16.0
       solace-spring-boot:
         groupId: com.solace.spring.boot
         artifactId: solace-spring-boot-bom
         versionProperty: solace-spring-boot.version
         mappings:
-          - compatibilityRange: "[3.3.0,3.5.0-M1)"
+          - compatibilityRange: "[3.4.0,3.5.0-M1)"
             version: 2.2.0
       solace-spring-cloud:
         groupId: com.solace.spring.cloud
         artifactId: solace-spring-cloud-bom
         versionProperty: solace-spring-cloud.version
         mappings:
-          - compatibilityRange: "[3.3.0,3.5.0-M1)"
-            version: 4.7.0
+          - compatibilityRange: "[3.4.0,3.5.0-M1)"
+            version: 4.8.0
       spring-ai:
         groupId: org.springframework.ai
         artifactId: spring-ai-bom
         versionProperty: spring-ai.version
         mappings:
-          - compatibilityRange: "[3.3.0,3.5.0-M1)"
-            version: 1.0.0-M6
+          - compatibilityRange: "[3.4.0,3.6.0-M1)"
+            version: 1.0.0
       spring-cloud:
         groupId: org.springframework.cloud
         artifactId: spring-cloud-dependencies
         versionProperty: spring-cloud.version
         order: 50
         mappings:
-          - compatibilityRange: "[3.3.0,3.4.0-M1)"
-            version: 2023.0.5
           - compatibilityRange: "[3.4.0,3.5.0-M1)"
-            version: 2024.0.0
+            version: 2024.0.2
           - compatibilityRange: "[3.5.0-M1,3.6.0-M1)"
-            version: 2025.0.0-M2
-            repositories:
-              - spring-milestones
+            version: 2025.0.0
       spring-cloud-azure:
         groupId: com.azure.spring
         artifactId: spring-cloud-azure-dependencies
         versionProperty: spring-cloud-azure.version
         mappings:
-          - compatibilityRange: "[3.3.0,3.5.0-M1)"
-            version: 5.20.1
+          - compatibilityRange: "[3.4.0,3.5.0-M1)"
+            version: 5.22.0
       spring-cloud-gcp:
         groupId: com.google.cloud
         artifactId: spring-cloud-gcp-dependencies
         versionProperty: spring-cloud-gcp.version
         additionalBoms: [ spring-cloud ]
         mappings:
-          - compatibilityRange: "[3.3.0,3.4.0-M1)"
-            version: 5.11.1
           - compatibilityRange: "[3.4.0,3.5.0-M1)"
-            version: 6.0.1
+            version: 6.2.3
       spring-cloud-services:
         groupId: io.pivotal.spring.cloud
         artifactId: spring-cloud-services-dependencies
         versionProperty: spring-cloud-services.version
         additionalBoms: [ spring-cloud ]
         mappings:
-          - compatibilityRange: "[3.3.0,3.5.0-M1)"
+          - compatibilityRange: "[3.4.0,3.5.0-M1)"
             version: 4.2.0
+          - compatibilityRange: "[3.5.0-M1,3.6.0-M1)"
+            version: 4.3.0
       spring-grpc:
         groupId: org.springframework.grpc
         artifactId: spring-grpc-dependencies
         versionProperty: spring-grpc.version
         mappings:
           - compatibilityRange: "[3.4.0,3.6.0-M1)"
-            version: 0.5.0
+            version: 0.9.0
       spring-modulith:
         groupId: org.springframework.modulith
         artifactId: spring-modulith-bom
         versionProperty: spring-modulith.version
         mappings:
-          - compatibilityRange: "[3.3.0,3.4.0-M1)"
-            version: 1.2.9
           - compatibilityRange: "[3.4.0,3.5.0-M1)"
-            version: 1.3.3
+            version: 1.3.7
           - compatibilityRange: "[3.5.0-M1,3.6.0-M1)"
-            version: 1.4.0-M2
-            repositories:
-              - spring-milestones
+            version: 1.4.1
       spring-shell:
         groupId: org.springframework.shell
         artifactId: spring-shell-dependencies
         versionProperty: spring-shell.version
         mappings:
-          - compatibilityRange: "[3.3.0,3.5.0-M1)"
+          - compatibilityRange: "[3.4.0,3.5.0-M1)"
             version: 3.4.0
+      tanzu-scg-extensions:
+        groupId: com.vmware.tanzu.springcloudgateway.extensions
+        artifactId: extensions-bom
+        versionProperty: tanzu-scg-extensions.version
+        mappings:
+          - compatibilityRange: "[3.4.0,3.5.0-M1)"
+            version: 1.0.0
       timefold-solver:
         groupId: ai.timefold.solver
         artifactId: timefold-solver-bom
         versionProperty: timefold-solver.version
         mappings:
-          - compatibilityRange: "[3.3.0,3.5.0-M1)"
-            version: 1.20.0
+          - compatibilityRange: "[3.4.0,3.6.0-M1)"
+            version: 1.24.0
       vaadin:
         groupId: com.vaadin
         artifactId: vaadin-bom
         versionProperty: vaadin.version
         mappings:
-          - compatibilityRange: "[3.3.0,3.4.0-M1)"
-            version: 24.5.13
           - compatibilityRange: "[3.4.0,3.5.0-M1)"
-            version: 24.6.6
+            version: 24.7.11
+          - compatibilityRange: "[3.5.0-M1,3.6.0-M1)"
+            version: 24.8.3
     platform:
-      compatibilityRange: "3.3.0"
+      compatibilityRange: "3.4.0"
   dependencies:
     - name: Developer Tools
       content:
@@ -225,7 +226,7 @@ initializr:
         - name: Spring Modulith
           id: modulith
           bom: spring-modulith
-          compatibilityRange: "[3.3.0,3.6.0-M1)"
+          compatibilityRange: "[3.4.0,3.6.0-M1)"
           group-id: org.springframework.modulith
           artifact-id: spring-modulith-starter-core
           description: Support for building modular monolithic applications.
@@ -292,11 +293,54 @@ initializr:
               description: Accessing MongoDB Data with REST
             - rel: reference
               href: https://docs.spring.io/spring-boot/{bootVersion}/how-to/data-access.html#howto.data-access.exposing-spring-data-repositories-as-rest
-        - name: Spring Session
-          id: session
-          groupId: org.springframework.session
-          artifactId: spring-session-core
-          description: Provides an API and implementations for managing user session information.
+        - name: Spring Session for Spring Data MongoDB
+          id: session-data-mongodb
+          description: Provides an API and a Spring Data MongoDB implementation for managing user session information.
+          groupId: org.springframework.boot
+          artifactId: spring-boot-session-data-mongodb
+          mappings:
+            - compatibilityRange: "[3.4.0,4.0.0-M1)"
+              group-id: org.springframework.session
+              artifact-id: spring-session-data-mongodb
+          starter: false
+          links:
+            - rel: reference
+              href: https://docs.spring.io/spring-session/reference/
+        - name: Spring Session for Spring Data Redis
+          id: session-data-redis
+          description: Provides an API and a Spring Data Redis implementation for managing user session information.
+          groupId: org.springframework.boot
+          artifactId: spring-boot-session-data-redis
+          mappings:
+            - compatibilityRange: "[3.4.0,4.0.0-M1)"
+              group-id: org.springframework.session
+              artifact-id: spring-session-data-redis
+          starter: false
+          links:
+            - rel: reference
+              href: https://docs.spring.io/spring-session/reference/
+        - name: Spring Session for Hazelcast
+          id: session-hazelcast
+          description: Provides an API and a Hazelcast implementation for managing user session information.
+          groupId: org.springframework.boot
+          artifactId: spring-boot-session-hazelcast
+          mappings:
+            - compatibilityRange: "[3.4.0,4.0.0-M1)"
+              group-id: org.springframework.session
+              artifact-id: spring-session-hazelcast
+          starter: false
+          links:
+            - rel: reference
+              href: https://docs.spring.io/spring-session/reference/
+        - name: Spring Session for JDBC
+          id: session-jdbc
+          description: Provides an API and a JDBC implementation for managing user session information.
+          groupId: org.springframework.boot
+          artifactId: spring-boot-session-jdbc
+          mappings:
+            - compatibilityRange: "[3.4.0,4.0.0-M1)"
+              group-id: org.springframework.session
+              artifact-id: spring-session-jdbc
           starter: false
           links:
             - rel: reference
@@ -343,7 +387,7 @@ initializr:
           artifactId: vaadin-spring-boot-starter
           description: The full-stack web app platform for Spring. Build views fully in Java with Flow, or in React using Hilla.
           bom: vaadin
-          compatibilityRange: "[3.3.0,3.5.0-M1)"
+          compatibilityRange: "[3.4.0,3.6.0-M1)"
           links:
             - rel: guide
               href: https://spring.io/guides/gs/crud-with-vaadin/
@@ -355,7 +399,7 @@ initializr:
           groupId: com.netflix.graphql.dgs
           artifactId: graphql-dgs-spring-graphql-starter
           description: Build GraphQL applications with Netflix DGS and Spring for GraphQL.
-          compatibilityRange: "[3.3.0,3.5.0-M1)"
+          compatibilityRange: "[3.4.0,3.6.0-M1)"
           bom: netflix-dgs
           links:
             - rel: reference
@@ -367,9 +411,9 @@ initializr:
           groupId: io.github.wimdeblauwe
           artifactId: htmx-spring-boot
           description: Build modern user interfaces with the simplicity and power of hypertext.
-          compatibilityRange: "[3.4.0,3.5.0-M1)"
+          compatibilityRange: "[3.4.0,3.6.0-M1)"
           mappings:
-            - compatibilityRange: "[3.4.0,3.5.0-M1)"
+            - compatibilityRange: "[3.4.0,3.6.0-M1)"
               version: 4.0.1
           links:
             - rel: reference
@@ -413,7 +457,6 @@ initializr:
           groupId: gg.jte
           artifactId: jte-spring-boot-starter-3
           version: 3.1.16
-          starter: true
           links:
             - rel: reference
               href: https://jte.gg/
@@ -458,28 +501,6 @@ initializr:
           links:
             - rel: reference
               href: https://docs.spring.io/spring-boot/{bootVersion}/reference/data/nosql.html#data.nosql.ldap
-        - name: Okta
-          id: okta
-          compatibilityRange: "[3.3.0,3.4.0-M1)"
-          description: Okta specific configuration for Spring Security/Spring Boot OAuth2 features. Enable your Spring Boot application to work with Okta via OAuth 2.0/OIDC.
-          groupId: com.okta.spring
-          artifactId: okta-spring-boot-starter
-          mappings:
-            - compatibilityRange: "[3.3.0,3.4.0-M1)"
-              version: 3.0.7
-          links:
-            - rel: guide
-              href: https://github.com/okta/samples-java-spring/tree/master/okta-hosted-login
-              description: Okta-Hosted Login Page Example
-            - rel: guide
-              href: https://github.com/okta/samples-java-spring/tree/master/custom-login
-              description: Custom Login Page Example
-            - rel: guide
-              href: https://github.com/okta/samples-java-spring/tree/master/resource-server
-              description: Okta Spring Security Resource Server Example
-            - rel: reference
-              href: https://github.com/okta/okta-spring-boot#readme
-              description: Okta Spring Boot documentation
     - name: SQL
       content:
         - name: JDBC API
@@ -532,12 +553,12 @@ initializr:
               description: R2DBC Homepage
         - name: MyBatis Framework
           id: mybatis
-          compatibilityRange: "[3.3.0,3.5.0-M1)"
+          compatibilityRange: "[3.4.0,3.5.0-M1)"
           description: Persistence framework with support for custom SQL, stored procedures and advanced mappings. MyBatis couples objects with stored procedures or SQL statements using a XML descriptor or annotations.
           groupId: org.mybatis.spring.boot
           artifactId: mybatis-spring-boot-starter
           mappings:
-            - compatibilityRange: "[3.3.0,3.5.0-M1)"
+            - compatibilityRange: "[3.4.0,3.5.0-M1)"
               version: 3.0.4
           links:
             - rel: guide
@@ -548,8 +569,12 @@ initializr:
         - name: Liquibase Migration
           id: liquibase
           description: Liquibase database migration and source control library.
-          groupId: org.liquibase
-          artifactId: liquibase-core
+          mappings:
+            - compatibilityRange: "[3.4.0,4.0.0-M1)"
+              group-id: org.liquibase
+              artifact-id: liquibase-core
+          groupId: org.springframework.boot
+          artifactId: spring-boot-liquibase
           starter: false
           links:
             - rel: reference
@@ -557,8 +582,12 @@ initializr:
         - name: Flyway Migration
           id: flyway
           description: Version control for your database so you can migrate from any version (incl. an empty database) to the latest version of the schema.
-          groupId: org.flywaydb
-          artifactId: flyway-core
+          mappings:
+            - compatibilityRange: "[3.4.0,4.0.0-M1)"
+              group-id: org.flywaydb
+              artifact-id: flyway-core
+          groupId: org.springframework.boot
+          artifactId: spring-boot-flyway
           starter: false
           links:
             - rel: reference
@@ -759,8 +788,12 @@ initializr:
         - name: Spring for Apache Kafka
           id: kafka
           description: Publish, subscribe, store, and process streams of records.
-          groupId: org.springframework.kafka
-          artifactId: spring-kafka
+          mappings:
+            - compatibilityRange: "[3.4.0,4.0.0-M1)"
+              group-id: org.springframework.kafka
+              artifact-id: spring-kafka
+          groupId: org.springframework.boot
+          artifactId: spring-boot-kafka
           starter: false
           links:
             - rel: reference
@@ -834,12 +867,12 @@ initializr:
               href: https://rsocket.io/
         - name: Apache Camel
           id: camel
-          compatibilityRange: "[3.3.0,3.5.0-M1)"
+          compatibilityRange: "[3.4.0,3.6.0-M1)"
           mappings:
-            - compatibilityRange: "[3.3.0,3.4.0-M1)"
-              version: 4.8.5
             - compatibilityRange: "[3.4.0,3.5.0-M1)"
-              version: 4.10.2
+              version: 4.11.0
+            - compatibilityRange: "[3.5.0,3.6.0-M1)"
+              version: 4.13.0
           description: Apache Camel is an open source integration framework that empowers you to quickly and easily integrate various systems consuming or producing data.
           groupId: org.apache.camel.springboot
           artifactId: camel-spring-boot-starter
@@ -850,7 +883,7 @@ initializr:
         - name: Solace PubSub+
           bom: solace-spring-boot
           id: solace
-          compatibilityRange: "[3.3.0,3.5.0-M1)"
+          compatibilityRange: "[3.4.0,3.5.0-M1)"
           description: Connect to a Solace PubSub+ Advanced Event Broker to publish, subscribe, request/reply and store/replay messages
           groupId: com.solace.spring.boot
           artifactId: solace-spring-boot-starter
@@ -905,24 +938,24 @@ initializr:
           id: spring-shell
           groupId: org.springframework.shell
           artifactId: spring-shell-starter
-          compatibilityRange: "[3.3.0,3.5.0-M1)"
+          compatibilityRange: "[3.4.0,3.5.0-M1)"
           description: Build command line applications with spring.
           bom: spring-shell
           links:
             - rel: reference
               href: https://docs.spring.io/spring-shell/reference/index.html
-        - name: Spring gRPC [Experimental]
+        - name: Spring gRPC
           id: spring-grpc
           groupId: org.springframework.grpc
           artifactId: spring-grpc-spring-boot-starter
           compatibilityRange: "[3.4.0,3.6.0-M1)"
-          description: Experimental support for gRPC, a high performance, open source universal RPC framework.
+          description: Support for gRPC, a high performance, open source universal RPC framework.
           bom: spring-grpc
           links:
             - rel: reference
               href: https://docs.spring.io/spring-grpc/reference/index.html
             - rel: sample
-              href: https://github.com/spring-projects-experimental/spring-grpc/tree/main/samples
+              href: https://github.com/spring-projects/spring-grpc/tree/main/samples
               description: Various sample apps using Spring gRPC
     - name: Ops
       content:
@@ -949,7 +982,7 @@ initializr:
           groupId: de.codecentric
           artifactId: spring-boot-admin-starter-client
           description: Required for your application to register with a Codecentric's Spring Boot Admin Server instance.
-          compatibilityRange: "[3.3.0,3.5.0-M1)"
+          compatibilityRange: "[3.4.0,3.6.0-M1)"
           bom: codecentric-spring-boot-admin
           links:
             - rel: reference
@@ -959,7 +992,7 @@ initializr:
           groupId: de.codecentric
           artifactId: spring-boot-admin-starter-server
           description: A community project to manage and monitor your Spring Boot applications. Provides a UI on top of the Spring Boot Actuator endpoints.
-          compatibilityRange: "[3.3.0,3.5.0-M1)"
+          compatibilityRange: "[3.4.0,3.6.0-M1)"
           bom: codecentric-spring-boot-admin
           links:
             - rel: reference
@@ -968,7 +1001,7 @@ initializr:
           id: sentry
           bom: sentry
           description: Application performance monitoring and error tracking that help software teams see clearer, solve quicker, and learn continuously.
-          compatibilityRange: "[3.3.0,3.5.0-M1)"
+          compatibilityRange: "[3.4.0,3.6.0-M1)"
           groupId: io.sentry
           artifactId: sentry-spring-boot-starter-jakarta
           links:
@@ -1057,6 +1090,7 @@ initializr:
           starter: false
         - name: Wavefront
           id: wavefront
+          compatibilityRange: "[3.4.0,3.6.0-M1)"
           description: Publish metrics and optionally distributed traces to Tanzu Observability by Wavefront, a SaaS-based metrics monitoring and analytics platform that lets you visualize, query, and alert over data from across your entire stack.
           groupId: io.micrometer
           artifactId: micrometer-registry-wavefront
@@ -1091,7 +1125,7 @@ initializr:
               href: https://java.testcontainers.org/
         - name: Contract Verifier
           bom: spring-cloud
-          compatibilityRange: "[3.3.0,3.6.0-M1)"
+          compatibilityRange: "[3.4.0,3.6.0-M1)"
           id: cloud-contract-verifier
           description: Moves TDD to the level of software architecture by enabling Consumer Driven Contract (CDC) development.
           groupId: org.springframework.cloud
@@ -1102,7 +1136,7 @@ initializr:
               href: https://docs.spring.io/spring-cloud-contract/reference/
         - name: Contract Stub Runner
           bom: spring-cloud
-          compatibilityRange: "[3.3.0,3.6.0-M1)"
+          compatibilityRange: "[3.4.0,3.6.0-M1)"
           id: cloud-contract-stub-runner
           description: Stub Runner for HTTP/Messaging based communication. Allows creating WireMock stubs from RestDocs tests.
           groupId: org.springframework.cloud
@@ -1114,8 +1148,12 @@ initializr:
         - name: Embedded LDAP Server
           id: unboundid-ldap
           description: Provides a platform neutral way for running a LDAP server in unit tests.
-          groupId: com.unboundid
-          artifactId: unboundid-ldapsdk
+          mappings:
+            - compatibilityRange: "[3.4.0,4.0.0-M1)"
+              group-id: com.unboundid
+              artifact-id: unboundid-ldapsdk
+          groupId: org.springframework.boot
+          artifactId: spring-boot-ldap
           scope: test
           starter: false
           links:
@@ -1123,7 +1161,7 @@ initializr:
               href: https://docs.spring.io/spring-boot/{bootVersion}/reference/data/nosql.html#data.nosql.ldap.embedded
     - name: Spring Cloud
       bom: spring-cloud
-      compatibilityRange: "[3.3.0,3.6.0-M1)"
+      compatibilityRange: "[3.4.0,3.6.0-M1)"
       content:
         - name: Cloud Bootstrap
           id: cloud-starter
@@ -1155,7 +1193,7 @@ initializr:
               href: https://docs.spring.io/spring-cloud-task/reference/
     - name: Spring Cloud Config
       bom: spring-cloud
-      compatibilityRange: "[3.3.0,3.6.0-M1)"
+      compatibilityRange: "[3.4.0,3.6.0-M1)"
       content:
         - name: Config Client
           id: cloud-config-client
@@ -1202,7 +1240,7 @@ initializr:
               href: https://docs.spring.io/spring-cloud-consul/reference/
     - name: Spring Cloud Discovery
       bom: spring-cloud
-      compatibilityRange: "[3.3.0,3.6.0-M1)"
+      compatibilityRange: "[3.4.0,3.6.0-M1)"
       content:
         - name: Eureka Discovery Client
           id: cloud-eureka
@@ -1244,12 +1282,12 @@ initializr:
               href: https://docs.spring.io/spring-cloud-consul/reference/discovery.html
     - name: Spring Cloud Routing
       bom: spring-cloud
-      compatibilityRange: "[3.3.0,3.6.0-M1)"
+      compatibilityRange: "[3.4.0,3.6.0-M1)"
       content:
         - name: Gateway
           id: cloud-gateway
           mappings:
-            - compatibility-range: "[3.3.0,3.5.0-M1)"
+            - compatibility-range: "[3.4.0,3.5.0-M1)"
               groupId: org.springframework.cloud
               artifactId: spring-cloud-starter-gateway-mvc
             - compatibility-range: "[3.5.0-M1,3.6.0-M1)"
@@ -1262,7 +1300,7 @@ initializr:
         - name: Reactive Gateway
           id: cloud-gateway-reactive
           mappings:
-            - compatibility-range: "[3.3.0,3.5.0-M1)"
+            - compatibility-range: "[3.4.0,3.5.0-M1)"
               groupId: org.springframework.cloud
               artifactId: spring-cloud-starter-gateway
             - compatibility-range: "[3.5.0-M1,3.6.0-M1)"
@@ -1301,7 +1339,7 @@ initializr:
               href: https://docs.spring.io/spring-cloud-commons/reference/spring-cloud-commons/loadbalancer.html
     - name: Spring Cloud Circuit Breaker
       bom: spring-cloud
-      compatibilityRange: "[3.3.0,3.6.0-M1)"
+      compatibilityRange: "[3.4.0,3.6.0-M1)"
       content:
         - name: Resilience4J
           id: cloud-resilience4j
@@ -1313,7 +1351,7 @@ initializr:
               href: https://docs.spring.io/spring-cloud-circuitbreaker/reference/spring-cloud-circuitbreaker-resilience4j.html
     - name: Spring Cloud Messaging
       bom: spring-cloud
-      compatibilityRange: "[3.3.0,3.6.0-M1)"
+      compatibilityRange: "[3.4.0,3.6.0-M1)"
       content:
         - name: Cloud Bus
           id: cloud-bus
@@ -1333,7 +1371,7 @@ initializr:
               href: https://docs.spring.io/spring-cloud-stream/reference/
     - name: VMware Tanzu Application Service
       bom: spring-cloud-services
-      compatibilityRange: "[3.3.0,3.5.0-M1)"
+      compatibilityRange: "[3.4.0,3.6.0-M1)"
       content:
         - name: Config Client (TAS)
           id: scs-config-client
@@ -1351,9 +1389,89 @@ initializr:
           links:
             - rel: reference
               href: https://docs.vmware.com/en/Spring-Cloud-Services-for-VMware-Tanzu/index.html
+    - name: VMware Tanzu Spring Enterprise Extensions
+      compatibilityRange: "[3.4.0,3.5.0-M1)"
+      content:
+        - name: Governance Starter [Enterprise]
+          id: tanzu-governance-starter
+          description: The Enterprise Spring Boot Governance Starter library enforces cipher and TLS security based on the industry standard, and empowers Spring developers to auto-generate compliance and governance reporting information for their applications.
+          groupId: com.vmware.tanzu.spring.governance
+          artifactId: governance-starter
+          version: 1.3.1
+          facets:
+            - tanzu-spring-enterprise
+          links:
+            - rel: reference
+              href: https://techdocs.broadcom.com/us/en/vmware-tanzu/spring/tanzu-spring/commercial/spring-tanzu/index-sbgs.html
+        - name: Spring Cloud Gateway Access Control [Enterprise]
+          id: tanzu-scg-access-control
+          bom: tanzu-scg-extensions
+          description: Spring Cloud Gateway filters for access control based on API keys or JWT Tokens.
+          groupId: com.vmware.tanzu.springcloudgateway.extensions
+          artifactId: access-control
+          facets:
+            - tanzu-spring-enterprise
+          links:
+            - rel: reference
+              href: https://techdocs.broadcom.com/us/en/vmware-tanzu/spring/spring-cloud-gateway-extensions/1-0-0/scg-extensions/access-control.html
+        - name: Spring Cloud Gateway Custom [Enterprise]
+          id: tanzu-scg-custom
+          bom: tanzu-scg-extensions
+          description: Spring Cloud Gateway utilities to help develop custom filters and predicates.
+          groupId: com.vmware.tanzu.springcloudgateway.extensions
+          artifactId: custom
+          facets:
+            - tanzu-spring-enterprise
+          links:
+            - rel: reference
+              href: https://techdocs.broadcom.com/us/en/vmware-tanzu/spring/spring-cloud-gateway-extensions/1-0-0/scg-extensions/custom.html
+        - name: Spring Cloud Gateway GraphQL [Enterprise]
+          id: tanzu-scg-graphql
+          bom: tanzu-scg-extensions
+          description: Spring Cloud Gateway filters to restrict GraphQL operations.
+          groupId: com.vmware.tanzu.springcloudgateway.extensions
+          artifactId: graphql
+          facets:
+            - tanzu-spring-enterprise
+          links:
+            - rel: reference
+              href: https://techdocs.broadcom.com/us/en/vmware-tanzu/spring/spring-cloud-gateway-extensions/1-0-0/scg-extensions/graphql.html
+        - name: Spring Cloud Gateway Single Sign On [Enterprise]
+          id: tanzu-scg-sso
+          bom: tanzu-scg-extensions
+          description: Spring Cloud Gateway filters to add single sign-on (SSO) and restrict traffic based on roles or scopes.
+          groupId: com.vmware.tanzu.springcloudgateway.extensions
+          artifactId: sso
+          facets:
+            - tanzu-spring-enterprise
+          links:
+            - rel: reference
+              href: https://techdocs.broadcom.com/us/en/vmware-tanzu/spring/spring-cloud-gateway-extensions/1-0-0/scg-extensions/sso.html
+        - name: Spring Cloud Gateway Traffic Control [Enterprise]
+          id: tanzu-scg-traffic-control
+          bom: tanzu-scg-extensions
+          description: Spring Cloud Gateway filters to restrict traffic based on request parameters and add circuit breakers.
+          groupId: com.vmware.tanzu.springcloudgateway.extensions
+          artifactId: traffic-control
+          facets:
+            - tanzu-spring-enterprise
+          links:
+            - rel: reference
+              href: https://techdocs.broadcom.com/us/en/vmware-tanzu/spring/spring-cloud-gateway-extensions/1-0-0/scg-extensions/traffic-control.html
+        - name: Spring Cloud Gateway Transformation [Enterprise]
+          id: tanzu-scg-transformation
+          bom: tanzu-scg-extensions
+          description: Spring Cloud Gateway filters to transform the response before returning downstream.
+          groupId: com.vmware.tanzu.springcloudgateway.extensions
+          artifactId: transformation
+          facets:
+            - tanzu-spring-enterprise
+          links:
+            - rel: reference
+              href: https://techdocs.broadcom.com/us/en/vmware-tanzu/spring/spring-cloud-gateway-extensions/1-0-0/scg-extensions/transformation.html
     - name: Microsoft Azure
       bom: spring-cloud-azure
-      compatibilityRange: "[3.3.0,3.5.0-M1)"
+      compatibilityRange: "[3.4.0,3.5.0-M1)"
       content:
         - name: Azure Support
           id: azure-support
@@ -1431,7 +1549,7 @@ initializr:
               description: Azure Storage Sample
     - name: Google Cloud
       bom: spring-cloud-gcp
-      compatibilityRange: "[3.3.0,3.5.0-M1)"
+      compatibilityRange: "[3.4.0,3.5.0-M1)"
       content:
         - name: Google Cloud Support
           id: cloud-gcp
@@ -1466,285 +1584,284 @@ initializr:
             - rel: guide
               href: https://github.com/GoogleCloudPlatform/spring-cloud-gcp/tree/main/spring-cloud-gcp-samples/spring-cloud-gcp-storage-resource-sample
     - name: AI
-      compatibilityRange: "[3.3.0,3.5.0-M1)"
+      compatibilityRange: "[3.4.0,3.6.0-M1)"
       content:
         - name: Anthropic Claude
           id: spring-ai-anthropic
           group-id: org.springframework.ai
-          artifact-id: spring-ai-anthropic-spring-boot-starter
+          artifact-id: spring-ai-starter-model-anthropic
           description: Spring AI support for Anthropic Claude AI models.
           bom: spring-ai
-          starter: true
           links:
             - rel: reference
               href: https://docs.spring.io/spring-ai/reference/api/chat/anthropic-chat.html
         - name: Azure OpenAI
           id: spring-ai-azure-openai
           group-id: org.springframework.ai
-          artifact-id: spring-ai-azure-openai-spring-boot-starter
+          artifact-id: spring-ai-starter-model-azure-openai
           description: Spring AI support for Azure’s OpenAI offering, powered by ChatGPT. It extends beyond traditional OpenAI capabilities, delivering AI-driven text generation with enhanced functionality.
           bom: spring-ai
-          starter: true
           links:
             - rel: reference
               href: https://docs.spring.io/spring-ai/reference/api/chat/azure-openai-chat.html
         - name: Azure AI Search
           id: spring-ai-vectordb-azure
           group-id: org.springframework.ai
-          artifact-id: spring-ai-azure-store-spring-boot-starter
+          artifact-id: spring-ai-starter-vector-store-azure
           description: Spring AI vector database support for Azure AI Search. It is an AI-powered information retrieval platform and part of Microsoft’s larger AI platform. Among other features, it allows users to query information using vector-based storage and retrieval.
           bom: spring-ai
-          starter: true
           links:
             - rel: reference
               href: https://docs.spring.io/spring-ai/reference/api/vectordbs/azure.html
         - name: Amazon Bedrock
           id: spring-ai-bedrock
           group-id: org.springframework.ai
-          artifact-id: spring-ai-bedrock-ai-spring-boot-starter
+          artifact-id: spring-ai-starter-model-bedrock
           description: Spring AI support for Amazon Bedrock Cohere and Titan Embedding Models.
           bom: spring-ai
-          starter: true
           links:
             - rel: reference
               href: https://docs.spring.io/spring-ai/reference/api/bedrock-chat.html
         - name: Amazon Bedrock Converse
           id: spring-ai-bedrock-converse
           group-id: org.springframework.ai
-          artifact-id: spring-ai-bedrock-converse-spring-boot-starter
+          artifact-id: spring-ai-starter-model-bedrock-converse
           description: Spring AI support for Amazon Bedrock Converse. It provides a unified interface for conversational AI models with enhanced capabilities including function/tool calling, multimodal inputs, and streaming responses.
           bom: spring-ai
-          starter: true
           links:
             - rel: reference
               href: https://docs.spring.io/spring-ai/reference/api/bedrock-converse.html
         - name: Apache Cassandra Vector Database
           id: spring-ai-vectordb-cassandra
           group-id: org.springframework.ai
-          artifact-id: spring-ai-cassandra-store-spring-boot-starter
+          artifact-id: spring-ai-starter-vector-store-cassandra
           description: Spring AI vector database support for Apache Cassandra.
           bom: spring-ai
-          starter: true
           links:
             - rel: reference
               href: https://docs.spring.io/spring-ai/reference/api/vectordbs/apache-cassandra.html
         - name: Chroma Vector Database
           id: spring-ai-vectordb-chroma
           group-id: org.springframework.ai
-          artifact-id: spring-ai-chroma-store-spring-boot-starter
+          artifact-id: spring-ai-starter-vector-store-chroma
           description: Spring AI vector database support for Chroma. It is an open-source embedding database and gives you the tools to store document embeddings, content, and metadata. It also allows to search through those embeddings, including metadata filtering.
           bom: spring-ai
-          starter: true
           links:
             - rel: reference
               href: https://docs.spring.io/spring-ai/reference/api/vectordbs/chroma.html
         - name: Elasticsearch Vector Database
           id: spring-ai-vectordb-elasticsearch
           group-id: org.springframework.ai
-          artifact-id: spring-ai-elasticsearch-store-spring-boot-starter
+          artifact-id: spring-ai-starter-vector-store-elasticsearch
           description: Spring AI vector database support for Elasticsearch.
           bom: spring-ai
-          starter: true
           links:
             - rel: reference
               href: https://docs.spring.io/spring-ai/reference/api/vectordbs/elasticsearch.html
         - name: Model Context Protocol Server
           id: spring-ai-mcp-server
           group-id: org.springframework.ai
-          artifact-id: spring-ai-mcp-server-spring-boot-starter
-          description: Spring AI support for setting up Model Context Protocol (MCP) servers.
+          artifact-id: spring-ai-starter-mcp-server
+          description: Spring AI support for Model Context Protocol (MCP) servers.
           bom: spring-ai
-          starter: true
           links:
             - rel: reference
               href: https://docs.spring.io/spring-ai/reference/api/mcp/mcp-server-boot-starter-docs.html
         - name: Model Context Protocol Client
           id: spring-ai-mcp-client
           group-id: org.springframework.ai
-          artifact-id: spring-ai-mcp-client-spring-boot-starter
+          artifact-id: spring-ai-starter-mcp-client
           description: Spring AI support for Model Context Protocol (MCP) clients.
           bom: spring-ai
-          starter: true
           links:
             - rel: reference
               href: https://docs.spring.io/spring-ai/reference/api/mcp/mcp-client-boot-starter-docs.html
         - name: Milvus Vector Database
           id: spring-ai-vectordb-milvus
           group-id: org.springframework.ai
-          artifact-id: spring-ai-milvus-store-spring-boot-starter
+          artifact-id: spring-ai-starter-vector-store-milvus
           description: Spring AI vector database support for Milvus. It is an open-source vector database that has garnered significant attention in the fields of data science and machine learning. One of its standout features lies in its robust support for vector indexing and querying.
           bom: spring-ai
-          starter: true
           links:
             - rel: reference
               href: https://docs.spring.io/spring-ai/reference/api/vectordbs/milvus.html
         - name: Mistral AI
           id: spring-ai-mistral
           group-id: org.springframework.ai
-          artifact-id: spring-ai-mistral-ai-spring-boot-starter
+          artifact-id: spring-ai-starter-model-mistral-ai
           description: Spring AI support for Mistral AI, the open and portable generative AI for devs and businesses.
           bom: spring-ai
-          starter: true
           links:
             - rel: reference
               href: https://docs.spring.io/spring-ai/reference/api/chat/mistralai-chat.html
         - name: MongoDB Atlas Vector Database
           id: spring-ai-vectordb-mongodb-atlas
           group-id: org.springframework.ai
-          artifact-id: spring-ai-mongodb-atlas-store-spring-boot-starter
+          artifact-id: spring-ai-starter-vector-store-mongodb-atlas
           description: Spring AI vector database support for MongoDB Atlas. Is is a fully managed cloud database service that provides an easy way to deploy, operate, and scale a MongoDB database in the cloud.
           bom: spring-ai
-          starter: true
           links:
             - rel: reference
               href: https://docs.spring.io/spring-ai/reference/api/vectordbs/mongodb.html
         - name: Neo4j Vector Database
           id: spring-ai-vectordb-neo4j
           group-id: org.springframework.ai
-          artifact-id: spring-ai-neo4j-store-spring-boot-starter
+          artifact-id: spring-ai-starter-vector-store-neo4j
           description: Spring AI vector database support for Neo4j's Vector Search. It allows users to query vector embeddings from large datasets.
           bom: spring-ai
-          starter: true
           links:
             - rel: reference
               href: https://docs.spring.io/spring-ai/reference/api/vectordbs/neo4j.html
         - name: Ollama
           id: spring-ai-ollama
           group-id: org.springframework.ai
-          artifact-id: spring-ai-ollama-spring-boot-starter
+          artifact-id: spring-ai-starter-model-ollama
           description: Spring AI support for Ollama. It allows you to run various Large Language Models (LLMs) locally and generate text from them.
           bom: spring-ai
-          starter: true
           links:
             - rel: reference
               href: https://docs.spring.io/spring-ai/reference/api/chat/ollama-chat.html
         - name: OpenAI
           id: spring-ai-openai
           group-id: org.springframework.ai
-          artifact-id: spring-ai-openai-spring-boot-starter
+          artifact-id: spring-ai-starter-model-openai
           description: Spring AI support for ChatGPT, the AI language model and DALL-E, the Image generation model from OpenAI.
           bom: spring-ai
-          starter: true
           links:
             - rel: reference
               href: https://docs.spring.io/spring-ai/reference/api/chat/openai-chat.html
+        - name: In-memory Chat Memory Repository
+          id: spring-ai-chat-memory-repository-in-memory
+          group-id: org.springframework.ai
+          artifact-id: spring-ai-starter-model-chat-memory
+          description: Spring AI support for in-memory chat memory repository.
+          bom: spring-ai
+          links:
+            - rel: reference
+              href: https://docs.spring.io/spring-ai/reference/api/chat-memory.html
+        - name: JDBC Chat Memory Repository
+          id: spring-ai-chat-memory-repository-jdbc
+          group-id: org.springframework.ai
+          artifact-id: spring-ai-starter-model-chat-memory-repository-jdbc
+          description: Spring AI support for JDBC based chat memory.
+          bom: spring-ai
+          links:
+            - rel: reference
+              href: https://docs.spring.io/spring-ai/reference/api/chat-memory.html
+        - name: Cassandra Chat Memory Repository
+          id: spring-ai-chat-memory-repository-cassandra
+          group-id: org.springframework.ai
+          artifact-id: spring-ai-starter-model-chat-memory-repository-cassandra
+          description: Spring AI support for Cassandra based chat memory.
+          bom: spring-ai
+          links:
+            - rel: reference
+              href: https://docs.spring.io/spring-ai/reference/api/chat-memory.html
+        - name: Neo4j Chat Memory Repository
+          id: spring-ai-chat-memory-repository-neo4j
+          group-id: org.springframework.ai
+          artifact-id: spring-ai-starter-model-chat-memory-repository-neo4j
+          description: Spring AI support for Neo4j based chat memory.
+          bom: spring-ai
+          links:
+            - rel: reference
+              href: https://docs.spring.io/spring-ai/reference/api/chat-memory.html
         - name: Oracle Vector Database
           id: spring-ai-vectordb-oracle
           group-id: org.springframework.ai
-          artifact-id: spring-ai-oracle-store-spring-boot-starter
+          artifact-id: spring-ai-starter-vector-store-oracle
           description: Spring AI vector database support for Oracle. Enables storing, indexing and searching vector embeddings in Oracle Database 23ai.
           bom: spring-ai
-          starter: true
           links:
             - rel: reference
               href: https://docs.spring.io/spring-ai/reference/api/vectordbs/oracle.html
         - name: PGvector Vector Database
           id: spring-ai-vectordb-pgvector
           group-id: org.springframework.ai
-          artifact-id: spring-ai-pgvector-store-spring-boot-starter
+          artifact-id: spring-ai-starter-vector-store-pgvector
           description: Spring AI vector database support for PGvector. It is an open-source extension for PostgreSQL that enables storing and searching over machine learning-generated embeddings.
           bom: spring-ai
-          starter: true
           links:
             - rel: reference
               href: https://docs.spring.io/spring-ai/reference/api/vectordbs/pgvector.html
         - name: Pinecone Vector Database
           id: spring-ai-vectordb-pinecone
           group-id: org.springframework.ai
-          artifact-id: spring-ai-pinecone-store-spring-boot-starter
+          artifact-id: spring-ai-starter-vector-store-pinecone
           description: Spring AI vector database support for Pinecone. It is a popular cloud-based vector database and allows you to store and search vectors efficiently.
           bom: spring-ai
-          starter: true
           links:
             - rel: reference
               href: https://docs.spring.io/spring-ai/reference/api/vectordbs/pinecone.html
         - name: PostgresML
           id: spring-ai-postgresml
           group-id: org.springframework.ai
-          artifact-id: spring-ai-postgresml-spring-boot-starter
+          artifact-id: spring-ai-starter-model-postgresml-embedding
           description: Spring AI support for the PostgresML text embeddings models.
           bom: spring-ai
-          starter: true
           links:
             - rel: reference
               href: https://docs.spring.io/spring-ai/reference/api/embeddings/postgresml-embeddings.html
         - name: Redis Search and Query Vector Database
           id: spring-ai-vectordb-redis
           group-id: org.springframework.ai
-          artifact-id: spring-ai-redis-store-spring-boot-starter
+          artifact-id: spring-ai-starter-vector-store-redis
           description: Spring AI vector database support for Redis Search and Query. It extends the core features of Redis OSS and allows you to use Redis as a vector database.
           bom: spring-ai
-          starter: true
           links:
             - rel: reference
               href: https://docs.spring.io/spring-ai/reference/api/vectordbs/redis.html
         - name: MariaDB Vector Database
           id: spring-ai-vectordb-mariadb
           group-id: org.springframework.ai
-          artifact-id: spring-ai-mariadb-store-spring-boot-starter
+          artifact-id: spring-ai-starter-vector-store-mariadb
           description: Spring AI support for MariaDB. MariaDB Vector Store support is part of MariaDB 11.7. It provides efficient vector similarity search capabilities using vector indexes, supporting both cosine similarity and Euclidean distance metrics.
           bom: spring-ai
-          starter: true
           links:
             - rel: reference
               href: https://docs.spring.io/spring-ai/reference/api/vectordbs/mariadb.html
-        - name: Oracle Coherence Vector Database
-          id: spring-ai-vectordb-coherence
-          group-id: org.springframework.ai
-          artifact-id: spring-ai-coherence-store-spring-boot-starter
-          description: Spring AI support for Oracle Coherence. Oracle Coherence Vector Store is a key-value store with optional persistence, offering fault-tolerant automatic sharding, polyglot and REST interfaces, querying, transactions, eventing, and in-place processing, as well as change data capture, multi-site federation, messaging, and integrations with popular frameworks.
-          bom: spring-ai
-          starter: true
-          links:
-            - rel: reference
-              href: https://docs.spring.io/spring-ai/reference/api/vectordbs.html
         - name: Azure Cosmos DB Vector Store
           id: spring-ai-vectordb-azurecosmosdb
           group-id: org.springframework.ai
-          artifact-id: spring-ai-azure-cosmos-db-store-spring-boot-starter
+          artifact-id: spring-ai-starter-vector-store-azure-cosmos-db
           description: Spring AI support for Azure Cosmos DB. Azure Cosmos DB is Microsoft’s globally distributed cloud-native database service designed for mission-critical applications.
           bom: spring-ai
-          starter: true
           links:
             - rel: reference
               href: https://docs.spring.io/spring-ai/reference/api/vectordbs/azure-cosmos-db.html
         - name: Stability AI
           id: spring-ai-stabilityai
           group-id: org.springframework.ai
-          artifact-id: spring-ai-stability-ai-spring-boot-starter
+          artifact-id: spring-ai-starter-model-stability-ai
           description: Spring AI support for Stability AI's text to image generation model.
           bom: spring-ai
-          starter: true
           links:
             - rel: reference
               href: https://docs.spring.io/spring-ai/reference/api/image/stabilityai-image.html
         - name: Transformers (ONNX) Embeddings
           id: spring-ai-transformers
           group-id: org.springframework.ai
-          artifact-id: spring-ai-transformers-spring-boot-starter
+          artifact-id: spring-ai-starter-model-transformers
           description: Spring AI support for pre-trained transformer models, serialized into the Open Neural Network Exchange (ONNX) format.
           bom: spring-ai
-          starter: true
           links:
             - rel: reference
               href: https://docs.spring.io/spring-ai/reference/api/embeddings/onnx.html
         - name: Vertex AI Gemini
           id: spring-ai-vertexai-gemini
           group-id: org.springframework.ai
-          artifact-id: spring-ai-vertex-ai-gemini-spring-boot-starter
+          artifact-id: spring-ai-starter-model-vertex-ai-gemini
           description: Spring AI support for Google Vertex Gemini chat. Doesn't support embeddings.
           bom: spring-ai
-          starter: true
           links:
             - rel: reference
               href: https://docs.spring.io/spring-ai/reference/api/chat/vertexai-gemini-chat.html
         - name: Vertex AI Embeddings
           id: spring-ai-vertexai-embeddings
           group-id: org.springframework.ai
-          artifact-id: spring-ai-vertex-ai-embedding-spring-boot-starter
+          artifact-id: spring-ai-starter-model-vertex-ai-embedding
           description: Spring AI support for Google Vertex text and multimodal embedding models.
           bom: spring-ai
-          starter: true
           links:
             - rel: reference
               href: https://docs.spring.io/spring-ai/reference/api/embeddings/vertexai-embeddings-text.html
@@ -1755,30 +1872,27 @@ initializr:
         - name: Qdrant Vector Database
           id: spring-ai-vectordb-qdrant
           group-id: org.springframework.ai
-          artifact-id: spring-ai-qdrant-store-spring-boot-starter
+          artifact-id: spring-ai-starter-vector-store-qdrant
           description: Spring AI vector database support for Qdrant. It is an open-source, high-performance vector search engine/database.
           bom: spring-ai
-          starter: true
           links:
             - rel: reference
               href: https://docs.spring.io/spring-ai/reference/api/vectordbs/qdrant.html
         - name: Typesense Vector Database
           id: spring-ai-vectordb-typesense
           group-id: org.springframework.ai
-          artifact-id: spring-ai-typesense-store-spring-boot-starter
+          artifact-id: spring-ai-starter-vector-store-typesense
           description: Spring AI vector database support for Typesense.
           bom: spring-ai
-          starter: true
           links:
             - rel: reference
               href: https://docs.spring.io/spring-ai/reference/api/vectordbs/typesense.html
         - name: Weaviate Vector Database
           id: spring-ai-vectordb-weaviate
           group-id: org.springframework.ai
-          artifact-id: spring-ai-weaviate-store-spring-boot-starter
+          artifact-id: spring-ai-starter-vector-store-weaviate
           description: Spring AI vector database support for Weaviate, an open-source vector database. It allows you to store data objects and vector embeddings from your favorite ML-models and scale seamlessly into billions of data objects.
           bom: spring-ai
-          starter: true
           links:
             - rel: reference
               href: https://docs.spring.io/spring-ai/reference/api/vectordbs/weaviate.html
@@ -1814,7 +1928,7 @@ initializr:
               href: https://docs.spring.io/spring-ai/reference/api/etl-pipeline.html#_pdf_page
         - name: Timefold Solver
           id: timefold-solver
-          compatibilityRange: "[3.3.0,3.4.0-M1)"
+          compatibilityRange: "[3.4.0,3.6.0-M1)"
           groupId: ai.timefold.solver
           artifactId: timefold-solver-spring-boot-starter
           description: AI solver to optimize operations and scheduling.
@@ -1876,7 +1990,7 @@ initializr:
       id: war
       default: false
   javaVersions:
-    - id: 23
+    - id: 24
       default: false
     - id: 21
       default: false
@@ -1893,11 +2007,11 @@ initializr:
       id: groovy
       default: false
   bootVersions:
-    - name: 3.4.0 (SNAPSHOT)
-      id: 3.4.0-SNAPSHOT
+    - name: 3.5.0 (SNAPSHOT)
+      id: 3.5.0-SNAPSHOT
       default: false
-    - name: 3.3.0
-      id: 3.3.0
+    - name: 3.4.0
+      id: 3.4.0
       default: true
 
 ---

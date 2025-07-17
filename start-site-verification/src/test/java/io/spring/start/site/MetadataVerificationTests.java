@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2025 the original author or authors.
+ * Copyright 2012 - present the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,6 +21,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.function.Consumer;
 import java.util.stream.Stream;
 
@@ -53,12 +54,22 @@ import static org.assertj.core.api.Assertions.assertThat;
  * Tests to verify the validity of the metadata.
  *
  * @author Andy Wilkinson
+ * @author Moritz Halbritter
  */
 @SpringBootTest
 @TestInstance(Lifecycle.PER_CLASS)
 @Execution(ExecutionMode.CONCURRENT)
 @ActiveProfiles("test")
 class MetadataVerificationTests {
+
+	private static final Set<String> IGNORED_DEPENDENCIES = Set.of(
+			"com.vmware.tanzu.spring.governance:governance-starter",
+			"com.vmware.tanzu.springcloudgateway.extensions:access-control",
+			"com.vmware.tanzu.springcloudgateway.extensions:custom",
+			"com.vmware.tanzu.springcloudgateway.extensions:graphql",
+			"com.vmware.tanzu.springcloudgateway.extensions:sso",
+			"com.vmware.tanzu.springcloudgateway.extensions:traffic-control",
+			"com.vmware.tanzu.springcloudgateway.extensions:transformation");
 
 	private final InitializrMetadata metadata;
 
@@ -142,7 +153,7 @@ class MetadataVerificationTests {
 				repositories.computeIfAbsent("spring-snapshots", this::repositoryForId);
 				repositories.computeIfAbsent("spring-milestones", this::repositoryForId);
 			}
-			else if (qualifier.equals("M")) {
+			else if (qualifier.equals("M") || qualifier.equals("RC")) {
 				repositories.computeIfAbsent("spring-milestones", this::repositoryForId);
 			}
 		}
@@ -169,7 +180,16 @@ class MetadataVerificationTests {
 	}
 
 	private Collection<Dependency> dependenciesForBootVersion(DependencyGroup group, Version bootVersion) {
-		return group.getContent().stream().filter((dependency) -> dependency.match(bootVersion)).toList();
+		return group.getContent()
+			.stream()
+			.filter((dependency) -> !isIgnored(dependency))
+			.filter((dependency) -> dependency.match(bootVersion))
+			.toList();
+	}
+
+	private boolean isIgnored(Dependency dependency) {
+		String coordinates = "%s:%s".formatted(dependency.getGroupId(), dependency.getArtifactId());
+		return IGNORED_DEPENDENCIES.contains(coordinates);
 	}
 
 }

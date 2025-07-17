@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2023 the original author or authors.
+ * Copyright 2012 - present the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -30,8 +30,8 @@ import io.spring.initializr.generator.spring.build.BuildCustomizer;
  */
 class ObservabilityActuatorBuildCustomizer implements BuildCustomizer<Build> {
 
-	private static final List<String> STANDARD_REGISTRY_IDS = Arrays.asList("datadog", "distributed-tracing",
-			"dynatrace", "graphite", "influx", "new-relic", "otlp-metrics", "prometheus", "wavefront", "zipkin");
+	private static final List<String> DEPENDENCIES = Arrays.asList("datadog", "distributed-tracing", "dynatrace",
+			"graphite", "influx", "new-relic", "otlp-metrics", "prometheus", "wavefront", "zipkin");
 
 	@Override
 	public void customize(Build build) {
@@ -41,7 +41,7 @@ class ObservabilityActuatorBuildCustomizer implements BuildCustomizer<Build> {
 	}
 
 	protected boolean match(DependencyContainer dependencies) {
-		return dependencies.ids().anyMatch(STANDARD_REGISTRY_IDS::contains);
+		return dependencies.ids().anyMatch(DEPENDENCIES::contains);
 	}
 
 }

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-  ~ Copyright 2012-2024 the original author or authors.
+  ~ Copyright 2012 - present the original author or authors.
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
   ~ you may not use this file except in compliance with the License.
@@ -22,7 +22,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>3.4.3</version>
+		<version>3.5.3</version>
 	</parent>
 	<groupId>io.spring.start</groupId>
 	<artifactId>start-parent</artifactId>
@@ -33,8 +33,8 @@
 	<properties>
 		<revision>0.0.1-SNAPSHOT</revision>
 		<disable.checks>false</disable.checks>
-		<spring-initializr.version>0.22.0-SNAPSHOT</spring-initializr.version>
-		<spring-javaformat.version>0.0.43</spring-javaformat.version>
+		<spring-initializr.version>0.22.1-SNAPSHOT</spring-initializr.version>
+		<spring-javaformat.version>0.0.47</spring-javaformat.version>
 	</properties>
 
 	<modules>
@@ -88,7 +88,7 @@
 			<dependency>
 				<groupId>com.azure.spring</groupId>
 				<artifactId>spring-cloud-azure-dependencies</artifactId>
-				<version>5.20.1</version>
+				<version>5.22.0</version>
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>
@@ -101,7 +101,7 @@
 				<plugin>
 					<groupId>org.codehaus.mojo</groupId>
 					<artifactId>flatten-maven-plugin</artifactId>
-					<version>1.6.0</version>
+					<version>1.7.0</version>
 				</plugin>
 				<plugin>
 					<groupId>io.spring.javaformat</groupId>
@@ -129,7 +129,7 @@
 							<phase>validate</phase>
 							<configuration>
 								<skip>${disable.checks}</skip>
-								<configLocation>io/spring/javaformat/checkstyle/checkstyle.xml</configLocation>
+								<configLocation>src/checkstyle/checkstyle.xml</configLocation>
 								<includeTestSourceDirectory>true</includeTestSourceDirectory>
 							</configuration>
 							<goals>
@@ -141,7 +141,7 @@
 						<dependency>
 							<groupId>com.puppycrawl.tools</groupId>
 							<artifactId>checkstyle</artifactId>
-							<version>10.21.2</version>
+							<version>10.21.4</version>
 						</dependency>
 						<dependency>
 							<groupId>io.spring.javaformat</groupId>
@@ -163,7 +163,18 @@
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-surefire-plugin</artifactId>
-					<version>3.5.2</version>
+					<version>3.5.3</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-compiler-plugin</artifactId>
+					<configuration>
+						<failOnWarning>true</failOnWarning>
+						<compilerArgs>
+							<arg>-Xlint:all</arg>
+							<arg>-Xlint:-processing</arg>
+						</compilerArgs>
+					</configuration>
 				</plugin>
 			</plugins>
 		</pluginManagement>

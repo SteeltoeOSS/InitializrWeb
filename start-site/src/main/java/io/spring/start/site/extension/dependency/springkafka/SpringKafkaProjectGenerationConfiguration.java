@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2025 the original author or authors.
+ * Copyright 2012 - present the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,6 +20,7 @@ import io.spring.initializr.generator.buildsystem.Build;
 import io.spring.initializr.generator.buildsystem.gradle.GradleBuildSystem;
 import io.spring.initializr.generator.buildsystem.maven.MavenBuildSystem;
 import io.spring.initializr.generator.condition.ConditionalOnBuildSystem;
+import io.spring.initializr.generator.condition.ConditionalOnPlatformVersion;
 import io.spring.initializr.generator.condition.ConditionalOnRequestedDependency;
 import io.spring.initializr.generator.project.ProjectDescription;
 import io.spring.initializr.generator.project.ProjectGenerationConfiguration;
@@ -47,12 +48,6 @@ class SpringKafkaProjectGenerationConfiguration {
 
 	private static final VersionRange SPRING_BOOT_3_4_M2_OR_LATER = VersionParser.DEFAULT.parseRange("3.4.0-M2");
 
-	private final boolean isSpringBoot34OrLater;
-
-	SpringKafkaProjectGenerationConfiguration(ProjectDescription projectDescription) {
-		this.isSpringBoot34OrLater = SPRING_BOOT_3_4_M2_OR_LATER.match(projectDescription.getPlatformVersion());
-	}
-
 	@Bean
 	@ConditionalOnRequestedDependency("kafka")
 	SpringKafkaBuildCustomizer springKafkaBuildCustomizer() {
@@ -61,10 +56,12 @@ class SpringKafkaProjectGenerationConfiguration {
 
 	@Bean
 	@ConditionalOnRequestedDependency("testcontainers")
-	ServiceConnectionsCustomizer kafkaServiceConnectionsCustomizer(Build build, DockerServiceResolver serviceResolver) {
+	ServiceConnectionsCustomizer kafkaServiceConnectionsCustomizer(ProjectDescription description, Build build,
+			DockerServiceResolver serviceResolver) {
+		boolean isSpringBoot34OrLater = SPRING_BOOT_3_4_M2_OR_LATER.match(description.getPlatformVersion());
 		return (serviceConnections) -> {
 			if (isKafkaEnabled(build)) {
-				if (this.isSpringBoot34OrLater) {
+				if (isSpringBoot34OrLater) {
 					serviceResolver.doWith("kafka-native", (service) -> serviceConnections.addServiceConnection(
 							ServiceConnection.ofContainer("kafka", service, TESTCONTAINERS_APACHE_CLASS_NAME, false)));
 				}
@@ -79,23 +76,31 @@ class SpringKafkaProjectGenerationConfiguration {
 
 	@Bean
 	@ConditionalOnRequestedDependency("kafka-streams")
+	@ConditionalOnPlatformVersion("4.0.0-M1")
+	SpringKafkaStreamsBuildCustomizer springKafkaStreamsBuildCustomizer() {
+		return new SpringKafkaStreamsBuildCustomizer();
+	}
+
+	@Bean
+	@ConditionalOnRequestedDependency("kafka-streams")
 	@ConditionalOnBuildSystem(MavenBuildSystem.ID)
-	SpringKafkaStreamsMavenBuildCustomizer springKafkaStreamsMavenBuildCustomizer() {
-		return new SpringKafkaStreamsMavenBuildCustomizer();
+	SpringKafkaStreamsMavenBuildCustomizer springKafkaStreamsMavenBuildCustomizer(ProjectDescription description) {
+		return new SpringKafkaStreamsMavenBuildCustomizer(description);
 	}
 
 	@Bean
 	@ConditionalOnRequestedDependency("kafka-streams")
 	@ConditionalOnBuildSystem(id = GradleBuildSystem.ID, dialect = GradleBuildSystem.DIALECT_GROOVY)
-	SpringKafkaStreamsGradleBuildCustomizer springKafkaStreamsGradleBuildCustomizer() {
-		return new SpringKafkaStreamsGradleBuildCustomizer('\'');
+	SpringKafkaStreamsGradleBuildCustomizer springKafkaStreamsGradleBuildCustomizer(ProjectDescription description) {
+		return new SpringKafkaStreamsGradleBuildCustomizer(description, '\'');
 	}
 
 	@Bean
 	@ConditionalOnRequestedDependency("kafka-streams")
 	@ConditionalOnBuildSystem(id = GradleBuildSystem.ID, dialect = GradleBuildSystem.DIALECT_KOTLIN)
-	SpringKafkaStreamsGradleBuildCustomizer springKafkaStreamsGradleKotlinBuildCustomizer() {
-		return new SpringKafkaStreamsGradleBuildCustomizer('\"');
+	SpringKafkaStreamsGradleBuildCustomizer springKafkaStreamsGradleKotlinBuildCustomizer(
+			ProjectDescription description) {
+		return new SpringKafkaStreamsGradleBuildCustomizer(description, '\"');
 	}
 
 	private boolean isKafkaEnabled(Build build) {

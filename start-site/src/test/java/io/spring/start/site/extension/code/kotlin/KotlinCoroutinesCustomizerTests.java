@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2025 the original author or authors.
+ * Copyright 2012 - present the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -40,7 +40,7 @@ class KotlinCoroutinesCustomizerTests extends AbstractExtensionTests {
 			.hasDependency("org.jetbrains.kotlinx", "kotlinx-coroutines-reactor")
 			.hasDependency("org.jetbrains.kotlinx", "kotlinx-coroutines-test", null, "test");
 		assertThat(helpDocument(request)).contains(
-				"* [Coroutines section of the Spring Framework Documentation](https://docs.spring.io/spring-framework/reference/6.2.0/languages/kotlin/coroutines.html)");
+				"* [Coroutines section of the Spring Framework Documentation](https://docs.spring.io/spring-framework/reference/6.2.7/languages/kotlin/coroutines.html)");
 	}
 
 	@Test
