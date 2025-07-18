@@ -5,14 +5,14 @@ Steeltoe Initializr UI reference implementation
 ## About
 
 This implementation largely steals from the [Spring Initializr Client](https://github.com/spring-io/start.spring.io).
-The primary differences between the 2 implementations are branding and domain metadata.
+The primary differences between the two implementations are branding and domain metadata.
 Branding differences include reference URLs, color schemes, and logos.
-Domain metadata include metadata differences such as "Java version" vs ".NET Framework" and "Spring Boot" vs "Steeltoe."
-A list of files that are known to diverge from Spring, is available [here](./Upstream.md)
+Domain metadata includes metadata differences such as "Java version" vs ".NET version" and "Spring Boot" vs "Steeltoe."
+A list of files that are known to diverge from Spring is available [here](./Upstream.md)
 
 ## Deploying
 
-There are 2 endpoints that the Web UI uses to 1) populate its UI, and 2) generate projects:
+There are two endpoints that the Web UI uses to 1) populate its UI, and 2) generate projects:
 
 * `/api/config/projectMetadata`
 * `/api/project`
@@ -20,8 +20,9 @@ There are 2 endpoints that the Web UI uses to 1) populate its UI, and 2) generat
 For local development, these endpoints are implemented in the development webpack configuration in [start-client/webpack.dev.js](start-client/webpack.dev.js).
 
 In a remote deployment, those endpoints are implemented by the [Initializr API](https://github.com/SteeltoeOSS/InitializrApi).
-The deployment should be frontended by an HTTP router that forwards requests to these 2 endpoints to the API server.
+The deployment should be frontended by an HTTP router that forwards requests to these two endpoints to the API server.
 A sample Kubernetes ingress configuration:
+
 ```yaml
 ---
 apiVersion: networking.k8s.io/v1beta1

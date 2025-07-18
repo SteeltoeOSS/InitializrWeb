@@ -107,7 +107,7 @@ function Fields({
                 </FieldError>
               )}
             </Control>
-            <Control text='.NET Framework'>
+            <Control text='.NET'>
               <Radio
                 name='dotNetFramework'
                 selected={get(values, 'dotNetFramework')}
@@ -127,7 +127,7 @@ function Fields({
               />
               {get(errors, 'dotNetFramework') && (
                 <FieldError>
-                  .NET Framework {get(errors, 'dotNetFramework.value')} is not supported.
+                  .NET {get(errors, 'dotNetFramework.value')} is not supported.
                   Please select a valid version.
                 </FieldError>
               )}

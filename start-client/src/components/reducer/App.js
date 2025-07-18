@@ -72,7 +72,7 @@ export function reduceDependencies(steeltoeVersion, dotNetFramework, items) {
       } else {
         message += `Requires`
       }
-      message += ` .NET Framework ${rangeToText(
+      message += ` .NET ${rangeToText(
         get(dep, 'dotNetFrameworkRange')
       )}`
     }

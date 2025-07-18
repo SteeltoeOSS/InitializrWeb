@@ -28,7 +28,7 @@ export default function Loading() {
           <Control text='Steeltoe'>
             <Placeholder type='radio' width='100px' />
           </Control>
-          <Control text='.NET Framework'>
+          <Control text='.NET'>
             <Placeholder type='radio' width='100px' />
           </Control>
           <Control text='Language'>
