@@ -1,6 +1,7 @@
 name: Build and stage
 
 on:
+  workflow_dispatch:
   push:
     branches:
     - main
