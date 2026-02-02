@@ -10,6 +10,38 @@ Branding differences include reference URLs, color schemes, and logos.
 Domain metadata includes metadata differences such as "Java version" vs ".NET version" and "Spring Boot" vs "Steeltoe."
 A list of files that are known to diverge from Spring is available [here](./Upstream.md)
 
+## Docker
+
+### Building the Image
+
+You can build the Docker image locally using the following command:
+
+```bash
+docker build -t initializr-web .
+```
+
+### Running the Image
+
+To run the image locally, you need to provide the `INITIALIZR_SERVICE_HOST` and `INITIALIZR_SERVICE_URI` environment variables. These point to the backend API service.
+
+**Bash:**
+```bash
+docker run -p 8080:80 \
+  -e INITIALIZR_SERVICE_HOST="start.steeltoe.io" \
+  -e INITIALIZR_SERVICE_URI="https://start.steeltoe.io/api" \
+  initializr-web
+```
+
+**PowerShell:**
+```powershell
+docker run -p 8080:80 `
+  -e INITIALIZR_SERVICE_HOST="start.steeltoe.io" `
+  -e INITIALIZR_SERVICE_URI="https://start.steeltoe.io/api" `
+  initializr-web
+```
+
+The application will be accessible at `http://localhost:8080`.
+
 ## Deploying
 
 There are two endpoints that the Web UI uses to 1) populate its UI, and 2) generate projects:
