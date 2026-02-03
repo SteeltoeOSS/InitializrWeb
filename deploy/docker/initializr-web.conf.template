@@ -1,13 +1,16 @@
 server {
     listen 80;
-    root /usr/share/initializr/www/public;
-    passenger_enabled on;
-    passenger_user app;
-    passenger_app_type node;
-    passenger_startup_file src/App.js;
+    root /usr/share/nginx/html;
+    index index.html;
+
+    location / {
+        try_files $uri $uri/ /index.html;
+    }
 
     location /api {
-        proxy_ssl_protocols TLSv1.2;    
+        proxy_ssl_protocols TLSv1.2;
+        proxy_ssl_server_name on;
+        proxy_ssl_name $INITIALIZR_SERVICE_HOST;
         proxy_pass $INITIALIZR_SERVICE_URI;
         proxy_set_header   Host $INITIALIZR_SERVICE_HOST;
         proxy_set_header   Connection keep-alive;
@@ -17,5 +20,3 @@ server {
         proxy_set_header   X-Forwarded-Host $server_name;
     }
 }
-
-# vim: ft=nginx
