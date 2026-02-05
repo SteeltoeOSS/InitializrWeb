@@ -16,9 +16,7 @@
 
 package io.spring.start.site.extension.dependency.springkafka;
 
-import io.spring.initializr.metadata.Dependency;
 import io.spring.initializr.web.project.ProjectRequest;
-import io.spring.start.site.SupportedBootVersion;
 import io.spring.start.site.extension.AbstractExtensionTests;
 import org.junit.jupiter.api.Test;
 
@@ -34,40 +32,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 class SpringKafkaProjectGenerationConfigurationTests extends AbstractExtensionTests {
 
 	@Test
-	void springKafkaTestIsAdded() {
-		ProjectRequest request = createProjectRequest("kafka");
-		Dependency kafkaTest = Dependency.withId("spring-kafka-test", "org.springframework.kafka", "spring-kafka-test",
-				null, Dependency.SCOPE_TEST);
-		assertThat(mavenPom(request)).hasDependency(Dependency.createSpringBootStarter("test", Dependency.SCOPE_TEST))
-			.hasDependency(kafkaTest)
-			.hasDependenciesSize(4);
-	}
-
-	@Test
-	void springKafkaTestIsNotAddedWithoutKafka() {
-		ProjectRequest request = createProjectRequest("web");
-		assertThat(mavenPom(request)).hasDependency(Dependency.createSpringBootStarter("web"))
-			.hasDependency(Dependency.createSpringBootStarter("test", Dependency.SCOPE_TEST))
-			.hasDependenciesSize(2);
-	}
-
-	@Test
-	void customizesBuildpacksBuilderWhenUsingMavenAndKafkaStreamsAndBoot34() {
-		ProjectRequest request = createProjectRequest(SupportedBootVersion.V3_4, "kafka-streams");
-		assertThat(mavenPom(request)).containsIgnoringWhitespaces("""
-				<plugin>
-					<groupId>org.springframework.boot</groupId>
-					<artifactId>spring-boot-maven-plugin</artifactId>
-					<configuration>
-						<image>
-							<builder>paketobuildpacks/builder-jammy-base:latest</builder>
-						</image>
-					</configuration>
-				</plugin>
-				""");
-	}
-
-	@Test
 	void customizesBuildpacksBuilderWhenUsingMavenAndKafkaStreams() {
 		ProjectRequest request = createProjectRequest("kafka-streams");
 		assertThat(mavenPom(request)).containsIgnoringWhitespaces("""
@@ -76,20 +40,10 @@ class SpringKafkaProjectGenerationConfigurationTests extends AbstractExtensionTe
 					<artifactId>spring-boot-maven-plugin</artifactId>
 					<configuration>
 						<image>
-							<runImage>paketobuildpacks/ubuntu-noble-run-base:latest</runImage>
+							<runImage>paketobuildpacks/ubuntu-noble-run:latest</runImage>
 						</image>
 					</configuration>
 				</plugin>
-				""");
-	}
-
-	@Test
-	void customizesBuildpacksBuilderWhenUsingGradleGroovyAndKafkaStreamsAndBoot34() {
-		ProjectRequest request = createProjectRequest(SupportedBootVersion.V3_4, "kafka-streams");
-		assertThat(gradleBuild(request)).containsIgnoringWhitespaces("""
-				tasks.named('bootBuildImage') {
-					builder = 'paketobuildpacks/builder-jammy-base:latest'
-				}
 				""");
 	}
 
@@ -98,17 +52,7 @@ class SpringKafkaProjectGenerationConfigurationTests extends AbstractExtensionTe
 		ProjectRequest request = createProjectRequest("kafka-streams");
 		assertThat(gradleBuild(request)).containsIgnoringWhitespaces("""
 				tasks.named('bootBuildImage') {
-					runImage = 'paketobuildpacks/ubuntu-noble-run-base:latest'
-				}
-				""");
-	}
-
-	@Test
-	void customizesBuildpacksBuilderWhenUsingGradleKotlinAndKafkaStreamsAndBoot34() {
-		ProjectRequest request = createProjectRequest(SupportedBootVersion.V3_4, "kafka-streams");
-		assertThat(gradleKotlinDslBuild(request)).containsIgnoringWhitespaces("""
-				tasks.bootBuildImage {
-				    builder = "paketobuildpacks/builder-jammy-base:latest"
+					runImage = 'paketobuildpacks/ubuntu-noble-run:latest'
 				}
 				""");
 	}
@@ -118,7 +62,7 @@ class SpringKafkaProjectGenerationConfigurationTests extends AbstractExtensionTe
 		ProjectRequest request = createProjectRequest("kafka-streams");
 		assertThat(gradleKotlinDslBuild(request)).containsIgnoringWhitespaces("""
 				tasks.bootBuildImage {
-				    runImage = "paketobuildpacks/ubuntu-noble-run-base:latest"
+				    runImage = "paketobuildpacks/ubuntu-noble-run:latest"
 				}
 				""");
 	}

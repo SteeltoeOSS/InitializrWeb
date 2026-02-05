@@ -31,6 +31,7 @@ describe('COMPLETE action', () => {
           packaging: '',
           packageName: '',
           java: '',
+          configurationFileFormat: '',
         },
         dependencies: [],
       },
@@ -46,9 +47,9 @@ describe('COMPLETE action', () => {
         defaultValues,
       },
     })
-    // expect(get(result, 'share')).toBe(
-    //   name='Dev&namespace=DevNamespace&description=Development%20project%20application&steeltoeVersion=3.0.2&dotNetFramework=netcoreapp3.1&dotNetTemplate=&language=csharp&packaging=zip'
-    // )
+    expect(get(result, 'share')).toBe(
+      name='Dev&namespace=DevNamespace&description=Development%20project%20application&steeltoeVersion=3.0.2&dotNetFramework=netcoreapp3.1&dotNetTemplate=&language=csharp&packaging=zip'
+    )
     // expect(get(result, 'values.project')).toBe('maven-project')
     expect(get(result, 'values.language')).toBe('csharp')
     expect(get(result, 'values.steeltoeVersion')).toBe('3.0.2')
@@ -180,6 +181,17 @@ describe('UPDATE action', () => {
       },
     })
     expect(get(result, 'values.meta.packaging')).toBe('war')
+  })
+  it('should reduce the state (configuration file format)', () => {
+    const result = reducer(state, {
+      type: 'UPDATE',
+      payload: {
+        meta: {
+          configurationFileFormat: 'yaml',
+        },
+      },
+    })
+    expect(get(result, 'values.meta.configurationFileFormat')).toBe('yaml')
   })
   it('should reduce the state (meta packageName)', () => {
     const result = reducer(state, {

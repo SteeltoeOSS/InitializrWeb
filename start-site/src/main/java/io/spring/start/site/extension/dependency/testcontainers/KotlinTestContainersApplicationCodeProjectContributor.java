@@ -16,9 +16,10 @@
 
 package io.spring.start.site.extension.dependency.testcontainers;
 
-import java.util.Arrays;
+import java.util.Set;
 import java.util.stream.Collectors;
 
+import io.spring.initializr.generator.container.docker.compose.PortMapping;
 import io.spring.initializr.generator.io.IndentingWriterFactory;
 import io.spring.initializr.generator.language.CodeBlock;
 import io.spring.initializr.generator.language.Parameter;
@@ -31,6 +32,7 @@ import io.spring.initializr.generator.project.ProjectDescription;
 import io.spring.start.site.container.DockerService;
 import io.spring.start.site.container.ServiceConnections;
 import io.spring.start.site.container.ServiceConnections.ServiceConnection;
+import io.spring.start.site.container.Testcontainers;
 import org.codehaus.plexus.util.StringUtils;
 
 import org.springframework.util.ClassUtils;
@@ -77,12 +79,14 @@ class KotlinTestContainersApplicationCodeProjectContributor extends
 	}
 
 	private KotlinFunctionDeclaration usingGenericContainer(String functionName, String imageId, String connectionName,
-			int... ports) {
-		String portsParameter = Arrays.stream(ports).mapToObj(String::valueOf).collect(Collectors.joining(", "));
+			Set<PortMapping> ports) {
+		String portsParameter = ports.stream()
+			.map((port) -> String.valueOf(port.getContainerPort()))
+			.collect(Collectors.joining(", "));
 		KotlinFunctionDeclaration method = KotlinFunctionDeclaration.function(functionName)
 			.returning("GenericContainer<*>")
 			.body(CodeBlock.ofStatement("return $T($L).withExposedPorts($L)",
-					"org.testcontainers.containers.GenericContainer", generatedDockerImageNameCode(imageId),
+					Testcontainers.GENERIC_CONTAINER_CLASS_NAME, generatedDockerImageNameCode(imageId),
 					portsParameter));
 		annotateContainerMethod(method, connectionName);
 		return method;

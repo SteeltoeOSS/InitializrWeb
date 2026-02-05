@@ -1,11 +1,12 @@
-@import 'variables';
-@import 'mixins';
+@use 'variables' as *;
+@use 'mixins' as *;
+@use 'responsive';
 
 $w_arrow: 12px;
 $w: 500px;
 
 .popup-share {
-  z-index: 10000;
+  z-index: 999;
   position: fixed;
   top: 50%;
   margin-top: -150px;
@@ -120,4 +121,3 @@ $w: 500px;
   transition: all 300ms;
 }
 
-@import 'responsive';

@@ -24,17 +24,17 @@ package io.spring.start.site;
 public enum SupportedBootVersion {
 
 	/**
-	 * 3.4.0.
-	 */
-	V3_4("3.4.0"),
-	/**
 	 * 3.5.0.
 	 */
 	V3_5("3.5.0"),
 	/**
 	 * 4.0.0.
 	 */
-	V4_0("4.0.0-SNAPSHOT");
+	V4_0("4.0.0"),
+	/**
+	 * 4.0.0.
+	 */
+	V4_1("4.1.0-SNAPSHOT");
 
 	private final String version;
 
@@ -56,7 +56,7 @@ public enum SupportedBootVersion {
 	 * @return the latest supported Spring Boot version
 	 */
 	public static SupportedBootVersion latest() {
-		return V3_5;
+		return V4_0;
 	}
 
 }

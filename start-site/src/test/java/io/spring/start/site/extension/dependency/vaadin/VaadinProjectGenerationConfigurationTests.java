@@ -21,6 +21,8 @@ import io.spring.initializr.web.project.ProjectRequest;
 import io.spring.start.site.SupportedBootVersion;
 import io.spring.start.site.extension.AbstractExtensionTests;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -32,13 +34,40 @@ import static org.assertj.core.api.Assertions.assertThat;
  */
 class VaadinProjectGenerationConfigurationTests extends AbstractExtensionTests {
 
-	private static final SupportedBootVersion BOOT_VERSION = SupportedBootVersion.latest();
+	private static final SupportedBootVersion BOOT_VERSION = SupportedBootVersion.V3_5;
+
+	@ParameterizedTest
+	@ValueSource(strings = { "17", "18", "19", "20" })
+	void java21IsRequiredWithBoot40(String jvmVersion) {
+		ProjectRequest request = createProjectRequest(SupportedBootVersion.V4_0, "vaadin");
+		request.setJavaVersion(jvmVersion);
+		assertThat(mavenPom(request)).hasProperty("java.version", "21");
+	}
+
+	@ParameterizedTest
+	@ValueSource(strings = { "21", "25" })
+	void java21OrLaterIsLeftAsIsWithBoot40(String jvmVersion) {
+		ProjectRequest request = createProjectRequest(SupportedBootVersion.V4_0, "vaadin");
+		request.setJavaVersion(jvmVersion);
+		assertThat(mavenPom(request)).hasProperty("java.version", jvmVersion);
+	}
+
+	@ParameterizedTest
+	@ValueSource(strings = { "17", "21", "25" })
+	void javaVersionIsLeftAsIsWithBoot35(String jvmVersion) {
+		ProjectRequest request = createProjectRequest(SupportedBootVersion.V3_5, "vaadin");
+		request.setJavaVersion(jvmVersion);
+		assertThat(mavenPom(request)).hasProperty("java.version", jvmVersion);
+	}
 
 	@Test
-	void mavenBuildWithVaadinAddProductionProfileWithoutProductionModeFlag() {
-		ProjectRequest request = createProjectRequest(BOOT_VERSION, "vaadin", "data-jpa");
-		assertThat(mavenPom(request)).hasProfile("production").lines().containsSequence(
-		// @formatter:off
+	void mavenBuildWithVaadinAddProductionProfileWithoutProductionModeFlagOnBoot35() {
+		ProjectRequest request = createProjectRequest(SupportedBootVersion.V3_5, "vaadin", "data-jpa");
+		assertThat(mavenPom(request)).hasProfile("production")
+			.doesNotHaveDependency("com.vaadin", "vaadin-dev")
+			.lines()
+			.containsSequence(
+			// @formatter:off
 				"		<profile>",
 				"			<id>production</id>",
 				"			<dependencies>",
@@ -78,6 +107,36 @@ class VaadinProjectGenerationConfigurationTests extends AbstractExtensionTests {
 	}
 
 	@Test
+	void mavenBuildWithVaadinAddsVaadinDevDependencyWithBoot4() {
+		ProjectRequest request = createProjectRequest(SupportedBootVersion.V4_0, "vaadin", "data-jpa");
+		assertThat(mavenPom(request)).doesNotHaveProfile("production")
+				.containsIgnoringWhitespaces(
+					"""
+					<dependency>
+						<groupId>com.vaadin</groupId>
+						<artifactId>vaadin-dev</artifactId>
+						<optional>true</optional>
+					</dependency>
+					""")
+				.containsIgnoringWhitespaces(
+					"""
+					<plugin>
+						<groupId>com.vaadin</groupId>
+						<artifactId>vaadin-maven-plugin</artifactId>
+						<version>${vaadin.version}</version>
+						<executions>
+							<execution>
+								<id>build-frontend</id>
+								<goals>
+									<goal>build-frontend</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+					""");
+	}
+
+	@Test
 	void mavenBuildWithoutVaadinDoesNotAddProductionProfile() {
 		assertThat(mavenPom(createProjectRequest("data-jpa"))).doesNotHaveProfile("production");
 	}
@@ -91,7 +150,15 @@ class VaadinProjectGenerationConfigurationTests extends AbstractExtensionTests {
 			.get("vaadin")
 			.resolve(Version.parse(request.getBootVersion()))
 			.getVersion();
-		assertThat(gradleBuild(request)).hasPlugin("com.vaadin", vaadinVersion);
+		assertThat(gradleBuild(request)).hasPlugin("com.vaadin", vaadinVersion)
+				.doesNotContain("developmentOnly 'com.vaadin:vaadin-dev'");
+	}
+
+	@Test
+	void gradleBuildWithVaadinAddsVaadinDevDependencyWithBoot4() {
+		ProjectRequest request = createProjectRequest(SupportedBootVersion.V4_0, "vaadin", "data-jpa");
+		assertThat(gradleBuild(request))
+				.contains("developmentOnly 'com.vaadin:vaadin-dev'");
 	}
 
 	@Test

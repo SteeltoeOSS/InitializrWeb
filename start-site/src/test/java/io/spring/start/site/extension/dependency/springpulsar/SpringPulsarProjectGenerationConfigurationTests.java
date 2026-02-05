@@ -16,11 +16,15 @@
 
 package io.spring.start.site.extension.dependency.springpulsar;
 
+import io.spring.initializr.generator.buildsystem.Build;
 import io.spring.initializr.generator.buildsystem.Dependency;
+import io.spring.initializr.generator.buildsystem.maven.MavenBuild;
+import io.spring.initializr.generator.container.docker.compose.PortMapping;
 import io.spring.initializr.generator.project.MutableProjectDescription;
 import io.spring.initializr.generator.test.project.ProjectAssetTester;
 import io.spring.initializr.generator.test.project.ProjectStructure;
 import io.spring.initializr.generator.version.Version;
+import io.spring.initializr.web.autoconfigure.InitializrAutoConfiguration;
 import io.spring.initializr.web.project.ProjectRequest;
 import io.spring.start.site.SupportedBootVersion;
 import io.spring.start.site.container.DockerServiceResolver;
@@ -28,6 +32,7 @@ import io.spring.start.site.container.ServiceConnections;
 import io.spring.start.site.container.ServiceConnectionsCustomizer;
 import io.spring.start.site.container.SimpleDockerServiceResolver;
 import io.spring.start.site.extension.AbstractExtensionTests;
+import io.spring.start.site.extension.dependency.testcontainers.TestcontainersProjectGenerationConfiguration;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -57,7 +62,7 @@ class SpringPulsarProjectGenerationConfigurationTests extends AbstractExtensionT
 
 		@Test
 		void pulsarReactiveBootStarterUsed() {
-			ProjectRequest request = createProjectRequest("pulsar-reactive");
+			ProjectRequest request = createProjectRequest(SupportedBootVersion.V3_5, "pulsar-reactive");
 			ProjectStructure project = generateProject(request);
 			assertThat(project).mavenBuild()
 				.hasDependency("org.springframework.boot", "spring-boot-starter-pulsar-reactive");
@@ -77,8 +82,15 @@ class SpringPulsarProjectGenerationConfigurationTests extends AbstractExtensionT
 
 		@ParameterizedTest
 		@ValueSource(strings = { "pulsar", "pulsar-reactive" })
-		void serviceCreatedWhenDockerComposeSelectedWithCompatibleBootVersion(String pulsarDependencyId) {
-			ProjectRequest request = createProjectRequest("docker-compose", pulsarDependencyId);
+		void serviceCreatedWhenDockerComposeSelectedWithBoot35(String pulsarDependencyId) {
+			ProjectRequest request = createProjectRequest(SupportedBootVersion.V3_5, "docker-compose",
+					pulsarDependencyId);
+			assertThat(composeFile(request)).hasSameContentAs(new ClassPathResource("compose/pulsar.yaml"));
+		}
+
+		@Test
+		void serviceCreatedWhenDockerComposeSelectedWithCompatibleBootVersion() {
+			ProjectRequest request = createProjectRequest("docker-compose", "pulsar");
 			assertThat(composeFile(request)).hasSameContentAs(new ClassPathResource("compose/pulsar.yaml"));
 		}
 
@@ -88,8 +100,10 @@ class SpringPulsarProjectGenerationConfigurationTests extends AbstractExtensionT
 	class ServiceConnectionConfigurationTests {
 
 		private final ProjectAssetTester projectTester = new ProjectAssetTester()
-			.withConfiguration(SpringPulsarProjectGenerationConfiguration.class)
-			.withBean(DockerServiceResolver.class, SimpleDockerServiceResolver::new);
+			.withConfiguration(SpringPulsarProjectGenerationConfiguration.class, InitializrAutoConfiguration.class,
+					TestcontainersProjectGenerationConfiguration.class)
+			.withBean(DockerServiceResolver.class, SimpleDockerServiceResolver::new)
+			.withBean(Build.class, MavenBuild::new);
 
 		@Test
 		void connectionNotAddedWhenTestcontainersNotSelected() {
@@ -129,7 +143,7 @@ class SpringPulsarProjectGenerationConfigurationTests extends AbstractExtensionT
 		private void assertPulsarServiceConnectionAdded(ServiceConnections connections) {
 			assertThat(connections.values()).first().satisfies((connection) -> {
 				assertThat(connection.id()).isEqualTo("pulsar");
-				assertThat(connection.containerClassName()).isEqualTo("org.testcontainers.containers.PulsarContainer");
+				assertThat(connection.containerClassName()).isEqualTo("org.testcontainers.pulsar.PulsarContainer");
 				assertThat(connection.isGenericContainer()).isFalse();
 				assertThat(connection.containerClassNameGeneric()).isFalse();
 				assertThat(connection.dockerService()).satisfies((dockerService) -> {
@@ -137,7 +151,8 @@ class SpringPulsarProjectGenerationConfigurationTests extends AbstractExtensionT
 					assertThat(dockerService.getImageTag()).isEqualTo("latest");
 					assertThat(dockerService.getWebsite()).isEqualTo("https://hub.docker.com/r/apachepulsar/pulsar");
 					assertThat(dockerService.getCommand()).isEqualTo("bin/pulsar standalone");
-					assertThat(dockerService.getPorts()).containsExactlyInAnyOrder(8080, 6650);
+					assertThat(dockerService.getPorts()).extracting(PortMapping::getContainerPort)
+						.containsExactlyInAnyOrder(8080, 6650);
 				});
 			});
 		}

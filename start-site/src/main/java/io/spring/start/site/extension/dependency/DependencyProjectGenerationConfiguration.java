@@ -33,6 +33,7 @@ import io.spring.start.site.extension.dependency.reactor.ReactorTestBuildCustomi
 import io.spring.start.site.extension.dependency.springbatch.SpringBatchTestBuildCustomizer;
 import io.spring.start.site.extension.dependency.springsecurity.SpringSecurityRSocketBuildCustomizer;
 import io.spring.start.site.extension.dependency.springsecurity.SpringSecurityTestBuildCustomizer;
+import io.spring.start.site.extension.dependency.springsecurity.SpringSecurityWebAuthnBuildCustomizer;
 import io.spring.start.site.extension.dependency.springshell.SpringShellTestBuildCustomizer;
 import io.spring.start.site.extension.dependency.thymeleaf.ThymeleafBuildCustomizer;
 
@@ -58,18 +59,26 @@ public class DependencyProjectGenerationConfiguration {
 	}
 
 	@Bean
+	@ConditionalOnPlatformVersion("4.0.0-RC1")
+	AddTestStartersBuildCustomizer addTestStartersBuildCustomizer() {
+		return new AddTestStartersBuildCustomizer();
+	}
+
+	@Bean
 	public ReactorTestBuildCustomizer reactorTestBuildCustomizer(ProjectDescription description) {
 		return new ReactorTestBuildCustomizer(this.metadata, description);
 	}
 
 	@Bean
 	@ConditionalOnRequestedDependency("security")
+	@ConditionalOnPlatformVersion("[3.5.0,4.0.0-RC1)")
 	public SpringSecurityTestBuildCustomizer securityTestBuildCustomizer() {
 		return new SpringSecurityTestBuildCustomizer();
 	}
 
 	@Bean
 	@ConditionalOnRequestedDependency("oauth2-client")
+	@ConditionalOnPlatformVersion("[3.5.0,4.0.0-RC1)")
 	SpringSecurityTestBuildCustomizer oauth2ClientTestBuildCustomizer() {
 		return new SpringSecurityTestBuildCustomizer();
 	}
@@ -81,7 +90,14 @@ public class DependencyProjectGenerationConfiguration {
 	}
 
 	@Bean
+	@ConditionalOnRequestedDependency("spring-security-webauthn")
+	SpringSecurityWebAuthnBuildCustomizer springSecurityWebAuthnBuildCustomizer() {
+		return new SpringSecurityWebAuthnBuildCustomizer();
+	}
+
+	@Bean
 	@ConditionalOnRequestedDependency("batch")
+	@ConditionalOnPlatformVersion("[3.5.0,4.0.0-RC1]")
 	public SpringBatchTestBuildCustomizer batchTestBuildCustomizer() {
 		return new SpringBatchTestBuildCustomizer();
 	}

@@ -24,11 +24,12 @@ import io.spring.initializr.generator.condition.ConditionalOnPlatformVersion;
 import io.spring.initializr.generator.condition.ConditionalOnRequestedDependency;
 import io.spring.initializr.generator.project.ProjectDescription;
 import io.spring.initializr.generator.project.ProjectGenerationConfiguration;
-import io.spring.initializr.generator.version.VersionParser;
-import io.spring.initializr.generator.version.VersionRange;
 import io.spring.start.site.container.DockerServiceResolver;
 import io.spring.start.site.container.ServiceConnections.ServiceConnection;
 import io.spring.start.site.container.ServiceConnectionsCustomizer;
+import io.spring.start.site.container.Testcontainers;
+import io.spring.start.site.container.Testcontainers.Container;
+import io.spring.start.site.container.Testcontainers.SupportedContainer;
 
 import org.springframework.context.annotation.Bean;
 
@@ -42,14 +43,9 @@ import org.springframework.context.annotation.Bean;
 @ProjectGenerationConfiguration
 class SpringKafkaProjectGenerationConfiguration {
 
-	private static final String TESTCONTAINERS_CONFLUENT_CLASS_NAME = "org.testcontainers.containers.KafkaContainer";
-
-	private static final String TESTCONTAINERS_APACHE_CLASS_NAME = "org.testcontainers.kafka.KafkaContainer";
-
-	private static final VersionRange SPRING_BOOT_3_4_M2_OR_LATER = VersionParser.DEFAULT.parseRange("3.4.0-M2");
-
 	@Bean
 	@ConditionalOnRequestedDependency("kafka")
+	@ConditionalOnPlatformVersion("[3.5.0,4.0.0-RC1]")
 	SpringKafkaBuildCustomizer springKafkaBuildCustomizer() {
 		return new SpringKafkaBuildCustomizer();
 	}
@@ -57,19 +53,12 @@ class SpringKafkaProjectGenerationConfiguration {
 	@Bean
 	@ConditionalOnRequestedDependency("testcontainers")
 	ServiceConnectionsCustomizer kafkaServiceConnectionsCustomizer(ProjectDescription description, Build build,
-			DockerServiceResolver serviceResolver) {
-		boolean isSpringBoot34OrLater = SPRING_BOOT_3_4_M2_OR_LATER.match(description.getPlatformVersion());
+			DockerServiceResolver serviceResolver, Testcontainers testcontainers) {
 		return (serviceConnections) -> {
 			if (isKafkaEnabled(build)) {
-				if (isSpringBoot34OrLater) {
-					serviceResolver.doWith("kafka-native", (service) -> serviceConnections.addServiceConnection(
-							ServiceConnection.ofContainer("kafka", service, TESTCONTAINERS_APACHE_CLASS_NAME, false)));
-				}
-				else {
-					serviceResolver.doWith("kafka",
-							(service) -> serviceConnections.addServiceConnection(ServiceConnection.ofContainer("kafka",
-									service, TESTCONTAINERS_CONFLUENT_CLASS_NAME, false)));
-				}
+				Container container = testcontainers.getContainer(SupportedContainer.KAFKA);
+				serviceResolver.doWith("kafka-native", (service) -> serviceConnections.addServiceConnection(
+						ServiceConnection.ofContainer("kafka", service, container.className(), container.generic())));
 			}
 		};
 	}
@@ -84,23 +73,22 @@ class SpringKafkaProjectGenerationConfiguration {
 	@Bean
 	@ConditionalOnRequestedDependency("kafka-streams")
 	@ConditionalOnBuildSystem(MavenBuildSystem.ID)
-	SpringKafkaStreamsMavenBuildCustomizer springKafkaStreamsMavenBuildCustomizer(ProjectDescription description) {
-		return new SpringKafkaStreamsMavenBuildCustomizer(description);
+	SpringKafkaStreamsMavenBuildCustomizer springKafkaStreamsMavenBuildCustomizer() {
+		return new SpringKafkaStreamsMavenBuildCustomizer();
 	}
 
 	@Bean
 	@ConditionalOnRequestedDependency("kafka-streams")
 	@ConditionalOnBuildSystem(id = GradleBuildSystem.ID, dialect = GradleBuildSystem.DIALECT_GROOVY)
-	SpringKafkaStreamsGradleBuildCustomizer springKafkaStreamsGradleBuildCustomizer(ProjectDescription description) {
-		return new SpringKafkaStreamsGradleBuildCustomizer(description, '\'');
+	SpringKafkaStreamsGradleBuildCustomizer springKafkaStreamsGradleBuildCustomizer() {
+		return new SpringKafkaStreamsGradleBuildCustomizer('\'');
 	}
 
 	@Bean
 	@ConditionalOnRequestedDependency("kafka-streams")
 	@ConditionalOnBuildSystem(id = GradleBuildSystem.ID, dialect = GradleBuildSystem.DIALECT_KOTLIN)
-	SpringKafkaStreamsGradleBuildCustomizer springKafkaStreamsGradleKotlinBuildCustomizer(
-			ProjectDescription description) {
-		return new SpringKafkaStreamsGradleBuildCustomizer(description, '\"');
+	SpringKafkaStreamsGradleBuildCustomizer springKafkaStreamsGradleKotlinBuildCustomizer() {
+		return new SpringKafkaStreamsGradleBuildCustomizer('\"');
 	}
 
 	private boolean isKafkaEnabled(Build build) {
