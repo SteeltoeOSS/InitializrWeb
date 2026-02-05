@@ -22,9 +22,22 @@ env:
   IMAGE_TAG: ${{ github.event_name == 'pull_request' && format('pr-{0}', github.event.number) || github.run_id }}
 
 jobs:
+  test:
+    name: Run tests
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Build test image
+      run: docker build --target test -t initializr-web-test .
+
+    - name: Run tests in Docker
+      run: docker run --rm initializr-web-test
+
   build-push:
     name: Build and push image
     runs-on: ubuntu-latest
+    needs: test
     steps:
     - uses: actions/checkout@v4
 

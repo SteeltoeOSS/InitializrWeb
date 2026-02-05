@@ -1,4 +1,4 @@
-FROM node:20 AS build
+FROM node:20 AS base
 WORKDIR /usr/src
 COPY start-client/package.json ./
 COPY start-client/yarn.lock ./
@@ -11,7 +11,14 @@ COPY start-client/webpack.common.js ./
 COPY start-client/webpack.prod.js ./
 COPY start-client/webpack.dev.js ./
 COPY start-client/BuildVersion.json ./
-RUN yarn install
+RUN yarn install --frozen-lockfile
+
+# Test stage - can be run with: docker build --target test -t initializr-web-test .
+FROM base AS test
+CMD ["yarn", "test"]
+
+# Build stage - builds production assets
+FROM base AS build
 ENV GOOGLE_TAGMANAGER_ID="G-2778ZJCYZ4"
 RUN yarn build
 

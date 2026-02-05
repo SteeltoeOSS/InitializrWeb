@@ -12,7 +12,19 @@ A list of files that are known to diverge from Spring is available [here](./Upst
 
 ## Docker
 
-### Building the Image
+### Running Tests
+
+The Dockerfile includes a multi-stage build with a dedicated test stage. To run tests in Docker:
+
+```bash
+# Build the test image
+docker build --target test -t initializr-web-test .
+
+# Run the tests
+docker run --rm initializr-web-test
+```
+
+### Building the Production Image
 
 You can build the Docker image locally using the following command:
 
