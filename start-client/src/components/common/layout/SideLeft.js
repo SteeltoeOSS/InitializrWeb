@@ -209,6 +209,16 @@ function SideLeft() {
                           Leave feedback
                         </a>
                       </li>
+                      <li>
+                        <a
+                          id='ql-help-migration2'
+                          target='_blank'
+                          rel='noopener noreferrer'
+                          href='https://github.com/spring-projects/spring-boot/wiki/Spring-Boot-4.0-Migration-Guide'
+                        >
+                          Migrate Spring Boot 3.5 to 4.0
+                        </a>
+                      </li>
                     </ul>
                   </div>
                   <div className='is-mobile'>

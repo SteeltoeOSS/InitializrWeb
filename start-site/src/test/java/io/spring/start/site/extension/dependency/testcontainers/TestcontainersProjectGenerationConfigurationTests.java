@@ -43,11 +43,12 @@ import static org.assertj.core.api.Assertions.assertThat;
  */
 class TestcontainersProjectGenerationConfigurationTests extends AbstractExtensionTests {
 
-	private static final SupportedBootVersion BOOT_VERSION = SupportedBootVersion.V3_4;
+	private static final SupportedBootVersion BOOT_VERSION = SupportedBootVersion.V3_5;
 
 	@Test
 	void buildWithOnlyTestContainers() {
-		assertThat(generateProject("testcontainers")).mavenBuild().hasDependency(getDependency("testcontainers"));
+		assertThat(generateProject("testcontainers")).mavenBuild()
+			.hasDependency(getDependency(BOOT_VERSION, "testcontainers"));
 	}
 
 	@ParameterizedTest
@@ -59,7 +60,7 @@ class TestcontainersProjectGenerationConfigurationTests extends AbstractExtensio
 			.hasDependency(getDependency(springBootDependencyId)
 				.resolve(Version.parse(SupportedBootVersion.latest().getVersion())))
 			.hasDependency("org.testcontainers", testcontainersArtifactId, null, "test")
-			.hasDependency(getDependency("testcontainers"));
+			.hasDependency(getDependency(BOOT_VERSION, "testcontainers"));
 	}
 
 	@ParameterizedTest
@@ -71,7 +72,7 @@ class TestcontainersProjectGenerationConfigurationTests extends AbstractExtensio
 			.hasDependency(getDependency(springBootDependencyId)
 				.resolve(Version.parse(SupportedBootVersion.latest().getVersion())))
 			.hasDependency("org.testcontainers", testcontainersArtifactId, null, "test")
-			.hasDependency(getDependency("testcontainers"));
+			.hasDependency(getDependency(BOOT_VERSION, "testcontainers"));
 	}
 
 	static Stream<Arguments> supportedTestcontainersActiveMQEntriesBuild() {
@@ -140,7 +141,7 @@ class TestcontainersProjectGenerationConfigurationTests extends AbstractExtensio
 	void buildWithSpringBoot31DoesNotIncludeBom() {
 		assertThat(generateProject("testcontainers")).mavenBuild()
 			.doesNotHaveBom("org.testcontainers", "testcontainers-bom")
-			.hasDependency(getDependency("testcontainers"));
+			.hasDependency(getDependency(BOOT_VERSION, "testcontainers"));
 	}
 
 	@Test
@@ -262,7 +263,7 @@ class TestcontainersProjectGenerationConfigurationTests extends AbstractExtensio
 					import org.springframework.boot.test.context.TestConfiguration
 					import org.springframework.boot.testcontainers.service.connection.ServiceConnection
 					import org.springframework.context.annotation.Bean
-					import org.testcontainers.containers.CassandraContainer
+					import org.testcontainers.cassandra.CassandraContainer
 					import org.testcontainers.utility.DockerImageName
 
 					@TestConfiguration(proxyBeanMethods = false)
@@ -271,7 +272,7 @@ class TestcontainersProjectGenerationConfigurationTests extends AbstractExtensio
 						@Bean
 						@ServiceConnection
 						CassandraContainer cassandraContainer() {
-							new CassandraContainer<>(DockerImageName.parse("cassandra:latest"))
+							new CassandraContainer(DockerImageName.parse("cassandra:latest"))
 						}
 
 					}
@@ -323,7 +324,7 @@ class TestcontainersProjectGenerationConfigurationTests extends AbstractExtensio
 					import org.springframework.boot.test.context.TestConfiguration;
 					import org.springframework.boot.testcontainers.service.connection.ServiceConnection;
 					import org.springframework.context.annotation.Bean;
-					import org.testcontainers.containers.CassandraContainer;
+					import org.testcontainers.cassandra.CassandraContainer;
 					import org.testcontainers.utility.DockerImageName;
 
 					@TestConfiguration(proxyBeanMethods = false)
@@ -331,8 +332,8 @@ class TestcontainersProjectGenerationConfigurationTests extends AbstractExtensio
 
 						@Bean
 						@ServiceConnection
-						CassandraContainer<?> cassandraContainer() {
-							return new CassandraContainer<>(DockerImageName.parse("cassandra:latest"));
+						CassandraContainer cassandraContainer() {
+							return new CassandraContainer(DockerImageName.parse("cassandra:latest"));
 						}
 
 					}
@@ -381,7 +382,7 @@ class TestcontainersProjectGenerationConfigurationTests extends AbstractExtensio
 					import org.springframework.boot.test.context.TestConfiguration
 					import org.springframework.boot.testcontainers.service.connection.ServiceConnection
 					import org.springframework.context.annotation.Bean
-					import org.testcontainers.containers.CassandraContainer
+					import org.testcontainers.cassandra.CassandraContainer
 					import org.testcontainers.utility.DockerImageName
 
 					@TestConfiguration(proxyBeanMethods = false)
@@ -389,7 +390,7 @@ class TestcontainersProjectGenerationConfigurationTests extends AbstractExtensio
 
 						@Bean
 						@ServiceConnection
-						fun cassandraContainer(): CassandraContainer<*> {
+						fun cassandraContainer(): CassandraContainer {
 							return CassandraContainer(DockerImageName.parse("cassandra:latest"))
 						}
 
@@ -418,9 +419,9 @@ class TestcontainersProjectGenerationConfigurationTests extends AbstractExtensio
 	@Test
 	void shouldAddHelpSection() {
 		assertHelpDocument("testcontainers", "data-mongodb", "postgresql").contains(
-				"https://docs.spring.io/spring-boot/3.4.0/reference/testing/testcontainers.html#testing.testcontainers")
+				"https://docs.spring.io/spring-boot/3.5.0/reference/testing/testcontainers.html#testing.testcontainers")
 			.contains(
-					"https://docs.spring.io/spring-boot/3.4.0/reference/features/dev-services.html#features.dev-services.testcontainers")
+					"https://docs.spring.io/spring-boot/3.5.0/reference/features/dev-services.html#features.dev-services.testcontainers")
 			.contains("mongo:latest")
 			.contains("postgres:latest");
 	}

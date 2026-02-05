@@ -16,23 +16,17 @@
 
 package io.spring.start.site.extension.dependency.sbom;
 
-import java.util.Collections;
-import java.util.Map;
-
 import io.spring.initializr.generator.buildsystem.gradle.GradleBuild;
 import io.spring.initializr.generator.buildsystem.gradle.GradlePlugin;
 import io.spring.initializr.generator.buildsystem.gradle.StandardGradlePlugin;
 import io.spring.initializr.generator.project.MutableProjectDescription;
 import io.spring.initializr.generator.version.Version;
-import io.spring.initializr.versionresolver.MavenVersionResolver;
-import io.spring.start.site.SupportedBootVersion;
 import org.assertj.core.api.ThrowingConsumer;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.mock;
 
 /**
  * Tests for {@link SbomCycloneDxGradleBuildCustomizer}.
@@ -45,31 +39,29 @@ class SbomCycloneDxGradleBuildCustomizerTests {
 
 	private MutableProjectDescription description;
 
-	private MavenVersionResolver versionResolver;
-
 	@BeforeEach
 	void setUp() {
 		this.description = new MutableProjectDescription();
-		this.versionResolver = mock(MavenVersionResolver.class);
-		this.customizer = new SbomCycloneDxGradleBuildCustomizer(this.versionResolver, this.description);
+		this.customizer = new SbomCycloneDxGradleBuildCustomizer(this.description);
 	}
 
-	@Test
-	void shouldUseDefaultVersionIfMavenResolverFails() {
-		givenBootVersion(SupportedBootVersion.latest().getVersion());
-		givenVersionResolverReturns(null);
-		GradleBuild gradleBuild = new GradleBuild();
-		this.customizer.customize(gradleBuild);
-		assertThat(gradleBuild.plugins().values()).anySatisfy(sbomPlugin("1.10.0"));
+	@ParameterizedTest
+	@CsvSource(textBlock = """
+			3.5.0,			2.4.1
+			4.0.0,			3.1.0
+			4.1.0-M1,		3.1.0
+			4.1.0-SNAPSHOT,	3.1.0
+			""")
+	void shouldUseCorrectPluginVersion(String bootVersion, String pluginVersion) {
+		GradleBuild gradleBuild = gradleBuildFor(bootVersion);
+		assertThat(gradleBuild.plugins().values()).anySatisfy(sbomPlugin(pluginVersion));
 	}
 
-	@Test
-	void shouldUseResolvedVersion() {
-		givenBootVersion(SupportedBootVersion.latest().getVersion());
-		givenVersionResolverReturns("2.20.0");
+	private GradleBuild gradleBuildFor(String bootVersion) {
+		this.description.setPlatformVersion(Version.parse(bootVersion));
 		GradleBuild gradleBuild = new GradleBuild();
 		this.customizer.customize(gradleBuild);
-		assertThat(gradleBuild.plugins().values()).anySatisfy(sbomPlugin("2.20.0"));
+		return gradleBuild;
 	}
 
 	private ThrowingConsumer<GradlePlugin> sbomPlugin(String version) {
@@ -78,22 +70,6 @@ class SbomCycloneDxGradleBuildCustomizerTests {
 			assertThat(plugin).isInstanceOf(StandardGradlePlugin.class);
 			assertThat(((StandardGradlePlugin) plugin).getVersion()).isEqualTo(version);
 		};
-	}
-
-	private void givenVersionResolverReturns(String pluginVersion) {
-		Map<String, String> versions = (pluginVersion != null)
-				? Map.of("org.cyclonedx:cyclonedx-gradle-plugin", pluginVersion) : Collections.emptyMap();
-		given(this.versionResolver.resolveDependencies("org.springframework.boot", "spring-boot-parent",
-				getBootVersion()))
-			.willReturn(versions);
-	}
-
-	private void givenBootVersion(String version) {
-		this.description.setPlatformVersion(Version.parse(version));
-	}
-
-	private String getBootVersion() {
-		return this.description.getPlatformVersion().toString();
 	}
 
 }

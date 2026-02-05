@@ -107,6 +107,18 @@ describe('getListValues', () => {
   //   }
   // })
 
+  it('parse correctly the list of configuration file formats', () => {
+    const json = { ...MockClient }
+    const listsValues = getLists(json)
+    const listFormats = get(listsValues, 'meta.configurationFileFormat')
+    const mockFormats = get(MockClient, 'configurationFileFormat.values')
+    expect(listFormats.length).toBe(mockFormats.length)
+    for (let i = 0; i < mockFormats.length; i += 1) {
+      expect(listFormats[i].key).toBe(mockFormats[i].id)
+      expect(listFormats[i].text).toBe(mockFormats[i].name)
+    }
+  })
+
   it('parse correctly the list of dependencies', () => {
     const json = { ...MockClient }
     const listsValues = getLists(json)
@@ -322,8 +334,9 @@ describe('getShareUrl', () => {
         name: 'foo8',
         description: 'foo9',
         packageName: 'foo10',
+        configurationFileFormat: 'foo11',
       },
-      dependencies: ['foo11', 'foo12'],
+      dependencies: ['foo12', 'foo13'],
     })
     expect(result).toBe(
       'name=foo8&namespace=&description=foo9&steeltoeVersion=&dotNetFramework=&dotNetTemplate=&language=foo2&packaging=&dependencies=foo11,foo12'
@@ -352,12 +365,13 @@ describe('getProject', () => {
         name: 'foo8',
         description: 'foo9',
         packageName: 'foo10',
+        configurationFileFormat: 'foo11',
       },
-      dependencies: ['foo11', 'foo12'],
+      dependencies: ['foo12', 'foo13'],
     }
     getProject('http://demo/starter.zip', values, [
-      { id: 'foo11' },
       { id: 'foo12' },
+      { id: 'foo13' },
     ])
     expect(fetch.mock.calls.length).toEqual(1)
     expect(fetch.mock.calls[0][0]).toEqual(
@@ -378,10 +392,11 @@ describe('getProject', () => {
         name: 'foo8',
         description: 'foo9',
         packageName: 'foo10',
+        configurationFileFormat: 'foo11',
       },
-      dependencies: ['foo11', 'foo12'],
+      dependencies: ['foo12', 'foo13'],
     }
-    getProject('http://demo/starter.zip', values, [{ id: 'foo11' }])
+    getProject('http://demo/starter.zip', values, [{ id: 'foo12' }])
     expect(fetch.mock.calls.length).toEqual(1)
     expect(fetch.mock.calls[0][0]).toEqual(
       'http://demo/starter.zip?name=foo8&namespace=&description=foo9&steeltoeVersion=&dotNetFramework=&language=foo2&packaging=&baseDir=foo8&dependencies=foo11,foo12'
@@ -401,6 +416,7 @@ describe('getProject', () => {
         name: 'foo8',
         description: 'foo9',
         packageName: 'foo10',
+        configurationFileFormat: 'foo11',
       },
     }
     getProject('http://demo/starter.zip', values, [])

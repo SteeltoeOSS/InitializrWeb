@@ -6,6 +6,7 @@ io.spring.start.site.extension.dependency.DependencyProjectGenerationConfigurati
 io.spring.start.site.extension.dependency.activemq.ActiveMQProjectGenerationConfiguration,\
 io.spring.start.site.extension.dependency.activemq.ArtemisProjectGenerationConfiguration,\
 io.spring.start.site.extension.dependency.cassandra.CassandraProjectGenerationConfiguration,\
+io.spring.start.site.extension.dependency.datasourcemicrometer.DatasourceMicrometerProjectGenerationConfiguration,\
 io.spring.start.site.extension.dependency.derby.DerbyProjectGenerationConfiguration,\
 io.spring.start.site.extension.dependency.dgs.DgsProjectGenerationConfiguration,\
 io.spring.start.site.extension.dependency.dgs.DgsCodegenProjectGenerationConfiguration,\
@@ -14,14 +15,17 @@ io.spring.start.site.extension.dependency.elasticsearch.ElasticsearchProjectGene
 io.spring.start.site.extension.dependency.flyway.FlywayProjectGenerationConfiguration,\
 io.spring.start.site.extension.dependency.graalvm.GraalVmProjectGenerationConfiguration,\
 io.spring.start.site.extension.dependency.graphql.SpringGraphQlProjectGenerationConfiguration,\
+io.spring.start.site.extension.dependency.h2.H2ProjectGenerationConfiguration,\
 io.spring.start.site.extension.dependency.htmx.HtmxProjectGenerationConfiguration,\
 io.spring.start.site.extension.dependency.jte.JteProjectGenerationConfiguration,\
 io.spring.start.site.extension.dependency.mariadb.MariaDbProjectGenerationConfiguration,\
+io.spring.start.site.extension.dependency.mcpsecurity.McpSecurityProjectGenerationConfiguration,\
 io.spring.start.site.extension.dependency.mongodb.MongoDbProjectGenerationConfiguration,\
 io.spring.start.site.extension.dependency.mysql.MysqlProjectGenerationConfiguration,\
 io.spring.start.site.extension.dependency.neo4j.Neo4jProjectGenerationConfiguration,\
 io.spring.start.site.extension.dependency.observability.ObservabilityProjectGenerationConfiguration,\
 io.spring.start.site.extension.dependency.oracle.OracleProjectGenerationConfiguration,\
+io.spring.start.site.extension.dependency.opentelemetry.OpenTelemetryProjectGenerationConfiguration,\
 io.spring.start.site.extension.dependency.postgresql.PgVectorProjectGenerationConfiguration,\
 io.spring.start.site.extension.dependency.postgresql.PostgresqlProjectGenerationConfiguration,\
 io.spring.start.site.extension.dependency.redis.RedisProjectGenerationConfiguration,\
