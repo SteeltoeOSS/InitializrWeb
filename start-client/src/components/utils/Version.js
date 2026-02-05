@@ -41,7 +41,15 @@ export const compare = (a, b) => {
   const versionB = b.split('.')
   const len = Math.min(versionA.length, versionB.length, 3)
   for (let i = 0; i < len; i += 1) {
-    result = parseInt(versionA[i], 10) - parseInt(versionB[i], 10)
+    const numA = parseInt(versionA[i], 10)
+    const numB = parseInt(versionB[i], 10)
+    
+    // Steeltoe: Treat non-numeric parts as wildcards that match any number.
+    if (isNaN(numA) || isNaN(numB)) {
+      continue
+    }
+    
+    result = numA - numB
     if (result !== 0) {
       return result
     }
