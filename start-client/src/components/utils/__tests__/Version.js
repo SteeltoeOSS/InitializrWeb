@@ -79,6 +79,27 @@ describe('compare', () => {
     result = compare('foo1.1', 'foo1.2')
     expect(result < 0).toBe(true)
   })
+
+  it('should handle versions with wildcards', () => {
+    // Non-numeric parts are treated as wildcards that match any number
+    let result = compare('4.x', '4.0')
+    expect(result).toBe(0)
+    
+    result = compare('3.4.5', '3.4.*')
+    expect(result).toBe(0)
+
+    result = compare('4.x', '4.0.1')
+    expect(result).toBe(0)
+
+    result = compare('4.x', '4.x')
+    expect(result).toBe(0)
+
+    result = compare('3.1.x', '4.0')
+    expect(result < 0).toBe(true)
+
+    result = compare('4.0', '5.x')
+    expect(result < 0).toBe(true)
+  })
 })
 
 /**
@@ -115,6 +136,24 @@ describe('isInRange', () => {
     expect(result).toBe(false)
     result = isInRange('3.0.0', '[2.0.0,2.2.0)')
     expect(result).toBe(false)
+  })
+  it('should handle versions with wildcards', () => {
+    let result = isInRange('3.x', '[4.0,5.0)')
+    expect(result).toBe(false)
+    result = isInRange('4.x', '[4.0,5.0)')
+    expect(result).toBe(true)
+    result = isInRange('4.1.x', '[4.0,5.0)')
+    expect(result).toBe(true)
+    result = isInRange('5.x', '[4.0,5.0)')
+    expect(result).toBe(false)
+    result = isInRange('3.x', '4.0')
+    expect(result).toBe(false)
+    result = isInRange('4.x', '4.0')
+    expect(result).toBe(true)
+    result = isInRange('4.1.x', '4.0')
+    expect(result).toBe(true)
+    result = isInRange('5.x', '4.0')
+    expect(result).toBe(true)
   })
 })
 
